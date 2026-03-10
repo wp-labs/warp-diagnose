@@ -1,0 +1,12 @@
+name : /oml/wparse
+rule : /wpl/wparse/*
+---
+__meta : auto = pipe read(content) | extract_subject_object ;
+event_time : time = read(time) ;
+level : chars = read(level) ;
+target : chars = read(target) ;
+subject : chars = pipe read(__meta) | get(subject) ;
+action : chars = pipe read(__meta) | get(action) ;
+status : chars = pipe read(__meta) | get(status) ;
+content : chars = read(content) ;
+source : chars = chars(wparse) ;

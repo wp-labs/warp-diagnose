@@ -1,0 +1,20 @@
+[[connectors]]
+id = "arrow_file"
+type = "arrow-file"
+allow_override = ["base", "file", "tag", "fields", "sync"]
+
+[connectors.params]
+base = "alerts"
+file = "default.arrow"
+tag = "wf_alert"
+sync = false
+fields = [
+  { name = "wfx_id", type = "chars" },
+  { name = "rule_name", type = "chars" },
+  { name = "score", type = "float" },
+  { name = "entity_type", type = "chars" },
+  { name = "entity_id", type = "chars" },
+  { name = "origin", type = "chars" },
+  { name = "fired_at", type = "chars" },
+  { name = "summary", type = "chars" },
+]

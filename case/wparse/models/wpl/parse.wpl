@@ -1,0 +1,11 @@
+package /wpl/wparse {
+    rule line {
+        (
+            time\.,
+            digit:ns,
+            chars:level<[,]>,
+            chars:target<[,]>,
+            chars:content\0
+        )
+    }
+}

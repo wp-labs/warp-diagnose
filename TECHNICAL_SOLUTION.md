@@ -111,13 +111,19 @@
 5. 单行 Filter Bar:
    - `Level / Risk / Source / Stage`
    - 支持多条件组合过滤
-6. Active Filters Row:
+6. Page Switch Row:
+   - `Overview / Log Data`
+   - 默认停留在 `Overview`
+7. Active Filters Row:
    - 展示已生效过滤条件
    - 末尾提供图标化 `Clear All`
-7. 下部 Selection Detail:
+8. 下部 Selection Detail:
    - 展示点选 bucket 对应日志明细
    - 显示关联 stage、risk、action、status、content
-8. Hover Preview:
+9. Log Data Page:
+   - 复用当前过滤条件
+   - 直接展示结构化输入日志表
+10. Hover Preview:
    - 跟随点位邻近显示
    - 不占固定布局列
 
@@ -133,6 +139,8 @@
 3. 视窗状态:
    - `timeline_canvas_x`
    - `timeline_zoom`
+4. 分页状态:
+   - `active_page: int`
 
 组合逻辑:
 1. 先按 `selected_stage` 过滤事件集合。
@@ -141,12 +149,14 @@
 4. 再按 `selected_source` 过滤。
 5. 点选后将 bucket 详情写入 `Selection Detail`。
 6. Hover 仅更新短预览文本，不改变主选择。
+7. `Log Data` 页复用同一组过滤条件，但数据源切换为输入日志行集合。
 
 ## 6.2 当前布局基线
 1. 上层:
    - Header + LOGO
    - KPI Summary Row
    - 单行 Filter Bar
+   - `Overview / Log Data` 分页条
    - Active Filters Row
    - 全宽 Timeline 面板
    - 内含图标化缩放、平移与重置
@@ -183,6 +193,9 @@
    - Slint Window 保持 `no-frame: false`
    - 使用系统标准窗口控件处理最大化/全屏
    - 初始窗口尺寸由 Rust 侧设置，避免在 UI 描述层锁死窗口行为
+6. 双分页策略:
+   - 第一页保持当前时间线总览，不回退既有阅读路径
+   - 第二页提供更适合筛选后逐行阅读的日志表布局
 
 ## 7. 性能策略
 1. 预聚合: 200ms bucket
@@ -206,14 +219,15 @@
 
 ## 10. 当前可执行链路 (2026-03-10)
 1. 规则与数据准备:
-   - 目录: `/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse`
-   - 脚本: `scripts/run_file_case.sh`
+   - `wparse` 目录: `/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse`
+   - `wfusion` 目录: `/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wfusion`
+   - 联调脚本: `/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/scripts/run_wp_wf_case.sh`
 2. 运行 wfusion 计算:
    - 推荐二进制: `/Users/zuowenjian/devspace/wp-labs/wp-reactor/target/debug/wfusion`
-   - 输出: `case/wparse/alerts/all.jsonl`
+   - 输出: `case/wfusion/alerts/wf-alert.arrow`
 3. 启动看板消费:
    - `WARP_DIAGNOSE_USE_WFUSION=1`
-   - `WARP_DIAGNOSE_WFUSION_ALERTS=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/alerts/all.jsonl`
+   - `WARP_DIAGNOSE_WFUSION_ALERTS=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wfusion/alerts/wf-alert.arrow`
 4. 当前样例规模:
    - file source ingest: `2161` rows
    - alert 输出: `89` rows（适合时间轴故事展示）
@@ -228,7 +242,7 @@
 7. 窗口行为已回归系统标准控件，支持系统级全屏与调整窗口大小。
 
 ## 11. 新任务技术起点
-1. 在 `case/wparse/rules/wparse_semantic.wfl` 上增量调参，优先保证输出稳定性与可解释性。
+1. 在 `case/wfusion/rules/wparse_semantic.wfl` 上增量调参，优先保证输出稳定性与可解释性。
 2. 在 `src/data.rs` 增加规则标签聚合（按 rule_name/score/entity_type 分层）。
 3. 在 Slint 主图增加 Narrative 侧栏，复用现有 point detail 与 stage card 数据。
 4. 后续若需要严格 lint 通过，可按 WFL v2.1 补 `limits { ... }`（当前运行不受阻）。

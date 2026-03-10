@@ -26,6 +26,16 @@ export struct LaneLabel {
     label: string,
 }
 
+export struct DetailRow {
+    time: string,
+    level: string,
+    target: string,
+    entity: string,
+    action: string,
+    status: string,
+    content: string,
+}
+
 export struct StageCard {
     idx: int,
     label: string,
@@ -337,6 +347,144 @@ component InlineIconButton inherits Button {
     colorize-icon: true;
 }
 
+component PageSwitchButton inherits Rectangle {
+    in property <string> label;
+    in property <bool> selected: false;
+    callback clicked;
+
+    min-width: 112px;
+    height: 28px;
+    border-radius: 14px;
+    background: selected ? #dfeafd : #f4f7fb;
+    border-width: 1px;
+    border-color: selected ? #8eb2ef : #d6e0ea;
+
+    Text {
+        text: label;
+        color: selected ? #1f5fd6 : #51657c;
+        font-size: 11px;
+        font-weight: selected ? 700 : 600;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+    }
+
+    TouchArea {
+        mouse-cursor: pointer;
+        clicked => {
+            root.clicked();
+        }
+    }
+}
+
+component DetailTablePanel inherits Rectangle {
+    in property <string> title;
+    in property <string> summary: "";
+    in property <[DetailRow]> rows: [];
+    in property <length> table-width: 900px;
+    in property <length> body-viewport-height: 252px;
+
+    border-radius: 10px;
+    background: #ffffff;
+    border-width: 1px;
+    border-color: #d6e0ea;
+
+    VerticalLayout {
+        padding: 10px;
+        spacing: 6px;
+
+        Text {
+            text: title;
+            color: #203047;
+            font-size: 14px;
+            font-weight: 700;
+            horizontal-alignment: left;
+        }
+
+        if (summary != "") : Text {
+            text: summary;
+            color: #64748b;
+            font-size: 11px;
+            horizontal-alignment: left;
+        }
+
+        Rectangle {
+            width: table-width;
+            height: 34px;
+            border-radius: 8px;
+            background: #dde8f3;
+            border-width: 1px;
+            border-color: #d8e3ee;
+
+            HorizontalLayout {
+                padding-left: 10px;
+                padding-right: 10px;
+                spacing: 8px;
+
+                Text { text: "Time"; min-width: 150px; color: #24384d; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
+                Text { text: "Level"; min-width: 62px; color: #24384d; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
+                Text { text: "Target"; min-width: 96px; color: #24384d; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
+                Text { text: "Entity"; min-width: 120px; color: #24384d; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
+                Text { text: "Action"; min-width: 88px; color: #24384d; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
+                Text { text: "Status"; min-width: 76px; color: #24384d; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
+                Text {
+                    text: "Content";
+                    min-width: 180px;
+                    horizontal-stretch: 1;
+                    color: #24384d;
+                    font-size: 12px;
+                    font-weight: 700;
+                    horizontal-alignment: center;
+                    vertical-alignment: center;
+                }
+            }
+        }
+
+        ScrollView {
+            vertical-scrollbar-policy: ScrollBarPolicy.as-needed;
+            horizontal-scrollbar-policy: ScrollBarPolicy.as-needed;
+
+            Rectangle {
+                width: table-width;
+                height: max(body-viewport-height, rows.length * 34px);
+                border-radius: 8px;
+                background: #f6f9fc;
+                border-width: 1px;
+                border-color: #d8e3ee;
+
+                for row[i] in rows: Rectangle {
+                    x: 0px;
+                    y: i * 34px;
+                    width: parent.width;
+                    height: 34px;
+                    background: Math.mod(i, 2) == 0 ? #f8fbfe : #f2f7fb;
+
+                    HorizontalLayout {
+                        padding-left: 10px;
+                        padding-right: 10px;
+                        spacing: 8px;
+
+                        Text { text: row.time; min-width: 150px; color: #334155; font-size: 12px; vertical-alignment: center; }
+                        Text { text: row.level; min-width: 62px; color: #334155; font-size: 12px; vertical-alignment: center; }
+                        Text { text: row.target; min-width: 96px; color: #334155; font-size: 12px; vertical-alignment: center; }
+                        Text { text: row.entity; min-width: 120px; color: #334155; font-size: 12px; vertical-alignment: center; }
+                        Text { text: row.action; min-width: 88px; color: #334155; font-size: 12px; vertical-alignment: center; }
+                        Text { text: row.status; min-width: 76px; color: #334155; font-size: 12px; vertical-alignment: center; }
+                        Text {
+                            text: row.content;
+                            min-width: 180px;
+                            horizontal-stretch: 1;
+                            color: #334155;
+                            font-size: 12px;
+                            vertical-alignment: center;
+                            overflow: elide;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 export component AppWindow inherits Window {
     in-out property <string> status_text: "Ready";
     in-out property <int> total_events: 0;
@@ -350,7 +498,8 @@ export component AppWindow inherits Window {
     in-out property <string> source_text: "No data loaded";
 
     in-out property <string> stage_detail_text: "No stage selected";
-    in-out property <string> point_detail_text: "Click any point";
+    in-out property <string> point_detail_summary: "Click any point to inspect input logs.";
+    in-out property <[DetailRow]> point_detail_rows: [];
     in-out property <string> lane_legend_text: "No lane";
     in-out property <string> hover_detail_text: "Hover a point to preview.";
 
@@ -373,6 +522,9 @@ export component AppWindow inherits Window {
     in-out property <string> active_stage_filter_text: "All stages";
     in-out property <[LaneLabel]> lane_labels: [];
     in-out property <[StageCard]> stage_cards: [];
+    in-out property <string> filtered_log_summary: "No log data loaded.";
+    in-out property <[DetailRow]> filtered_log_rows: [];
+    property <int> active_page: 0;
 
     callback reload_data();
     callback level_filter_clicked(int);
@@ -781,404 +933,413 @@ export component AppWindow inherits Window {
             }
         }
 
-        timeline-panel := Rectangle {
-            property <length> timeline_pan_step: 30px;
-            property <float> timeline_zoom_min: 0.5;
-            property <float> timeline_zoom_max: 6.0;
-            property <float> timeline_zoom_step: 0.25;
-            property <float> timeline_zoom_in_value: min(self.timeline_zoom_max, root.timeline_zoom + self.timeline_zoom_step);
-            property <float> timeline_zoom_out_value: max(self.timeline_zoom_min, root.timeline_zoom - self.timeline_zoom_step);
-            property <length> timeline_min_canvas_x: min(0px, timeline-viewport.width - timeline-content.width);
+        Rectangle {
+            height: 38px;
             border-radius: 10px;
             background: #ffffff;
-            height: 480px;
             border-width: 1px;
             border-color: #d6e0ea;
 
-            Text {
-                text: "TimeLine";
-                color: #203047;
-                font-size: 16px;
-                font-weight: 700;
-                x: 12px;
-                y: 8px;
-            }
+            HorizontalLayout {
+                padding-left: 10px;
+                padding-right: 10px;
+                spacing: 6px;
 
-            Text {
-                text: "Use the filter bar above for Level. Click a point to open its detail below.";
-                color: #64748b;
-                font-size: 11px;
-                x: 14px;
-                y: 27px;
-            }
+                Text {
+                    text: "Page";
+                    color: #64748b;
+                    font-size: 11px;
+                    font-weight: 700;
+                    vertical-alignment: center;
+                }
 
-            Rectangle {
-                x: parent.width - 240px;
-                y: 7px;
-                width: 228px;
-                height: 32px;
-                background: transparent;
-
-                HorizontalLayout {
-                    spacing: 4px;
-
-                    TimelineToolButton {
-                        tool-icon: @image-url("icons/timeline-zoom-out.svg");
-                        clicked => {
-                            root.timeline_canvas_x = min(
-                                0px,
-                                timeline-viewport.width / 2 - (timeline-viewport.width / 2 - timeline-content.x) * timeline-panel.timeline_zoom_out_value / root.timeline_zoom
-                            );
-                            root.timeline_zoom = timeline-panel.timeline_zoom_out_value;
-                        }
-                    }
-
-                    TimelineToolButton {
-                        tool-icon: @image-url("icons/timeline-zoom-in.svg");
-                        clicked => {
-                            root.timeline_canvas_x = min(
-                                0px,
-                                timeline-viewport.width / 2 - (timeline-viewport.width / 2 - timeline-content.x) * timeline-panel.timeline_zoom_in_value / root.timeline_zoom
-                            );
-                            root.timeline_zoom = timeline-panel.timeline_zoom_in_value;
-                        }
-                    }
-
-                    TimelineToolButton {
-                        tool-icon: @image-url("icons/timeline-fit.svg");
-                        clicked => {
-                            root.timeline_canvas_x = min(
-                                0px,
-                                timeline-viewport.width / 2 - (timeline-viewport.width / 2 - timeline-content.x) * 1.0 / root.timeline_zoom
-                            );
-                            root.timeline_zoom = 1.0;
-                        }
-                    }
-
-                    TimelineToolButton {
-                        tool-icon: @image-url("icons/timeline-pan-left.svg");
-                        clicked => {
-                            root.timeline_canvas_x = min(0px, timeline-content.x + timeline-panel.timeline_pan_step);
-                        }
-                    }
-
-                    TimelineToolButton {
-                        tool-icon: @image-url("icons/timeline-pan-right.svg");
-                        clicked => {
-                            root.timeline_canvas_x = max(timeline-panel.timeline_min_canvas_x, timeline-content.x - timeline-panel.timeline_pan_step);
-                        }
-                    }
-
-                    TimelineToolButton {
-                        tool-icon: @image-url("icons/timeline-reset.svg");
-                        clicked => {
-                            root.timeline_canvas_x = 0px;
-                            root.timeline_zoom = 1.0;
-                            root.clear_all_filters();
-                        }
+                PageSwitchButton {
+                    label: "Overview";
+                    selected: root.active_page == 0;
+                    clicked => {
+                        root.active_page = 0;
                     }
                 }
-            }
 
-            Rectangle {
-                x: 12px;
-                y: 38px;
-                width: parent.width - 24px;
-                height: 434px;
-                border-radius: 8px;
-                background: #edf3f8;
+                PageSwitchButton {
+                    label: "Log Data";
+                    selected: root.active_page == 1;
+                    clicked => {
+                        root.active_page = 1;
+                    }
+                }
+
+                Rectangle {
+                    background: transparent;
+                }
+            }
+        }
+
+        if (root.active_page == 0) : VerticalLayout {
+            spacing: 10px;
+
+            timeline-panel := Rectangle {
+                property <length> timeline_pan_step: 30px;
+                property <float> timeline_zoom_min: 0.5;
+                property <float> timeline_zoom_max: 6.0;
+                property <float> timeline_zoom_step: 0.25;
+                property <float> timeline_zoom_in_value: min(self.timeline_zoom_max, root.timeline_zoom + self.timeline_zoom_step);
+                property <float> timeline_zoom_out_value: max(self.timeline_zoom_min, root.timeline_zoom - self.timeline_zoom_step);
+                property <length> timeline_min_canvas_x: min(0px, timeline-viewport.width - timeline-content.width);
+                border-radius: 10px;
+                background: #ffffff;
+                height: 480px;
                 border-width: 1px;
-                border-color: #d8e3ee;
+                border-color: #d6e0ea;
 
-                for lane in lane_labels: Text {
-                    text: lane.label;
-                    color: #6b7f95;
-                    x: 8px;
-                    y: 96px + (350px - 52px) * lane.y_pct;
-                    font-size: 10px;
-                    width: 74px;
-                    horizontal-alignment: left;
+                Text {
+                    text: "TimeLine";
+                    color: #203047;
+                    font-size: 16px;
+                    font-weight: 700;
+                    x: 12px;
+                    y: 8px;
                 }
 
-                timeline-viewport := Rectangle {
-                    x: 82px;
-                    y: 0px;
-                    width: parent.width - 92px;
-                    height: parent.height;
-                    clip: true;
+                Text {
+                    text: "Use the filter bar above for Level. Click a point to open its detail below.";
+                    color: #64748b;
+                    font-size: 11px;
+                    x: 14px;
+                    y: 27px;
+                }
+
+                Rectangle {
+                    x: parent.width - 240px;
+                    y: 7px;
+                    width: 228px;
+                    height: 32px;
                     background: transparent;
 
-                    TouchArea {
-                        property <length> start_canvas_x: 0px;
-                        x: 0px;
-                        y: 84px;
-                        width: parent.width;
-                        height: 350px;
+                    HorizontalLayout {
+                        spacing: 4px;
 
-                        pointer-event(event) => {
-                            if (event.button == PointerEventButton.left && event.kind == PointerEventKind.down) {
-                                self.start_canvas_x = timeline-content.x;
+                        TimelineToolButton {
+                            tool-icon: @image-url("icons/timeline-zoom-out.svg");
+                            clicked => {
+                                root.timeline_canvas_x = min(
+                                    0px,
+                                    timeline-viewport.width / 2 - (timeline-viewport.width / 2 - timeline-content.x) * timeline-panel.timeline_zoom_out_value / root.timeline_zoom
+                                );
+                                root.timeline_zoom = timeline-panel.timeline_zoom_out_value;
                             }
                         }
 
-                        moved => {
-                            if (self.enabled && self.pressed) {
-                                root.timeline_canvas_x = self.start_canvas_x + (self.mouse-x - self.pressed-x);
+                        TimelineToolButton {
+                            tool-icon: @image-url("icons/timeline-zoom-in.svg");
+                            clicked => {
+                                root.timeline_canvas_x = min(
+                                    0px,
+                                    timeline-viewport.width / 2 - (timeline-viewport.width / 2 - timeline-content.x) * timeline-panel.timeline_zoom_in_value / root.timeline_zoom
+                                );
+                                root.timeline_zoom = timeline-panel.timeline_zoom_in_value;
+                            }
+                        }
+
+                        TimelineToolButton {
+                            tool-icon: @image-url("icons/timeline-fit.svg");
+                            clicked => {
+                                root.timeline_canvas_x = min(
+                                    0px,
+                                    timeline-viewport.width / 2 - (timeline-viewport.width / 2 - timeline-content.x) * 1.0 / root.timeline_zoom
+                                );
+                                root.timeline_zoom = 1.0;
+                            }
+                        }
+
+                        TimelineToolButton {
+                            tool-icon: @image-url("icons/timeline-pan-left.svg");
+                            clicked => {
+                                root.timeline_canvas_x = min(0px, timeline-content.x + timeline-panel.timeline_pan_step);
+                            }
+                        }
+
+                        TimelineToolButton {
+                            tool-icon: @image-url("icons/timeline-pan-right.svg");
+                            clicked => {
+                                root.timeline_canvas_x = max(timeline-panel.timeline_min_canvas_x, timeline-content.x - timeline-panel.timeline_pan_step);
+                            }
+                        }
+
+                        TimelineToolButton {
+                            tool-icon: @image-url("icons/timeline-reset.svg");
+                            clicked => {
+                                root.timeline_canvas_x = 0px;
+                                root.timeline_zoom = 1.0;
+                                root.clear_all_filters();
                             }
                         }
                     }
+                }
 
-                    timeline-content := Rectangle {
-                        x: max(min(0px, timeline-viewport.width - self.width), min(0px, root.timeline_canvas_x));
+                Rectangle {
+                    x: 12px;
+                    y: 38px;
+                    width: parent.width - 24px;
+                    height: 434px;
+                    border-radius: 8px;
+                    background: #edf3f8;
+                    border-width: 1px;
+                    border-color: #d8e3ee;
+
+                    for lane in lane_labels: Text {
+                        text: lane.label;
+                        color: #6b7f95;
+                        x: 8px;
+                        y: 96px + (350px - 52px) * lane.y_pct;
+                        font-size: 10px;
+                        width: 74px;
+                        horizontal-alignment: left;
+                    }
+
+                    timeline-viewport := Rectangle {
+                        x: 82px;
                         y: 0px;
-                        width: max(parent.width - 6px, root.timeline_content_px * 1px * root.timeline_zoom);
+                        width: parent.width - 92px;
                         height: parent.height;
+                        clip: true;
                         background: transparent;
 
-                        Rectangle {
-                            x: 0px;
-                            y: 0px;
-                            width: parent.width;
-                            height: 76px;
-                            border-radius: 8px;
-                            background: #f5f8fc;
-                            border-width: 1px;
-                            border-color: #d8e3ee;
-
-                            Text {
-                                text: "Stage Track (click to filter)";
-                                color: #6b7f95;
-                                x: 10px;
-                                y: 4px;
-                                font-size: 11px;
-                            }
-
-                            for stage[i] in stage_bands: Rectangle {
-                                x: 8px + (parent.width - 16px) * stage.start_pct;
-                                y: 20px;
-                                width: max(6px, (parent.width - 16px) * (stage.end_pct - stage.start_pct));
-                                height: 50px;
-                                border-radius: 6px;
-                                background: stage.selected ? #5b8def : #d9e5f5;
-                                border-width: stage.selected ? 2px : 1px;
-                                border-color: stage.selected ? #2f6fed : #abc0db;
-
-                                Text {
-                                    text: stage.label;
-                                    color: stage.selected ? #ffffff : #203047;
-                                    horizontal-alignment: center;
-                                    vertical-alignment: center;
-                                    font-size: 11px;
-                                }
-
-                                TouchArea {
-                                    clicked => {
-                                        root.stage_clicked(i);
-                                    }
-                                }
-                            }
-                        }
-
-                        Rectangle {
+                        TouchArea {
+                            property <length> start_canvas_x: 0px;
                             x: 0px;
                             y: 84px;
                             width: parent.width;
                             height: 350px;
-                            border-radius: 8px;
-                            background: #f8fbff;
-                            border-width: 1px;
-                            border-color: #dbe5ef;
 
-                            for tick in time_ticks: Rectangle {
-                                x: (parent.width - 1px) * tick.x_pct;
-                                y: 0px;
-                                width: 1px;
-                                height: parent.height;
-                                background: #ced9e6;
-                            }
-
-                            for lane in lane_labels: Rectangle {
-                                x: 0px;
-                                y: (parent.height - 1px) * lane.y_pct;
-                                width: parent.width;
-                                height: 1px;
-                                background: #dbe5ef;
-                            }
-
-                            for point[i] in timeline_points: Rectangle {
-                                width: 7px + point.size_norm * 14px;
-                                height: 7px + point.size_norm * 14px;
-                                x: (parent.width - 8px) * point.x_pct - self.width / 2 + 4px;
-                                y: (parent.height - 8px) * point.y_pct - self.height / 2 + 4px;
-                                border-radius: self.width / 2;
-                                background: point.risk >= 0.85 ? #e66a73 : (point.risk >= 0.60 ? #d9a23b : #35b883);
-                                border-width: 0px;
-
-                                point-hover := TouchArea {
-                                    property <length> start_canvas_x: 0px;
-                                    property <bool> dragged: false;
-
-                                    pointer-event(event) => {
-                                        if (event.button == PointerEventButton.left && event.kind == PointerEventKind.down) {
-                                            self.start_canvas_x = timeline-content.x;
-                                            self.dragged = false;
-                                        }
-                                    }
-
-                                    moved => {
-                                        if (self.enabled && self.pressed) {
-                                            if (self.mouse-x > self.pressed-x + 3px || self.mouse-x < self.pressed-x - 3px) {
-                                                self.dragged = true;
-                                            }
-                                        }
-                                    }
-
-                                    clicked => {
-                                        if (!self.dragged) {
-                                            root.point_clicked(i);
-                                        }
-                                    }
-
-                                    changed has-hover => {
-                                        if self.has-hover {
-                                            root.point_hovered(i);
-                                        } else {
-                                            root.point_unhovered();
-                                        }
-                                    }
+                            pointer-event(event) => {
+                                if (event.button == PointerEventButton.left && event.kind == PointerEventKind.down) {
+                                    self.start_canvas_x = timeline-content.x;
                                 }
+                            }
 
-                                Rectangle {
-                                    visible: point-hover.has-hover;
-                                    x: point.x_pct > 0.74 ? -214px : parent.width + 10px;
-                                    y: point.y_pct < 0.22 ? parent.height + 10px : -88px;
-                                    width: 204px;
-                                    height: 78px;
-                                    border-radius: 8px;
-                                    background: #fffaf0;
-                                    border-width: 1px;
-                                    border-color: #dfc58e;
-
-                                    Text {
-                                        text: hover_detail_text;
-                                        color: #4b5563;
-                                        x: 8px;
-                                        y: 7px;
-                                        width: parent.width - 16px;
-                                        font-size: 10px;
-                                        wrap: word-wrap;
-                                        horizontal-alignment: left;
-                                        vertical-alignment: top;
-                                    }
+                            moved => {
+                                if (self.enabled && self.pressed) {
+                                    root.timeline_canvas_x = self.start_canvas_x + (self.mouse-x - self.pressed-x);
                                 }
                             }
                         }
 
-                        for tick in time_ticks: Text {
-                            text: tick.label;
-                            color: #6b7f95;
-                            x: parent.width * tick.x_pct - 24px;
-                            y: parent.height - 24px;
-                            width: 52px;
-                            font-size: 10px;
-                            horizontal-alignment: center;
+                        timeline-content := Rectangle {
+                            x: max(min(0px, timeline-viewport.width - self.width), min(0px, root.timeline_canvas_x));
+                            y: 0px;
+                            width: max(parent.width - 6px, root.timeline_content_px * 1px * root.timeline_zoom);
+                            height: parent.height;
+                            background: transparent;
+
+                            Rectangle {
+                                x: 0px;
+                                y: 0px;
+                                width: parent.width;
+                                height: 76px;
+                                border-radius: 8px;
+                                background: #f5f8fc;
+                                border-width: 1px;
+                                border-color: #d8e3ee;
+
+                                Text {
+                                    text: "Stage Track (click to filter)";
+                                    color: #6b7f95;
+                                    x: 10px;
+                                    y: 4px;
+                                    font-size: 11px;
+                                }
+
+                                for stage[i] in stage_bands: Rectangle {
+                                    x: 8px + (parent.width - 16px) * stage.start_pct;
+                                    y: 20px;
+                                    width: max(6px, (parent.width - 16px) * (stage.end_pct - stage.start_pct));
+                                    height: 50px;
+                                    border-radius: 6px;
+                                    background: stage.selected ? #5b8def : #d9e5f5;
+                                    border-width: stage.selected ? 2px : 1px;
+                                    border-color: stage.selected ? #2f6fed : #abc0db;
+
+                                    Text {
+                                        text: stage.label;
+                                        color: stage.selected ? #ffffff : #203047;
+                                        horizontal-alignment: center;
+                                        vertical-alignment: center;
+                                        font-size: 11px;
+                                    }
+
+                                    TouchArea {
+                                        clicked => {
+                                            root.stage_clicked(i);
+                                        }
+                                    }
+                                }
+                            }
+
+                            Rectangle {
+                                x: 0px;
+                                y: 84px;
+                                width: parent.width;
+                                height: 350px;
+                                border-radius: 8px;
+                                background: #f8fbff;
+                                border-width: 1px;
+                                border-color: #dbe5ef;
+
+                                for tick in time_ticks: Rectangle {
+                                    x: (parent.width - 1px) * tick.x_pct;
+                                    y: 0px;
+                                    width: 1px;
+                                    height: parent.height;
+                                    background: #ced9e6;
+                                }
+
+                                for lane in lane_labels: Rectangle {
+                                    x: 0px;
+                                    y: (parent.height - 1px) * lane.y_pct;
+                                    width: parent.width;
+                                    height: 1px;
+                                    background: #dbe5ef;
+                                }
+
+                                for point[i] in timeline_points: Rectangle {
+                                    width: 7px + point.size_norm * 14px;
+                                    height: 7px + point.size_norm * 14px;
+                                    x: (parent.width - 8px) * point.x_pct - self.width / 2 + 4px;
+                                    y: (parent.height - 8px) * point.y_pct - self.height / 2 + 4px;
+                                    border-radius: self.width / 2;
+                                    background: point.risk >= 0.85 ? #e66a73 : (point.risk >= 0.60 ? #d9a23b : #35b883);
+                                    border-width: 0px;
+
+                                    point-hover := TouchArea {
+                                        property <length> start_canvas_x: 0px;
+                                        property <bool> dragged: false;
+
+                                        pointer-event(event) => {
+                                            if (event.button == PointerEventButton.left && event.kind == PointerEventKind.down) {
+                                                self.start_canvas_x = timeline-content.x;
+                                                self.dragged = false;
+                                            }
+                                        }
+
+                                        moved => {
+                                            if (self.enabled && self.pressed) {
+                                                if (self.mouse-x > self.pressed-x + 3px || self.mouse-x < self.pressed-x - 3px) {
+                                                    self.dragged = true;
+                                                }
+                                            }
+                                        }
+
+                                        clicked => {
+                                            if (!self.dragged) {
+                                                root.point_clicked(i);
+                                            }
+                                        }
+
+                                        changed has-hover => {
+                                            if self.has-hover {
+                                                root.point_hovered(i);
+                                            } else {
+                                                root.point_unhovered();
+                                            }
+                                        }
+                                    }
+
+                                    Rectangle {
+                                        visible: point-hover.has-hover;
+                                        x: point.x_pct > 0.74 ? -214px : parent.width + 10px;
+                                        y: point.y_pct < 0.22 ? parent.height + 10px : -88px;
+                                        width: 204px;
+                                        height: 78px;
+                                        border-radius: 8px;
+                                        background: #fffaf0;
+                                        border-width: 1px;
+                                        border-color: #dfc58e;
+
+                                        Text {
+                                            text: hover_detail_text;
+                                            color: #4b5563;
+                                            x: 8px;
+                                            y: 7px;
+                                            width: parent.width - 16px;
+                                            font-size: 10px;
+                                            wrap: word-wrap;
+                                            horizontal-alignment: left;
+                                            vertical-alignment: top;
+                                        }
+                                    }
+                                }
+                            }
+
+                            for tick in time_ticks: Text {
+                                text: tick.label;
+                                color: #6b7f95;
+                                x: parent.width * tick.x_pct - 24px;
+                                y: parent.height - 24px;
+                                width: 52px;
+                                font-size: 10px;
+                                horizontal-alignment: center;
+                            }
+                        }
+                    }
+                }
+            }
+
+            HorizontalLayout {
+                spacing: 10px;
+
+                DetailTablePanel {
+                    min-width: 900px;
+                    height: 340px;
+                    title: "Selection Detail";
+                    rows: root.point_detail_rows;
+                    table-width: 900px;
+                    body-viewport-height: 252px;
+                }
+
+                Rectangle {
+                    width: 470px;
+                    border-radius: 10px;
+                    background: #ffffff;
+                    border-width: 1px;
+                    border-color: #d6e0ea;
+
+                    VerticalLayout {
+                        padding: 10px;
+                        spacing: 8px;
+
+                        ScrollTextPanel {
+                            title: "Entity Lanes";
+                            body: lane_legend_text;
+                            body-size: 10px;
+                            body-viewport-height: 86px;
+                        }
+
+                        ScrollTextPanel {
+                            title: "Top Targets";
+                            body: top_targets_text;
+                            body-size: 11px;
+                            body-viewport-height: 86px;
+                        }
+
+                        ScrollTextPanel {
+                            title: "Source & Status";
+                            body: source_text + "\n\n" + status_text;
+                            body-size: 10px;
+                            body-viewport-height: 176px;
                         }
                     }
                 }
             }
         }
 
-        HorizontalLayout {
-            spacing: 10px;
-
-            Rectangle {
-                min-width: 900px;
-                border-radius: 10px;
-                background: #ffffff;
-                border-width: 1px;
-                border-color: #d6e0ea;
-
-                VerticalLayout {
-                    padding: 10px;
-                    spacing: 6px;
-
-                    Text {
-                        text: "Selection Detail";
-                        color: #203047;
-                        font-size: 14px;
-                        font-weight: 700;
-                        horizontal-alignment: left;
-                    }
-
-                    Text {
-                        text: "Click a timeline point to inspect the corresponding bucket data here.";
-                        color: #64748b;
-                        font-size: 11px;
-                        horizontal-alignment: left;
-                    }
-
-                    ScrollView {
-                        vertical-scrollbar-policy: ScrollBarPolicy.as-needed;
-                        horizontal-scrollbar-policy: ScrollBarPolicy.as-needed;
-
-                        Rectangle {
-                            width: parent.width - 6px;
-                            height: 286px;
-                            border-radius: 8px;
-                            background: #f6f9fc;
-                            border-width: 1px;
-                            border-color: #d8e3ee;
-
-                            Text {
-                                text: point_detail_text;
-                                color: #334155;
-                                x: 10px;
-                                y: 10px;
-                                width: parent.width - 20px;
-                                font-family: "Menlo";
-                                font-size: 12px;
-                                wrap: word-wrap;
-                                horizontal-alignment: left;
-                                vertical-alignment: top;
-                            }
-                        }
-                    }
-                }
-            }
-
-            Rectangle {
-                width: 470px;
-                border-radius: 10px;
-                background: #ffffff;
-                border-width: 1px;
-                border-color: #d6e0ea;
-
-                VerticalLayout {
-                    padding: 10px;
-                    spacing: 8px;
-
-                    ScrollTextPanel {
-                        title: "Entity Lanes";
-                        body: lane_legend_text;
-                        body-size: 10px;
-                        body-viewport-height: 86px;
-                    }
-
-                    ScrollTextPanel {
-                        title: "Top Targets";
-                        body: top_targets_text;
-                        body-size: 11px;
-                        body-viewport-height: 86px;
-                    }
-
-                    ScrollTextPanel {
-                        title: "Source & Status";
-                        body: source_text + "\n\n" + status_text;
-                        body-size: 10px;
-                        body-viewport-height: 176px;
-                    }
-                }
-            }
+        if (root.active_page == 1) : DetailTablePanel {
+            height: 760px;
+            title: "Filtered Log Data";
+            summary: root.filtered_log_summary;
+            rows: root.filtered_log_rows;
+            table-width: 1280px;
+            body-viewport-height: 660px;
         }
     }
 }

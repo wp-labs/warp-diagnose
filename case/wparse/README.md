@@ -1,74 +1,106 @@
-# wparse case for wfusion
+# wparse Case
 
-本目录提供 `wparse` 日志语义计算的最小可运行 case。
+本目录现在只承载 `wparse` 工作根：
+
+1. `conf / models / topology / connectors`
+2. 输入日志与解析输出
+3. `wp` 日志 Arrow 产物
+
+语义约定：
+
+- `wp` = log，表示 `wparse` 解析后的日志事件
+- `wf` = alert，表示 `wfusion` 计算后的告警事件
 
 ## 目录
 
-- `schemas/wparse_semantic.wfs`: 输入/输出窗口定义
-- `rules/wparse_semantic.wfl`: 语义规则（prepare/running/anomaly）
-- `wfusion.toml`: runtime 配置（file source + sinks）
-- `sinks/`: sink 路由（含 `alerts/all.jsonl`）
-- `scripts/build_wparse_events.py`: 将 demo.json 或 raw wparse.log 转为 wfusion 输入 NDJSON
-  - `event_time` 输出为纳秒时间戳（wfusion file source 可直接消费）
+- `conf/wparse.toml`: `wparse` 主配置
+- `models/`: 从 `wp-self` 迁入的 WPL / OML / knowledge 配置
+- `topology/`: 从 `wp-self` 迁入的 source / sink 路由
+- `connectors/`: 当前版本 `wparse` 所需 connector 定义
+- `../target_data/raw_log.dat`: 本地默认输入日志
+- `data/out_dat/wp-log.arrow`: `wparse` 直接输出的 `wp` 日志 Arrow 文件
+- `.run/`: `wparse` 运行期产物
 
-## 1) 生成输入数据
+`wfusion` 相关文件已经拆到：
+
+- `../wfusion/wfusion.toml`
+- `../wfusion/rules/`
+- `../wfusion/schemas/`
+- `../wfusion/sinks/`
+- `../wfusion/alerts/`
+- `../wfusion/logs/`
+
+## 1) 准备输入日志
+
+默认样例日志已经放在：
+
+```bash
+../target_data/raw_log.dat
+```
+
+如果要替换成目标日志，直接在顶层联调脚本执行时传入 `INPUT` 即可：
+
+```bash
+cd /Users/zuowenjian/devspace/wp-labs/warp-diagnose
+INPUT=/absolute/path/to/target.log case/scripts/run_wp_wf_case.sh
+```
+
+脚本会先把目标日志复制为 `case/target_data/raw_log.dat`，然后执行后续解析与计算。
+
+## 2) 单独执行 wparse
+
+要求：
+- `wparse` 可执行文件在 `PATH` 中，或通过 `WPARSE_BIN` 指定
+
+推荐命令：
 
 ```bash
 cd /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse
-python3 scripts/build_wparse_events.py \
-  --input /Users/zuowenjian/devspace/wp-labs/wp-examples/analyse/wp-self/data/out_dat/demo.json \
-  --output data/wparse_events.ndjson \
-  --mode demo
+wparse batch --work-root .
 ```
 
-如果输入是原始文本日志：
+## 3) 执行完整链路
+
+推荐使用顶层联调脚本：
 
 ```bash
-python3 scripts/build_wparse_events.py \
-  --input /Users/zuowenjian/devspace/wp-labs/wp-examples/analyse/wp-self/data/in_dat/wparse.log \
-  --output data/wparse_events.ndjson \
-  --mode raw
+cd /Users/zuowenjian/devspace/wp-labs/warp-diagnose
+case/scripts/run_wp_wf_case.sh
 ```
 
-## 2) 执行 wfusion 计算
+它会串联：
 
-```bash
-cd /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse
-/Users/zuowenjian/devspace/wp-labs/wp-reactor/target/debug/wfusion run --config wfusion.toml
-```
-
-说明:
-- 配置中同时启用了 `file` 和 `tcp` source。
-- `file` source 读取 `data/wparse_events.ndjson`。
-- `tcp` source 监听 `127.0.0.1:9800`，可用于外部 sender 持续送数。
-- 建议优先使用 `wp-reactor/target/debug/wfusion`（已验证 file source 生效）。
+1. `wparse` 读取 `case/target_data/raw_log.dat`
+2. 直接生成 `case/wparse/data/out_dat/wp-log.arrow`
+3. OML 已直接将输出字段收敛为 `wfusion` 期望 schema
+4. 顶层脚本将同一个文件复制到 `case/wfusion/data/in_dat/wp-log.arrow`
+5. `wfusion` 直接以 `arrow_framed` 读取该文件
+6. 运行 `wfusion`
+7. 生成 `case/wfusion/alerts/wf-alert.arrow`
 
 输出文件：
 
-- `alerts/semantic_alerts.jsonl`
-- `alerts/all.jsonl`
+- `data/out_dat/wp-log.arrow`
 
-样例数据（`demo.json`）下当前输出规模约为 `89` 条告警，适合时间轴分段展示。
-
-一键执行（推荐）：
-
-```bash
-cd /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse
-scripts/run_file_case.sh
-```
-
-## 3) 接入 warp-diagnose 看板
+## 4) 接入 warp-diagnose 看板
 
 ```bash
 cd /Users/zuowenjian/devspace/wp-labs/warp-diagnose
 WARP_DIAGNOSE_USE_WFUSION=1 \
-WARP_DIAGNOSE_WFUSION_ALERTS=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/alerts/all.jsonl \
+WARP_DIAGNOSE_DEMO_JSON=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/data/out_dat/wp-log.arrow \
+WARP_DIAGNOSE_WPARSE_LOG=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/target_data/raw_log.dat \
+WARP_DIAGNOSE_WFUSION_ALERTS=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wfusion/alerts/wf-alert.arrow \
 cargo run
 ```
 
-## 规则说明
+也可以直接让脚本拉起桌面端：
 
-- 三条规则均采用 `match<target,subject:1s:fixed>`，按 `target+subject` 做 1 秒窗口聚合。
-- `prepare_stage_signal`: 识别初始化/加载/分配/创建/启动聚集（close 触发）。
-- `running_stage_signal`: 识别解析/运行/派发聚集（close 触发）。
-- `anomaly_burst_signal`: 识别 WARN/ERROR 或错误状态聚集（close 触发）。
+```bash
+cd /Users/zuowenjian/devspace/wp-labs/warp-diagnose
+RUN_DIAGNOSE=1 case/scripts/run_wp_wf_case.sh
+```
+
+当前 `warp-diagnose` 默认也会优先读取本目录下的：
+- `case/wparse/data/out_dat/wp-log.arrow`
+- `case/target_data/raw_log.dat`
+- `case/wfusion/alerts/wf-alert.arrow`

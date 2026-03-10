@@ -1,9 +1,8 @@
-mod data;
-
 use std::cell::RefCell;
 use std::rc::Rc;
 
 use slint::VecModel;
+use warp_diagnose::data;
 
 slint::include_modules!();
 
@@ -96,20 +95,19 @@ struct UiState {
     selected_source: Option<data::SourceFilter>,
     selected_point: Option<usize>,
     hover_point: Option<usize>,
-    point_details: Vec<String>,
+    point_detail_summaries: Vec<String>,
+    point_detail_rows: Vec<Vec<data::DetailRowVm>>,
     point_previews: Vec<String>,
     point_hint: String,
 }
 
 fn apply_view(app: &AppWindow, state: &mut UiState) {
-    let view = state
-        .dashboard
-        .build_view(
-            state.selected_stage,
-            state.selected_level,
-            state.selected_risk,
-            state.selected_source,
-        );
+    let view = state.dashboard.build_view(
+        state.selected_stage,
+        state.selected_level,
+        state.selected_risk,
+        state.selected_source,
+    );
 
     app.set_total_events(view.report.total_rows as i32);
     app.set_risk_low_events(view.report.risk_low_rows as i32);
@@ -203,22 +201,60 @@ fn apply_view(app: &AppWindow, state: &mut UiState) {
     app.set_timeline_content_px(view.timeline_content_px);
     app.set_lane_labels(Rc::new(VecModel::from(lane_rows)).into());
     app.set_stage_cards(Rc::new(VecModel::from(card_rows)).into());
+    app.set_filtered_log_summary(view.filtered_log_summary.into());
+    app.set_filtered_log_rows(
+        Rc::new(VecModel::from(
+            view.filtered_log_rows
+                .iter()
+                .map(|row| DetailRow {
+                    time: row.time.clone().into(),
+                    level: row.level.clone().into(),
+                    target: row.target.clone().into(),
+                    entity: row.entity.clone().into(),
+                    action: row.action.clone().into(),
+                    status: row.status.clone().into(),
+                    content: row.content.clone().into(),
+                })
+                .collect::<Vec<_>>(),
+        ))
+        .into(),
+    );
 
-    state.point_details = view.point_details;
+    state.point_detail_summaries = view.point_detail_summaries;
+    state.point_detail_rows = view.point_detail_rows;
     state.point_previews = view.point_previews;
     state.point_hint = view.point_hint_text;
     state.hover_point = None;
     app.set_hover_detail_text("Hover a point to preview.".into());
 
-    let point_text = match state.selected_point {
-        Some(idx) if idx < state.point_details.len() => state.point_details[idx].clone(),
+    let point_summary = match state.selected_point {
+        Some(idx) if idx < state.point_detail_summaries.len() => {
+            state.point_detail_summaries[idx].clone()
+        }
         _ => {
             state.selected_point = None;
             state.point_hint.clone()
         }
     };
 
-    app.set_point_detail_text(point_text.into());
+    let point_rows = match state.selected_point {
+        Some(idx) if idx < state.point_detail_rows.len() => state.point_detail_rows[idx]
+            .iter()
+            .map(|row| DetailRow {
+                time: row.time.clone().into(),
+                level: row.level.clone().into(),
+                target: row.target.clone().into(),
+                entity: row.entity.clone().into(),
+                action: row.action.clone().into(),
+                status: row.status.clone().into(),
+                content: row.content.clone().into(),
+            })
+            .collect::<Vec<_>>(),
+        _ => Vec::new(),
+    };
+
+    app.set_point_detail_summary(point_summary.into());
+    app.set_point_detail_rows(Rc::new(VecModel::from(point_rows)).into());
 }
 
 fn reload_data(app: &AppWindow, state: &mut UiState) {
@@ -229,7 +265,8 @@ fn reload_data(app: &AppWindow, state: &mut UiState) {
     state.selected_source = None;
     state.selected_point = None;
     state.hover_point = None;
-    state.point_details.clear();
+    state.point_detail_summaries.clear();
+    state.point_detail_rows.clear();
     state.point_previews.clear();
     state.point_hint.clear();
     apply_view(app, state);
@@ -248,7 +285,8 @@ fn main() -> Result<(), slint::PlatformError> {
         selected_source: None,
         selected_point: None,
         hover_point: None,
-        point_details: Vec::new(),
+        point_detail_summaries: Vec::new(),
+        point_detail_rows: Vec::new(),
         point_previews: Vec::new(),
         point_hint: String::new(),
     }));
@@ -277,7 +315,11 @@ fn main() -> Result<(), slint::PlatformError> {
             if let Some(app) = weak.upgrade() {
                 let mut st = state.borrow_mut();
                 let next = level_filter_from_ui_idx(idx);
-                st.selected_level = if st.selected_level == next { None } else { next };
+                st.selected_level = if st.selected_level == next {
+                    None
+                } else {
+                    next
+                };
                 st.selected_point = None;
                 st.hover_point = None;
                 apply_view(&app, &mut st);
@@ -307,7 +349,11 @@ fn main() -> Result<(), slint::PlatformError> {
             if let Some(app) = weak.upgrade() {
                 let mut st = state.borrow_mut();
                 let next = source_filter_from_ui_idx(idx);
-                st.selected_source = if st.selected_source == next { None } else { next };
+                st.selected_source = if st.selected_source == next {
+                    None
+                } else {
+                    next
+                };
                 st.selected_point = None;
                 st.hover_point = None;
                 apply_view(&app, &mut st);
@@ -415,8 +461,26 @@ fn main() -> Result<(), slint::PlatformError> {
                 let mut st = state.borrow_mut();
                 let idx = idx.max(0) as usize;
                 st.selected_point = Some(idx);
-                if idx < st.point_details.len() {
-                    app.set_point_detail_text(st.point_details[idx].clone().into());
+                if idx < st.point_detail_summaries.len() {
+                    let rows = st
+                        .point_detail_rows
+                        .get(idx)
+                        .map(|rows| {
+                            rows.iter()
+                                .map(|row| DetailRow {
+                                    time: row.time.clone().into(),
+                                    level: row.level.clone().into(),
+                                    target: row.target.clone().into(),
+                                    entity: row.entity.clone().into(),
+                                    action: row.action.clone().into(),
+                                    status: row.status.clone().into(),
+                                    content: row.content.clone().into(),
+                                })
+                                .collect::<Vec<_>>()
+                        })
+                        .unwrap_or_default();
+                    app.set_point_detail_summary(st.point_detail_summaries[idx].clone().into());
+                    app.set_point_detail_rows(Rc::new(VecModel::from(rows)).into());
                 }
             }
         });
@@ -429,7 +493,8 @@ fn main() -> Result<(), slint::PlatformError> {
             if let Some(app) = weak.upgrade() {
                 let mut st = state.borrow_mut();
                 st.selected_point = None;
-                app.set_point_detail_text(st.point_hint.clone().into());
+                app.set_point_detail_summary(st.point_hint.clone().into());
+                app.set_point_detail_rows(Rc::new(VecModel::from(Vec::<DetailRow>::new())).into());
             }
         });
     }

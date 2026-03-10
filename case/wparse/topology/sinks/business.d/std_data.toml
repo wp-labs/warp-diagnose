@@ -1,0 +1,31 @@
+version = "2.0"
+
+[sink_group]
+name = "demo"
+oml = ["*"]
+tags = ["biz:demo"]
+
+[[sink_group.sinks]]
+name = "arrow"
+connect = "arrow_file_sink"
+tags = ["sink:arrow"]
+
+[sink_group.sinks.params]
+file = "wp-log.arrow"
+tag = "wparse"
+fields = [
+  { name = "event_time", type = "time" },
+  { name = "level", type = "chars" },
+  { name = "target", type = "chars" },
+  { name = "subject", type = "chars" },
+  { name = "action", type = "chars" },
+  { name = "status", type = "chars" },
+  { name = "content", type = "chars" },
+  { name = "source", type = "chars" },
+]
+
+[[sink_group.sinks]]
+name = "json"
+connect = "file_json_sink"
+[sink_group.sinks.params]
+file = "wp-log.json"

@@ -17,8 +17,8 @@ import streamlit as st
 def resolve_default_log_path() -> Path:
     project_root = Path(__file__).resolve().parents[1]
     candidates = [
-        project_root / "case" / "wparse" / "data" / "wparse_events.ndjson",
-        project_root / "case" / "wparse" / "alerts" / "all.jsonl",
+        project_root / "case" / "wfusion" / "data" / "in_dat" / "wparse_events.ndjson",
+        project_root / "case" / "wfusion" / "alerts" / "wf-alert.jsonl",
         Path("/Users/zuowenjian/devspace/wp-labs/wp-examples/analyse/wp-self/data/out_dat/demo.json"),
     ]
     for c in candidates:

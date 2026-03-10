@@ -88,6 +88,7 @@
    - 顶部: LOGO + 标题 + Reload 图标按钮
    - 中上: 风险区间 KPI 看板
    - 中部: 单行 `Filter Bar`
+   - 过滤栏下: `Overview / Log Data` 双分页切换
    - 上层主区: 全宽 `TimeLine`
    - 下层左侧: `Selection Detail`
    - 下层右侧: `Entity Lanes / Top Targets / Source & Status`
@@ -111,6 +112,7 @@
 6. 点击时间线圆点: 在下方 `Selection Detail` 展示该 bucket 对应证据。
 7. Hover 时间线圆点: 在鼠标附近弹出短预览卡，不使用固定 Hover 面板。
 8. 窗口保留系统标准控件，支持系统全屏和窗口拖拽改大小。
+9. 默认进入 `Overview` 页；切换到 `Log Data` 页后，按当前 `Level / Risk / Source / Stage` 条件展示输入日志表。
 
 ### 9.3 视觉风格
 1. 当前主题已切换为浅色版本。
@@ -136,8 +138,8 @@
    - `risk >= 0.85`
 5. 已支持 stage / level / risk / source 四维过滤、点选下钻与 hover 预览。
 6. 头部已加入程序 LOGO，窗口行为回归系统标准窗口控件。
-7. 计算链路优先使用 wfusion 输出 `alerts/all.jsonl`。
-8. wparse 专用 case 已落地到 `case/wparse/`，可一键生成并消费告警。
+7. 计算链路优先使用 wfusion 输出 `case/wfusion/alerts/wf-alert.arrow`。
+8. case 目录已按职责拆分为 `case/wparse/` 与 `case/wfusion/`，由顶层脚本串联执行。
 
 ### 9.5 交互调整归档 (2026-03-10)
 1. 信息架构重排:
@@ -165,6 +167,9 @@
    - 整体主题由深色切换为浅色
    - 白底信息卡 + 浅灰蓝背景作为当前基线
    - 风险颜色语义保持一致，避免切换主题后失去风险直觉
+7. 双页阅读路径:
+   - `Overview` 保留时间线分析与点选证据
+   - `Log Data` 聚焦条件命中的结构化日志表
 
 ## 10. 新任务入口
 1. 叙事层增强:

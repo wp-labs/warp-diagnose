@@ -105,13 +105,49 @@
    - 在产品文档中补充交互调整归档段落
    - 在技术文档中补充交互实现约束与窗口行为说明
    - 清理旧版 `Home/Now` 等已过时描述
+30. 打通本地 `wparse -> wfusion -> warp-diagnose` 链路:
+   - 将 `wp-self` 的 `conf / models / topology` 复制到 `case/wparse`
+   - 补齐当前版本 `wparse` 所需 `connectors`
+   - `run_file_case.sh` 升级为端到端脚本，支持直接从目标日志跑到本工程产物目录
+   - `warp-diagnose` 默认路径切换为优先读取本工程 `case/wparse` 产物
+31. 收敛 Arrow 持久化链路:
+   - 明确 `wp = log`、`wf = alert`
+   - `warp-diagnose` 增加 Arrow 读取能力，默认优先消费 `wp-log.arrow` 与 `wf-alert.arrow`
+   - 新增 `wp_arrow_to_ndjson` 本地转换工具
+   - 新增 `wf_alert_json_to_arrow`，将 `wfusion` alert JSONL 归一化为 Arrow
+   - 联调脚本改为 `wp-log.arrow -> wparse_events.ndjson -> wf-alert.jsonl -> wf-alert.arrow`
+   - 文档补充当前 `wparse` 与 `wfusion alert sink` 的 Arrow 运行时限制
+32. 拆分 `wparse / wfusion` case 目录:
+   - `case/wparse` 只保留 `wparse` 工作根与 `wp` 日志产物
+   - `case/wfusion` 承接 `wfusion` 规则、sink、日志与 `wf` 告警产物
+   - 联调脚本上提到 `case/scripts/run_wp_wf_case.sh`
+   - `warp-diagnose` 默认路径切换为 `case/wparse + case/wfusion` 双目录结构
+33. 切换为 `wparse` 直接 Arrow 输出:
+   - `case/wparse/topology/sinks/business.d/demo.toml` 改为 `arrow_file_sink`
+   - `wparse` 直接写 `case/wparse/data/out_dat/wp-log.arrow`
+   - 删除 `demo.json -> wp-log.arrow` 这段本地转换依赖
+34. 增加双分页日志阅读模式:
+   - 默认第一页保持现有 `Overview` 时间线布局
+   - 新增第二页 `Log Data`，按当前过滤条件展示结构化输入日志表
+   - `log_events` 同步补齐 stage 映射，确保 `Stage / Level / Risk / Source` 过滤在日志页也生效
+35. 更新 `wfusion` Arrow 输入链路:
+   - 根据 `wp-reactor/docs/user-guide/runtime-config.md`，确认 `file source` 已支持 `arrow_framed`
+   - `case/wfusion/wfusion.toml` 改为读取 `data/in_dat/wp-log.arrow`
+   - 在 `wparse` 侧通过 OML + sink 字段清单直接收敛到 `wfusion` 期望 schema
+   - 顶层脚本移除 `wp_arrow_to_ndjson` 与 `wp_arrow_to_wf_arrow` 中间转换步骤
+36. 验证 `wfusion` 直接 Arrow 输出限制:
+   - 尝试将 `case/wfusion` sink 从 `file_json` 切到 `arrow_file`
+   - 运行时确认当前 `wfusion` alert sink 链路输出的是 JSON 字符串，不是 record
+   - `arrow_file` 现阶段不可直接接收 alert 输出，临时保留 `wf_alert_json_to_arrow` 桥接
+   - 联调脚本继续采用 `wf-alert.jsonl -> wf-alert.arrow` 转换
 
 ## 3. 当前结论
 1. 技术路线确定为 Rust 原生 GUI: Slint。
 2. 计算层依托 wp-reactor，可通过 bridge 复用。
-3. v0.1 以 JSON/NDJSON 为主，后续可扩展 Arrow/Parquet。
+3. 当前本地 case 已统一为 Arrow 持久化优先，保留 JSON/NDJSON 仅作为 `wparse` 兼容中间态。
 4. 当前工程已可编译，并能读取真实样例数据。
 5. 当前主交互已经从“日志流阅读”转向“多维筛选 + 时间线下钻 + 点选证据展示”。
+6. 当前已补充第二阅读路径，支持从时间线总览切换到条件化日志表。
 
 ## 4. 当前工程文件
 1. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/Cargo.toml
@@ -123,16 +159,16 @@
 7. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/TECHNICAL_SOLUTION.md
 8. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/TASK_LOG.md
 9. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/WFUSION_EXECUTION_PLAN.md
-10. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/README.md
-11. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/wfusion.toml
-12. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/schemas/wparse_semantic.wfs
-13. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/rules/wparse_semantic.wfl
-14. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/scripts/build_wparse_events.py
-15. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/sinks/defaults.toml
-16. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/sinks/sink.d/file_json.toml
-17. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/sinks/business.d/semantic.toml
-18. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/sinks/business.d/catch_all.toml
-19. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/scripts/run_file_case.sh
+10. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/README.md
+11. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/scripts/run_wp_wf_case.sh
+12. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/README.md
+13. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wfusion/README.md
+14. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wfusion/wfusion.toml
+15. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wfusion/schemas/wparse_semantic.wfs
+16. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wfusion/rules/wparse_semantic.wfl
+17. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wfusion/sinks/sink.d/file_json.toml
+18. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wfusion/sinks/business.d/semantic.toml
+19. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wfusion/sinks/business.d/catch_all.toml
 20. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/view/demo_log_dashboard.py
 
 ## 5. 待办列表
@@ -142,6 +178,7 @@
 4. 增加 Turning Points 与 Causal Chain 叙事模块。
 5. 支持阈值参数在线调节（boundary_threshold、min_segment_events）。
 6. 对接 wp-reactor 输出接口，替换本地文件直读。
+7. 继续优化 `Log Data` 页的查询条件表达与大数据量分页策略。
 
 ## 6. 建议执行顺序
 1. 先做 CLI 计算正确性。
@@ -168,3 +205,11 @@
 - 2026-03-10: 完成交互重构归档，明确当前基线为浅色主题、level 过滤、点选详情与浮动 hover 预览。
 - 2026-03-10: 完成过滤体系与头部工具栏归档，明确当前基线为风险 KPI、四维过滤、图标化工具栏与 LOGO 头部。
 - 2026-03-10: 细化交互调整文档，补充布局重排、时间线工具栏、过滤器分组配色与系统窗口行为记录。
+- 2026-03-10: 将 `wp-self` 解析配置迁入 `case/wparse`，并打通本工程内 `wparse -> wfusion -> warp-diagnose` 执行链路。
+- 2026-03-10: 完成 Arrow 链路收敛，明确 `wp-log.arrow` 与 `wf-alert.arrow` 为诊断侧默认输入。
+- 2026-03-10: 完成 case 目录拆分，`wparse` 与 `wfusion` 改为双目录结构，并新增顶层联调脚本。
+- 2026-03-10: 切换到 `wparse` 直接输出 `wp-log.arrow`，收掉 `demo.json -> Arrow` 的兼容转换。
+- 2026-03-10: 新增 `Overview / Log Data` 双分页，支持按当前条件查看结构化输入日志。
+- 2026-03-10: 确认 `wfusion` 已支持 `arrow_framed` file source，并切换到直接消费 `wp-log.arrow`。
+- 2026-03-10: 将 Arrow schema 对齐逻辑前移到 `wparse` OML，删除中间 `wp_arrow_to_wf_arrow` 桥接工具。
+- 2026-03-10: 验证 `wfusion` 直接 Arrow 输出受限，暂时保留 `wf_alert_json_to_arrow` 作为桥接。

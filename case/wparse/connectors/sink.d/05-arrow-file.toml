@@ -1,0 +1,11 @@
+[[connectors]]
+id = "arrow_file_sink"
+type = "arrow-file"
+allow_override = ["base", "file", "tag", "fields", "sync"]
+
+[connectors.params]
+base = "./data/out_dat"
+file = "default.arrow"
+tag = "default"
+sync = false
+fields = []

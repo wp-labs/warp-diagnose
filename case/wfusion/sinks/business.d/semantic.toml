@@ -1,0 +1,10 @@
+[sink_group]
+name = "semantic_output"
+windows = ["semantic_*"]
+
+[[sink_group.sinks]]
+connect = "file_json"
+name = "semantic_file"
+
+[sink_group.sinks.params]
+file = "wf-semantic.jsonl"
