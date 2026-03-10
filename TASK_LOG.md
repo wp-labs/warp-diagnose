@@ -87,12 +87,31 @@
    - 从 `wp-self/view` 迁移 `demo_log_dashboard.py` 到 `warp-diagnose/view`
    - 默认数据路径改为优先 `case/wparse/data/wparse_events.ndjson`
    - 保留旧路径回退兼容
+27. 完成交互与布局重构归档:
+   - `INFO / WARN / ERROR` 改为数据过滤选择器
+   - 移除固定 `Inspector` 与 `Recent Event Stream` 主路径
+   - 点击时间线点位后在下方 `Selection Detail` 展示证据
+   - `Hover Preview` 改为点位附近浮层
+   - 时间线支持平移、缩放与图标化导航
+   - 整体主题切换为浅色版本
+28. 完成过滤与工具栏二次重构:
+   - 顶部 KPI 改为风险区间统计，不再使用 `INFO / WARN / ERROR`
+   - 过滤体系扩展为 `Level / Risk / Source / Stage` 四维
+   - `Filter` 优先收敛为单行
+   - `Active` 行增加彩色过滤标签与图标化 `Clear All`
+   - 时间线功能按钮减化为语义图标
+   - 顶部增加程序 LOGO，窗口最大化回归系统标准控件
+29. 完成交互调整文档归档细化:
+   - 在产品文档中补充交互调整归档段落
+   - 在技术文档中补充交互实现约束与窗口行为说明
+   - 清理旧版 `Home/Now` 等已过时描述
 
 ## 3. 当前结论
 1. 技术路线确定为 Rust 原生 GUI: Slint。
 2. 计算层依托 wp-reactor，可通过 bridge 复用。
 3. v0.1 以 JSON/NDJSON 为主，后续可扩展 Arrow/Parquet。
 4. 当前工程已可编译，并能读取真实样例数据。
+5. 当前主交互已经从“日志流阅读”转向“多维筛选 + 时间线下钻 + 点选证据展示”。
 
 ## 4. 当前工程文件
 1. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/Cargo.toml
@@ -117,11 +136,12 @@
 20. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/view/demo_log_dashboard.py
 
 ## 5. 待办列表
-1. 优化时间图视觉层次（网格线、坐标刻度、hover 提示）。
-2. 增加 Stage 说明卡组件化展示（主动作、异常数、持续时长）。
-3. 增加 Turning Points 与 Causal Chain 叙事模块。
-4. 支持阈值参数在线调节（boundary_threshold、min_segment_events）。
-5. 对接 wp-reactor 输出接口，替换本地文件直读。
+1. 增加结构化 `Selection Detail` 卡片，替代纯文本明细。
+2. 支持鼠标滚轮缩放与更细粒度导航。
+3. 继续评估过滤条在窄窗口下的折行/收纳策略。
+4. 增加 Turning Points 与 Causal Chain 叙事模块。
+5. 支持阈值参数在线调节（boundary_threshold、min_segment_events）。
+6. 对接 wp-reactor 输出接口，替换本地文件直读。
 
 ## 6. 建议执行顺序
 1. 先做 CLI 计算正确性。
@@ -145,3 +165,6 @@
 - 2026-03-10: 完成 wparse 规则改版（fixed window close 输出），提升故事化展示可读性。
 - 2026-03-10: 完成设计与任务文档归档，准备切入新任务阶段。
 - 2026-03-10: 完成 `demo_log_dashboard.py` 迁移到 warp-diagnose 并修正默认数据入口。
+- 2026-03-10: 完成交互重构归档，明确当前基线为浅色主题、level 过滤、点选详情与浮动 hover 预览。
+- 2026-03-10: 完成过滤体系与头部工具栏归档，明确当前基线为风险 KPI、四维过滤、图标化工具栏与 LOGO 头部。
+- 2026-03-10: 细化交互调整文档，补充布局重排、时间线工具栏、过滤器分组配色与系统窗口行为记录。

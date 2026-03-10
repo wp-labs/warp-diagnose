@@ -1,6 +1,6 @@
 # Warp Diagnose 技术方案
 
-版本: v0.2
+版本: v0.4
 日期: 2026-03-10
 项目: warp-diagnose
 
@@ -94,16 +94,95 @@
 5. stage_confidence 由主动作占比和边界概率综合。
 
 ## 6. UI 实现策略 (Slint)
-1. 顶部 Stage Track:
+1. 顶部 Header:
+   - 程序 LOGO
+   - 标题与副标题
+   - Reload 图标按钮
+2. 顶部 Stage Track:
    - 绘制阶段带与可点击阶段节点
    - 触发过滤命令
-2. 中部 Unified Timeline:
+3. 中部 Unified Timeline:
    - 依据时间轴绘制 entity 点
    - 点大小取 log1p(count) 映射
    - 点颜色取 risk 色带映射
-3. 底部 Evidence Panel:
-   - 展示点选桶对应日志明细
-   - 显示关联 stage、risk、action
+4. 顶部 KPI Summary Row:
+   - `ALL EVENTS / risk<0.60 / 0.60-0.84 / risk>=0.85`
+   - 仅承担统计展示
+5. 单行 Filter Bar:
+   - `Level / Risk / Source / Stage`
+   - 支持多条件组合过滤
+6. Active Filters Row:
+   - 展示已生效过滤条件
+   - 末尾提供图标化 `Clear All`
+7. 下部 Selection Detail:
+   - 展示点选 bucket 对应日志明细
+   - 显示关联 stage、risk、action、status、content
+8. Hover Preview:
+   - 跟随点位邻近显示
+   - 不占固定布局列
+
+## 6.1 当前交互状态机
+1. 过滤状态:
+   - `selected_stage: Option<usize>`
+   - `selected_level: Option<LevelFilter>`
+   - `selected_risk: Option<RiskFilter>`
+   - `selected_source: Option<SourceFilter>`
+2. 点位状态:
+   - `selected_point: Option<usize>`
+   - `hover_point: Option<usize>`
+3. 视窗状态:
+   - `timeline_canvas_x`
+   - `timeline_zoom`
+
+组合逻辑:
+1. 先按 `selected_stage` 过滤事件集合。
+2. 再按 `selected_level` 过滤。
+3. 再按 `selected_risk` 过滤。
+4. 再按 `selected_source` 过滤。
+5. 点选后将 bucket 详情写入 `Selection Detail`。
+6. Hover 仅更新短预览文本，不改变主选择。
+
+## 6.2 当前布局基线
+1. 上层:
+   - Header + LOGO
+   - KPI Summary Row
+   - 单行 Filter Bar
+   - Active Filters Row
+   - 全宽 Timeline 面板
+   - 内含图标化缩放、平移与重置
+2. 下层左侧:
+   - `Selection Detail` 主展示区
+3. 下层右侧:
+   - `Entity Lanes`
+   - `Top Targets`
+   - `Source & Status`
+4. 已移除:
+   - 固定 `Inspector`
+   - 固定 `Hover Preview`
+   - `Recent Event Stream` 主阅读区
+
+## 6.3 交互实现约束
+1. 时间线导航:
+   - 仅保留语义图标按钮
+   - 当前包括缩小、放大、适配、左移、右移、重置
+   - `重置` 同时恢复时间线视窗并清空过滤条件
+2. 拖拽平移:
+   - 手势绑定在时间线固定 viewport 层
+   - 点位自身只负责 hover/click，不承担整图区拖拽
+   - 通过分离职责降低拖拽抖动与误触
+3. Hover 预览:
+   - 采用点位邻近浮层
+   - 不再维护固定侧栏或固定底部 hover 区
+   - hover 只更新短预览，不改动当前选中详情
+4. 过滤条:
+   - `Level / Risk / Source` 使用 pill 选择器
+   - `Stage` 通过时间线选择后映射为过滤标签
+   - `Active` 行展示所有生效维度，并在尾部提供统一清空图标
+   - 各维度使用独立色系，降低多维过滤时的识别成本
+5. 窗口行为:
+   - Slint Window 保持 `no-frame: false`
+   - 使用系统标准窗口控件处理最大化/全屏
+   - 初始窗口尺寸由 Rust 侧设置，避免在 UI 描述层锁死窗口行为
 
 ## 7. 性能策略
 1. 预聚合: 200ms bucket
@@ -138,6 +217,15 @@
 4. 当前样例规模:
    - file source ingest: `2161` rows
    - alert 输出: `89` rows（适合时间轴故事展示）
+
+## 10.1 当前 UI 基线 (2026-03-10)
+1. 已支持时间线拖拽平移，拖拽手势绑定在固定 viewport 层，避免抖动。
+2. 时间线工具栏已收敛为图标按钮，并支持缩放、左右平移、统一重置。
+3. 已支持 `level / risk / source / stage` 四维过滤联动。
+4. 顶部 KPI 已切换为风险区间统计，而非 level 统计。
+5. 已切换为浅色主题，维持风险色语义不变，并为不同过滤维度分配不同底色。
+6. Hover 预览已改为点位邻近浮层，固定 Hover 面板不再保留。
+7. 窗口行为已回归系统标准控件，支持系统级全屏与调整窗口大小。
 
 ## 11. 新任务技术起点
 1. 在 `case/wparse/rules/wparse_semantic.wfl` 上增量调参，优先保证输出稳定性与可解释性。

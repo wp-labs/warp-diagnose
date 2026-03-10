@@ -7,9 +7,93 @@ use slint::VecModel;
 
 slint::include_modules!();
 
+fn level_filter_to_ui_idx(filter: Option<data::LevelFilter>) -> i32 {
+    match filter {
+        None => 0,
+        Some(data::LevelFilter::Info) => 1,
+        Some(data::LevelFilter::Warn) => 2,
+        Some(data::LevelFilter::Error) => 3,
+    }
+}
+
+fn level_filter_from_ui_idx(idx: i32) -> Option<data::LevelFilter> {
+    match idx {
+        1 => Some(data::LevelFilter::Info),
+        2 => Some(data::LevelFilter::Warn),
+        3 => Some(data::LevelFilter::Error),
+        _ => None,
+    }
+}
+
+fn level_filter_label(filter: Option<data::LevelFilter>) -> String {
+    match filter {
+        None => "All levels".to_string(),
+        Some(data::LevelFilter::Info) => "Level: INFO".to_string(),
+        Some(data::LevelFilter::Warn) => "Level: WARN".to_string(),
+        Some(data::LevelFilter::Error) => "Level: ERROR+".to_string(),
+    }
+}
+
+fn risk_filter_to_ui_idx(filter: Option<data::RiskFilter>) -> i32 {
+    match filter {
+        None => 0,
+        Some(data::RiskFilter::Low) => 1,
+        Some(data::RiskFilter::Mid) => 2,
+        Some(data::RiskFilter::High) => 3,
+    }
+}
+
+fn risk_filter_from_ui_idx(idx: i32) -> Option<data::RiskFilter> {
+    match idx {
+        1 => Some(data::RiskFilter::Low),
+        2 => Some(data::RiskFilter::Mid),
+        3 => Some(data::RiskFilter::High),
+        _ => None,
+    }
+}
+
+fn risk_filter_label(filter: Option<data::RiskFilter>) -> String {
+    match filter {
+        None => "All risks".to_string(),
+        Some(data::RiskFilter::Low) => "Risk: < 0.60".to_string(),
+        Some(data::RiskFilter::Mid) => "Risk: 0.60-0.84".to_string(),
+        Some(data::RiskFilter::High) => "Risk: >= 0.85".to_string(),
+    }
+}
+
+fn source_filter_to_ui_idx(filter: Option<data::SourceFilter>) -> i32 {
+    match filter {
+        None => 0,
+        Some(data::SourceFilter::Demo) => 1,
+        Some(data::SourceFilter::Wparse) => 2,
+        Some(data::SourceFilter::Wfusion) => 3,
+    }
+}
+
+fn source_filter_from_ui_idx(idx: i32) -> Option<data::SourceFilter> {
+    match idx {
+        1 => Some(data::SourceFilter::Demo),
+        2 => Some(data::SourceFilter::Wparse),
+        3 => Some(data::SourceFilter::Wfusion),
+        _ => None,
+    }
+}
+
+fn source_filter_label(filter: Option<data::SourceFilter>) -> String {
+    match filter {
+        None => "All sources".to_string(),
+        Some(data::SourceFilter::Demo) => "Source: demo".to_string(),
+        Some(data::SourceFilter::Wparse) => "Source: wparse".to_string(),
+        Some(data::SourceFilter::Wfusion) => "Source: wfusion".to_string(),
+    }
+}
+
 struct UiState {
     dashboard: data::DashboardData,
     selected_stage: Option<usize>,
+    selected_level: Option<data::LevelFilter>,
+    selected_risk: Option<data::RiskFilter>,
+    selected_source: Option<data::SourceFilter>,
     selected_point: Option<usize>,
     hover_point: Option<usize>,
     point_details: Vec<String>,
@@ -18,12 +102,19 @@ struct UiState {
 }
 
 fn apply_view(app: &AppWindow, state: &mut UiState) {
-    let view = state.dashboard.build_view(state.selected_stage);
+    let view = state
+        .dashboard
+        .build_view(
+            state.selected_stage,
+            state.selected_level,
+            state.selected_risk,
+            state.selected_source,
+        );
 
     app.set_total_events(view.report.total_rows as i32);
-    app.set_info_events(view.report.info_rows as i32);
-    app.set_warn_events(view.report.warn_rows as i32);
-    app.set_error_events(view.report.error_rows as i32);
+    app.set_risk_low_events(view.report.risk_low_rows as i32);
+    app.set_risk_mid_events(view.report.risk_mid_rows as i32);
+    app.set_risk_high_events(view.report.risk_high_rows as i32);
 
     let status_text = view.report.to_status_text();
 
@@ -32,6 +123,22 @@ fn apply_view(app: &AppWindow, state: &mut UiState) {
     app.set_top_entities_text(view.report.top_entities_text.into());
     app.set_source_text(view.report.source_text.into());
     app.set_status_text(status_text.into());
+    app.set_active_level_filter(level_filter_to_ui_idx(state.selected_level));
+    app.set_active_risk_filter(risk_filter_to_ui_idx(state.selected_risk));
+    app.set_active_source_filter(source_filter_to_ui_idx(state.selected_source));
+    app.set_has_level_filter(state.selected_level.is_some());
+    app.set_has_risk_filter(state.selected_risk.is_some());
+    app.set_has_source_filter(state.selected_source.is_some());
+    app.set_has_stage_filter(state.selected_stage.is_some());
+    app.set_active_level_filter_text(level_filter_label(state.selected_level).into());
+    app.set_active_risk_filter_text(risk_filter_label(state.selected_risk).into());
+    app.set_active_source_filter_text(source_filter_label(state.selected_source).into());
+    let active_stage = state
+        .selected_stage
+        .and_then(|idx| state.dashboard.stage_label(idx))
+        .map(|label| format!("Stage: {label}"))
+        .unwrap_or_else(|| "All stages".to_string());
+    app.set_active_stage_filter_text(active_stage.into());
 
     app.set_stage_detail_text(view.stage_detail_text.into());
     app.set_lane_legend_text(view.lane_legend_text.into());
@@ -117,6 +224,9 @@ fn apply_view(app: &AppWindow, state: &mut UiState) {
 fn reload_data(app: &AppWindow, state: &mut UiState) {
     state.dashboard = data::load_default_sources();
     state.selected_stage = None;
+    state.selected_level = None;
+    state.selected_risk = None;
+    state.selected_source = None;
     state.selected_point = None;
     state.hover_point = None;
     state.point_details.clear();
@@ -127,10 +237,15 @@ fn reload_data(app: &AppWindow, state: &mut UiState) {
 
 fn main() -> Result<(), slint::PlatformError> {
     let app = AppWindow::new()?;
+    app.window()
+        .set_size(slint::LogicalSize::new(1420.0, 960.0));
 
     let state = Rc::new(RefCell::new(UiState {
         dashboard: data::load_default_sources(),
         selected_stage: None,
+        selected_level: None,
+        selected_risk: None,
+        selected_source: None,
         selected_point: None,
         hover_point: None,
         point_details: Vec::new(),
@@ -151,6 +266,110 @@ fn main() -> Result<(), slint::PlatformError> {
                 let mut st = state.borrow_mut();
                 reload_data(&app, &mut st);
                 eprintln!("[warp-diagnose] data reloaded");
+            }
+        });
+    }
+
+    {
+        let weak = app.as_weak();
+        let state = Rc::clone(&state);
+        app.on_level_filter_clicked(move |idx| {
+            if let Some(app) = weak.upgrade() {
+                let mut st = state.borrow_mut();
+                let next = level_filter_from_ui_idx(idx);
+                st.selected_level = if st.selected_level == next { None } else { next };
+                st.selected_point = None;
+                st.hover_point = None;
+                apply_view(&app, &mut st);
+            }
+        });
+    }
+
+    {
+        let weak = app.as_weak();
+        let state = Rc::clone(&state);
+        app.on_risk_filter_clicked(move |idx| {
+            if let Some(app) = weak.upgrade() {
+                let mut st = state.borrow_mut();
+                let next = risk_filter_from_ui_idx(idx);
+                st.selected_risk = if st.selected_risk == next { None } else { next };
+                st.selected_point = None;
+                st.hover_point = None;
+                apply_view(&app, &mut st);
+            }
+        });
+    }
+
+    {
+        let weak = app.as_weak();
+        let state = Rc::clone(&state);
+        app.on_source_filter_clicked(move |idx| {
+            if let Some(app) = weak.upgrade() {
+                let mut st = state.borrow_mut();
+                let next = source_filter_from_ui_idx(idx);
+                st.selected_source = if st.selected_source == next { None } else { next };
+                st.selected_point = None;
+                st.hover_point = None;
+                apply_view(&app, &mut st);
+            }
+        });
+    }
+
+    {
+        let weak = app.as_weak();
+        let state = Rc::clone(&state);
+        app.on_clear_level_filter(move || {
+            if let Some(app) = weak.upgrade() {
+                let mut st = state.borrow_mut();
+                st.selected_level = None;
+                st.selected_point = None;
+                st.hover_point = None;
+                apply_view(&app, &mut st);
+            }
+        });
+    }
+
+    {
+        let weak = app.as_weak();
+        let state = Rc::clone(&state);
+        app.on_clear_risk_filter(move || {
+            if let Some(app) = weak.upgrade() {
+                let mut st = state.borrow_mut();
+                st.selected_risk = None;
+                st.selected_point = None;
+                st.hover_point = None;
+                apply_view(&app, &mut st);
+            }
+        });
+    }
+
+    {
+        let weak = app.as_weak();
+        let state = Rc::clone(&state);
+        app.on_clear_source_filter(move || {
+            if let Some(app) = weak.upgrade() {
+                let mut st = state.borrow_mut();
+                st.selected_source = None;
+                st.selected_point = None;
+                st.hover_point = None;
+                apply_view(&app, &mut st);
+            }
+        });
+    }
+
+    {
+        let weak = app.as_weak();
+        let state = Rc::clone(&state);
+        app.on_clear_all_filters(move || {
+            if let Some(app) = weak.upgrade() {
+                let mut st = state.borrow_mut();
+                st.selected_stage = None;
+                st.selected_level = None;
+                st.selected_risk = None;
+                st.selected_source = None;
+                st.selected_point = None;
+                st.hover_point = None;
+                apply_view(&app, &mut st);
             }
         });
     }

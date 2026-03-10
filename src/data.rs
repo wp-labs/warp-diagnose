@@ -69,9 +69,9 @@ pub struct LoadReport {
     pub wparse_rows: usize,
     pub wfusion_rows: usize,
     pub total_rows: usize,
-    pub info_rows: usize,
-    pub warn_rows: usize,
-    pub error_rows: usize,
+    pub risk_low_rows: usize,
+    pub risk_mid_rows: usize,
+    pub risk_high_rows: usize,
     pub unique_targets: usize,
     pub unique_entities: usize,
     pub first_ts: Option<String>,
@@ -98,8 +98,8 @@ impl LoadReport {
                 self.compute_backend, self.wfusion_enabled, self.wfusion_used
             ),
             format!(
-                "total={} | info={} | warn={} | error+={}",
-                self.total_rows, self.info_rows, self.warn_rows, self.error_rows
+                "total={} | risk<0.60={} | 0.60-0.84={} | >=0.85={}",
+                self.total_rows, self.risk_low_rows, self.risk_mid_rows, self.risk_high_rows
             ),
             format!(
                 "targets={} | entities={} | stages={}",
@@ -172,6 +172,27 @@ pub struct StageCardVm {
     pub action: String,
     pub summary: String,
     pub selected: bool,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum LevelFilter {
+    Info,
+    Warn,
+    Error,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum RiskFilter {
+    Low,
+    Mid,
+    High,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum SourceFilter {
+    Demo,
+    Wparse,
+    Wfusion,
 }
 
 #[derive(Debug, Clone)]
@@ -288,7 +309,17 @@ pub fn load_default_sources() -> DashboardData {
 }
 
 impl DashboardData {
-    pub fn build_view(&self, selected_stage: Option<usize>) -> DashboardView {
+    pub fn stage_label(&self, idx: usize) -> Option<&str> {
+        self.stages.get(idx).map(|s| s.label.as_str())
+    }
+
+    pub fn build_view(
+        &self,
+        selected_stage: Option<usize>,
+        level_filter: Option<LevelFilter>,
+        risk_filter: Option<RiskFilter>,
+        source_filter: Option<SourceFilter>,
+    ) -> DashboardView {
         let mut report = self.report.clone();
 
         let (global_min_ns, global_max_ns) = ns_bounds(&self.events);
@@ -316,7 +347,7 @@ impl DashboardData {
             });
         }
 
-        let filtered_events: Vec<&EventRecord> = match selected_stage {
+        let stage_filtered_events: Vec<&EventRecord> = match selected_stage {
             Some(idx) if idx < self.stages.len() => self
                 .events
                 .iter()
@@ -325,19 +356,59 @@ impl DashboardData {
             _ => self.events.iter().collect(),
         };
 
-        report.total_rows = filtered_events.len();
-        report.info_rows = filtered_events
-            .iter()
-            .filter(|e| e.level == "INFO")
-            .count();
-        report.warn_rows = filtered_events
-            .iter()
-            .filter(|e| e.level == "WARN")
-            .count();
-        report.error_rows = filtered_events
-            .iter()
-            .filter(|e| e.level == "ERROR" || e.level == "FATAL")
-            .count();
+        report.total_rows = stage_filtered_events.len();
+        let (risk_low_rows, risk_mid_rows, risk_high_rows) = count_risk_buckets(&stage_filtered_events);
+        report.risk_low_rows = risk_low_rows;
+        report.risk_mid_rows = risk_mid_rows;
+        report.risk_high_rows = risk_high_rows;
+
+        let filtered_events: Vec<&EventRecord> = match level_filter {
+            Some(LevelFilter::Info) => stage_filtered_events
+                .into_iter()
+                .filter(|e| e.level == "INFO")
+                .collect(),
+            Some(LevelFilter::Warn) => stage_filtered_events
+                .into_iter()
+                .filter(|e| e.level == "WARN")
+                .collect(),
+            Some(LevelFilter::Error) => stage_filtered_events
+                .into_iter()
+                .filter(|e| e.level == "ERROR" || e.level == "FATAL")
+                .collect(),
+            None => stage_filtered_events,
+        };
+
+        let filtered_events: Vec<&EventRecord> = match risk_filter {
+            Some(RiskFilter::Low) => filtered_events
+                .into_iter()
+                .filter(|e| matches!(risk_bucket(e.risk), RiskBucket::Low))
+                .collect(),
+            Some(RiskFilter::Mid) => filtered_events
+                .into_iter()
+                .filter(|e| matches!(risk_bucket(e.risk), RiskBucket::Mid))
+                .collect(),
+            Some(RiskFilter::High) => filtered_events
+                .into_iter()
+                .filter(|e| matches!(risk_bucket(e.risk), RiskBucket::High))
+                .collect(),
+            None => filtered_events,
+        };
+
+        let filtered_events: Vec<&EventRecord> = match source_filter {
+            Some(SourceFilter::Demo) => filtered_events
+                .into_iter()
+                .filter(|e| e.source == "demo")
+                .collect(),
+            Some(SourceFilter::Wparse) => filtered_events
+                .into_iter()
+                .filter(|e| e.source == "wparse")
+                .collect(),
+            Some(SourceFilter::Wfusion) => filtered_events
+                .into_iter()
+                .filter(|e| e.source == "wfusion")
+                .collect(),
+            None => filtered_events,
+        };
 
         let (timeline_points, point_details, point_previews, lane_legend_text, lane_labels) =
             build_timeline_points(&filtered_events, &self.stages);
@@ -379,11 +450,10 @@ fn enrich_report(report: &mut LoadReport, events: &[EventRecord], stages: &[Stag
     let mut entity_counts: HashMap<String, usize> = HashMap::new();
 
     for event in events {
-        match event.level.as_str() {
-            "INFO" => report.info_rows += 1,
-            "WARN" => report.warn_rows += 1,
-            "ERROR" | "FATAL" => report.error_rows += 1,
-            _ => {}
+        match risk_bucket(event.risk) {
+            RiskBucket::Low => report.risk_low_rows += 1,
+            RiskBucket::Mid => report.risk_mid_rows += 1,
+            RiskBucket::High => report.risk_high_rows += 1,
         }
 
         if !event.target.is_empty() {
@@ -411,6 +481,37 @@ fn enrich_report(report: &mut LoadReport, events: &[EventRecord], stages: &[Stag
     if let Some(last) = events.last() {
         report.last_ts = Some(last.time_text.clone());
     }
+}
+
+#[derive(Debug, Clone, Copy)]
+enum RiskBucket {
+    Low,
+    Mid,
+    High,
+}
+
+fn risk_bucket(risk: f32) -> RiskBucket {
+    if risk >= 0.85 {
+        RiskBucket::High
+    } else if risk >= 0.60 {
+        RiskBucket::Mid
+    } else {
+        RiskBucket::Low
+    }
+}
+
+fn count_risk_buckets(events: &[&EventRecord]) -> (usize, usize, usize) {
+    let mut low = 0usize;
+    let mut mid = 0usize;
+    let mut high = 0usize;
+    for event in events {
+        match risk_bucket(event.risk) {
+            RiskBucket::Low => low += 1,
+            RiskBucket::Mid => mid += 1,
+            RiskBucket::High => high += 1,
+        }
+    }
+    (low, mid, high)
 }
 
 fn load_demo_ndjson(path: &Path, seq_start: usize) -> anyhow::Result<(Vec<EventRecord>, usize)> {
