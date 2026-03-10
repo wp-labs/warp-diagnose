@@ -1,0 +1,1205 @@
+2026-03-09T14:34:58.561492Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: loaded schema file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/schemas/wparse_semantic.wfs schemas=2
+2026-03-09T14:34:58.563268Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: compiled rule file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/rules/wparse_semantic.wfl rules=3
+2026-03-09T14:34:58.563316Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: over vs over_cap validation passed windows=2
+2026-03-09T14:34:58.566659Z ERROR engine.start{listen=tcp://127.0.0.1:9800}: fail! engine-bootstrap: 
+call context:
+	listen : tcp://127.0.0.1:9800
+	base_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse
+ mod_path=wf_runtime::lifecycle
+2026-03-09T14:35:34.145554Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: loaded schema file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/schemas/wparse_semantic.wfs schemas=2
+2026-03-09T14:35:34.146812Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: compiled rule file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/rules/wparse_semantic.wfl rules=3
+2026-03-09T14:35:34.146863Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: over vs over_cap validation passed windows=2
+2026-03-09T14:35:34.147476Z ERROR engine.start{listen=tcp://127.0.0.1:9800}: fail! engine-bootstrap: 
+call context:
+	listen : tcp://127.0.0.1:9800
+	base_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse
+ mod_path=wf_runtime::lifecycle
+2026-03-09T15:03:12.986733Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: loaded schema file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/schemas/wparse_semantic.wfs schemas=2
+2026-03-09T15:03:12.987752Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: compiled rule file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/rules/wparse_semantic.wfl rules=3
+2026-03-09T15:03:12.987796Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: over vs over_cap validation passed windows=2
+2026-03-09T15:03:12.988605Z ERROR engine.start{listen=tcp://127.0.0.1:9800}: fail! engine-bootstrap: 
+call context:
+	listen : tcp://127.0.0.1:9800
+	base_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse
+ mod_path=wf_runtime::lifecycle
+2026-03-09T15:20:29.492202Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: loaded schema file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/schemas/wparse_semantic.wfs schemas=2
+2026-03-09T15:20:29.493368Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: compiled rule file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/rules/wparse_semantic.wfl rules=3
+2026-03-09T15:20:29.493415Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: over vs over_cap validation passed windows=2
+2026-03-09T15:20:29.495428Z  INFO [sys] engine.start{listen=tcp://127.0.0.1:9800}: engine bootstrap complete schemas=2 rules=3
+2026-03-09T15:20:29.495572Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:20:29.495575Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:20:29.495575Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:20:29.495609Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:20:29.495612Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:20:29.495645Z  INFO engine.start{listen=tcp://127.0.0.1:9800}: suc! engine-bootstrap: 
+call context:
+	listen : tcp://127.0.0.1:9800
+	base_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse
+ mod_path=wf_runtime::lifecycle
+2026-03-09T15:20:29.495674Z  INFO [sys] WarpFusion reactor started listen=127.0.0.1:9800
+2026-03-09T15:20:29.496790Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:20:30.497310Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:20:30.497389Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:20:30.497580Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:20:31.496885Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:20:31.496873Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:20:31.496872Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:20:32.497168Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:20:32.497461Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:20:32.497463Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:20:33.497315Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:20:33.497541Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:20:33.497465Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:20:34.491924Z  INFO [sys] received signal, initiating graceful shutdown signal="SIGTERM"
+2026-03-09T15:20:34.492010Z  INFO [sys] initiating graceful shutdown
+2026-03-09T15:20:34.492024Z DEBUG [sys] waiting for task group to finish task_group="metrics"
+2026-03-09T15:20:34.492037Z DEBUG [sys] task group finished task_group="metrics"
+2026-03-09T15:20:34.492042Z DEBUG [sys] waiting for task group to finish task_group="receiver"
+2026-03-09T15:20:34.492288Z DEBUG [sys] task group finished task_group="receiver"
+2026-03-09T15:20:34.492323Z DEBUG [sys] waiting for task group to finish task_group="rules"
+2026-03-09T15:20:34.492375Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:20:34.492376Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:20:34.492438Z DEBUG [pipe] <prepare_stage_signal#0> rule task shutdown complete
+2026-03-09T15:20:34.492438Z DEBUG [pipe] <running_stage_signal#1> rule task shutdown complete
+2026-03-09T15:20:34.492426Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:20:34.492499Z DEBUG [pipe] <anomaly_burst_signal#2> rule task shutdown complete
+2026-03-09T15:20:34.492612Z DEBUG [sys] task group finished task_group="rules"
+2026-03-09T15:20:34.492636Z DEBUG [sys] waiting for task group to finish task_group="evictor"
+2026-03-09T15:20:34.492653Z DEBUG [sys] task group finished task_group="evictor"
+2026-03-09T15:20:34.492660Z DEBUG [sys] waiting for task group to finish task_group="alert"
+2026-03-09T15:20:34.492670Z DEBUG [sys] task group finished task_group="alert"
+2026-03-09T15:24:58.513397Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: loaded schema file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/schemas/wparse_semantic.wfs schemas=2
+2026-03-09T15:24:58.514319Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: compiled rule file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/rules/wparse_semantic.wfl rules=3
+2026-03-09T15:24:58.514365Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: over vs over_cap validation passed windows=2
+2026-03-09T15:24:58.515200Z  INFO [sys] engine.start{listen=tcp://127.0.0.1:9800}: engine bootstrap complete schemas=2 rules=3
+2026-03-09T15:24:58.516188Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:24:58.516210Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:24:58.516216Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:24:58.516283Z  INFO engine.start{listen=tcp://127.0.0.1:9800}: suc! engine-bootstrap: 
+call context:
+	listen : tcp://127.0.0.1:9800
+	base_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse
+ mod_path=wf_runtime::lifecycle
+2026-03-09T15:24:58.516297Z  INFO [sys] metrics exporter started listen=127.0.0.1:9901 interval=1s
+2026-03-09T15:24:58.516308Z  INFO [sys] WarpFusion reactor started listen=127.0.0.1:9800
+2026-03-09T15:24:58.516324Z  INFO [res] runtime metrics enabled interval=1s listen=127.0.0.1:9901
+2026-03-09T15:24:58.517388Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:24:58.517396Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:24:58.517397Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:24:59.517889Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:24:59.517847Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:24:59.517923Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:24:59.518206Z  INFO [res] metrics snapshot summary=rx_rows=0 routed=0 dropped_late=0 matches=0 alerts=0 window_bytes=0
+2026-03-09T15:24:59.518402Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |          0B |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T15:25:00.518246Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:25:00.518413Z  INFO [res] metrics snapshot summary=rx_rows=0 routed=0 dropped_late=0 matches=0 alerts=0 window_bytes=0
+2026-03-09T15:25:00.518447Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:25:00.518447Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:25:00.518543Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |          0B |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T15:25:01.518318Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:25:01.518315Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:25:01.518315Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:25:01.518391Z  INFO [res] metrics snapshot summary=rx_rows=0 routed=0 dropped_late=0 matches=0 alerts=0 window_bytes=0
+2026-03-09T15:25:01.518410Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |          0B |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T15:25:02.517596Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:25:02.517596Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:25:02.517600Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:25:02.517664Z  INFO [res] metrics snapshot summary=rx_rows=0 routed=0 dropped_late=0 matches=0 alerts=0 window_bytes=0
+2026-03-09T15:25:02.517694Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |          0B |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T15:25:03.514809Z  INFO [sys] received signal, initiating graceful shutdown signal="SIGTERM"
+2026-03-09T15:25:03.514933Z  INFO [sys] initiating graceful shutdown
+2026-03-09T15:25:03.514999Z DEBUG [sys] waiting for task group to finish task_group="metrics"
+2026-03-09T15:25:03.515115Z  INFO [res] 
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
+| stat    | row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
+| avg     |       0.0 |       0.0 |       0.0 |       0.0 |          0B |       0.0 |
+| max     |       0.0 |       0.0 |       0.0 |       0.0 |          0B |       0.0 |
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
++---------+------------+------------+------------+------------+------------+
+| total   | rows       | late       | rules      | sm_delta   | out        |
++---------+------------+------------+------------+------------+------------+
+| count   |          0 |          0 |          0 |         +0 |          0 |
++---------+------------+------------+------------+------------+------------+ runtime=4.997670542s intervals=5
+2026-03-09T15:25:03.515282Z DEBUG [sys] task group finished task_group="metrics"
+2026-03-09T15:25:03.515296Z DEBUG [sys] waiting for task group to finish task_group="receiver"
+2026-03-09T15:25:03.515309Z DEBUG [sys] task group finished task_group="receiver"
+2026-03-09T15:25:03.515336Z DEBUG [sys] waiting for task group to finish task_group="rules"
+2026-03-09T15:25:03.515369Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:25:03.515383Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:25:03.515412Z DEBUG [pipe] <prepare_stage_signal#0> rule task shutdown complete
+2026-03-09T15:25:03.515414Z DEBUG [pipe] <running_stage_signal#1> rule task shutdown complete
+2026-03-09T15:25:03.515464Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:25:03.515483Z DEBUG [pipe] <anomaly_burst_signal#2> rule task shutdown complete
+2026-03-09T15:25:03.515572Z DEBUG [sys] task group finished task_group="rules"
+2026-03-09T15:25:03.515594Z DEBUG [sys] waiting for task group to finish task_group="evictor"
+2026-03-09T15:25:03.515607Z DEBUG [sys] task group finished task_group="evictor"
+2026-03-09T15:25:03.515613Z DEBUG [sys] waiting for task group to finish task_group="alert"
+2026-03-09T15:25:03.516661Z DEBUG [sys] task group finished task_group="alert"
+2026-03-09T15:31:22.796458Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: loaded schema file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/schemas/wparse_semantic.wfs schemas=2
+2026-03-09T15:31:22.797709Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: compiled rule file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/rules/wparse_semantic.wfl rules=3
+2026-03-09T15:31:22.797761Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: over vs over_cap validation passed windows=2
+2026-03-09T15:31:22.798900Z  INFO [sys] engine.start{listen=tcp://127.0.0.1:9800}: engine bootstrap complete schemas=2 rules=3
+2026-03-09T15:31:22.799030Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:31:22.799028Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:31:22.799045Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:31:22.799096Z  INFO engine.start{listen=tcp://127.0.0.1:9800}: suc! engine-bootstrap: 
+call context:
+	listen : tcp://127.0.0.1:9800
+	base_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse
+ mod_path=wf_runtime::lifecycle
+2026-03-09T15:31:22.799131Z  INFO [sys] WarpFusion reactor started listen=127.0.0.1:9800
+2026-03-09T15:31:22.800251Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:31:22.800258Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:31:22.800258Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:31:23.801727Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:31:23.801923Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:31:23.801941Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:31:24.796077Z  INFO [sys] received signal, initiating graceful shutdown signal="SIGTERM"
+2026-03-09T15:31:24.796423Z  INFO [sys] initiating graceful shutdown
+2026-03-09T15:31:24.796488Z DEBUG [sys] waiting for task group to finish task_group="metrics"
+2026-03-09T15:31:24.796507Z DEBUG [sys] task group finished task_group="metrics"
+2026-03-09T15:31:24.796512Z DEBUG [sys] waiting for task group to finish task_group="receiver"
+2026-03-09T15:31:24.796614Z DEBUG [sys] task group finished task_group="receiver"
+2026-03-09T15:31:24.796656Z DEBUG [sys] waiting for task group to finish task_group="rules"
+2026-03-09T15:31:24.796689Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:31:24.796702Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:31:24.796726Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:31:24.796749Z DEBUG [pipe] <anomaly_burst_signal#2> rule task shutdown complete
+2026-03-09T15:31:24.796751Z DEBUG [pipe] <running_stage_signal#1> rule task shutdown complete
+2026-03-09T15:31:24.796751Z DEBUG [pipe] <prepare_stage_signal#0> rule task shutdown complete
+2026-03-09T15:31:24.796878Z DEBUG [sys] task group finished task_group="rules"
+2026-03-09T15:31:24.796892Z DEBUG [sys] waiting for task group to finish task_group="evictor"
+2026-03-09T15:31:24.796903Z DEBUG [sys] task group finished task_group="evictor"
+2026-03-09T15:31:24.796907Z DEBUG [sys] waiting for task group to finish task_group="alert"
+2026-03-09T15:31:24.796946Z DEBUG [sys] task group finished task_group="alert"
+2026-03-09T15:35:58.789696Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: loaded schema file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/schemas/wparse_semantic.wfs schemas=2
+2026-03-09T15:35:58.790560Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: compiled rule file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/rules/wparse_semantic.wfl rules=3
+2026-03-09T15:35:58.790604Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: over vs over_cap validation passed windows=2
+2026-03-09T15:35:58.791422Z  INFO [sys] engine.start{listen=tcp://127.0.0.1:9800}: engine bootstrap complete schemas=2 rules=3
+2026-03-09T15:35:58.791550Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:35:58.791556Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:35:58.791563Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:35:58.791630Z  INFO engine.start{listen=tcp://127.0.0.1:9800}: suc! engine-bootstrap: 
+call context:
+	listen : tcp://127.0.0.1:9800
+	base_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse
+ mod_path=wf_runtime::lifecycle
+2026-03-09T15:35:58.791639Z  INFO [sys] metrics exporter started listen=127.0.0.1:9901 interval=1s
+2026-03-09T15:35:58.791658Z  INFO [sys] WarpFusion reactor started listen=127.0.0.1:9800
+2026-03-09T15:35:58.791670Z  INFO [res] runtime metrics enabled interval=1s listen=127.0.0.1:9901
+2026-03-09T15:35:58.792791Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:35:58.792796Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:35:58.792800Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:35:59.794179Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:35:59.794646Z  INFO [res] metrics snapshot summary=rx_rows=0 routed=0 dropped_late=0 matches=0 alerts=0 window_bytes=0
+2026-03-09T15:35:59.794681Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:35:59.794795Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:35:59.794816Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |          0B |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T15:36:00.794228Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:36:00.794228Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:36:00.794434Z  INFO [res] metrics snapshot summary=rx_rows=0 routed=0 dropped_late=0 matches=0 alerts=0 window_bytes=0
+2026-03-09T15:36:00.794291Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:36:00.794535Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |          0B |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T15:36:01.794425Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:36:01.794443Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:36:01.794467Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:36:01.794573Z  INFO [res] metrics snapshot summary=rx_rows=0 routed=0 dropped_late=0 matches=0 alerts=0 window_bytes=0
+2026-03-09T15:36:01.794654Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |          0B |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T15:36:02.793927Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:36:02.793927Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:36:02.793927Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:36:02.794098Z  INFO [res] metrics snapshot summary=rx_rows=0 routed=0 dropped_late=0 matches=0 alerts=0 window_bytes=0
+2026-03-09T15:36:02.794133Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |          0B |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T15:36:03.794462Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:36:03.794489Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:36:03.794555Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:36:03.794659Z  INFO [res] metrics snapshot summary=rx_rows=0 routed=0 dropped_late=0 matches=0 alerts=0 window_bytes=0
+2026-03-09T15:36:03.794750Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |          0B |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T15:36:04.794252Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:36:04.794252Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:36:04.794450Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:36:04.794687Z  INFO [res] metrics snapshot summary=rx_rows=0 routed=0 dropped_late=0 matches=0 alerts=0 window_bytes=0
+2026-03-09T15:36:04.794793Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |          0B |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T15:36:05.794057Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:36:05.794109Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:36:05.794273Z  INFO [res] metrics snapshot summary=rx_rows=0 routed=0 dropped_late=0 matches=0 alerts=0 window_bytes=0
+2026-03-09T15:36:05.794358Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:36:05.794391Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |          0B |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T15:36:06.790602Z  INFO [sys] received signal, initiating graceful shutdown signal="SIGTERM"
+2026-03-09T15:36:06.790686Z  INFO [sys] initiating graceful shutdown
+2026-03-09T15:36:06.790700Z DEBUG [sys] waiting for task group to finish task_group="metrics"
+2026-03-09T15:36:06.790788Z  INFO [res] 
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
+| stat    | row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
+| avg     |       0.0 |       0.0 |       0.0 |       0.0 |          0B |       0.0 |
+| max     |       0.0 |       0.0 |       0.0 |       0.0 |          0B |       0.0 |
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
++---------+------------+------------+------------+------------+------------+
+| total   | rows       | late       | rules      | sm_delta   | out        |
++---------+------------+------------+------------+------------+------------+
+| count   |          0 |          0 |          0 |         +0 |          0 |
++---------+------------+------------+------------+------------+------------+ runtime=7.998002709s intervals=8
+2026-03-09T15:36:06.790870Z DEBUG [sys] task group finished task_group="metrics"
+2026-03-09T15:36:06.790891Z DEBUG [sys] waiting for task group to finish task_group="receiver"
+2026-03-09T15:36:06.790903Z DEBUG [sys] task group finished task_group="receiver"
+2026-03-09T15:36:06.790922Z DEBUG [sys] waiting for task group to finish task_group="rules"
+2026-03-09T15:36:06.790957Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:36:06.790957Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:36:06.790974Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:36:06.791013Z DEBUG [pipe] <prepare_stage_signal#0> rule task shutdown complete
+2026-03-09T15:36:06.791013Z DEBUG [pipe] <running_stage_signal#1> rule task shutdown complete
+2026-03-09T15:36:06.791015Z DEBUG [pipe] <anomaly_burst_signal#2> rule task shutdown complete
+2026-03-09T15:36:06.791126Z DEBUG [sys] task group finished task_group="rules"
+2026-03-09T15:36:06.791147Z DEBUG [sys] waiting for task group to finish task_group="evictor"
+2026-03-09T15:36:06.791160Z DEBUG [sys] task group finished task_group="evictor"
+2026-03-09T15:36:06.791165Z DEBUG [sys] waiting for task group to finish task_group="alert"
+2026-03-09T15:36:06.791209Z DEBUG [sys] task group finished task_group="alert"
+2026-03-09T15:40:56.031019Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: loaded schema file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/schemas/wparse_semantic.wfs schemas=2
+2026-03-09T15:40:56.031939Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: compiled rule file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/rules/wparse_semantic.wfl rules=3
+2026-03-09T15:40:56.031983Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: over vs over_cap validation passed windows=2
+2026-03-09T15:40:56.032848Z  INFO [sys] engine.start{listen=tcp://127.0.0.1:9800}: engine bootstrap complete schemas=2 rules=3
+2026-03-09T15:40:56.032970Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:40:56.032985Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:40:56.032994Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:40:56.033081Z  INFO [sys] metrics exporter started listen=127.0.0.1:9901 interval=1s
+2026-03-09T15:40:56.033094Z  INFO engine.start{listen=tcp://127.0.0.1:9800}: suc! engine-bootstrap: 
+call context:
+	listen : tcp://127.0.0.1:9800
+	base_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse
+ mod_path=wf_runtime::lifecycle
+2026-03-09T15:40:56.033123Z  INFO [sys] WarpFusion reactor started listen=127.0.0.1:9800
+2026-03-09T15:40:56.033141Z  INFO [res] runtime metrics enabled interval=1s listen=127.0.0.1:9901
+2026-03-09T15:40:56.033153Z  INFO [conn] starting file source replay source=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/data/wparse_events.ndjson stream="wparse"
+2026-03-09T15:40:56.033496Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:40:56.033500Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:40:56.033500Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:40:56.056133Z DEBUG [pipe] frame decoded stream="wparse" rows=2048
+2026-03-09T15:40:56.056263Z DEBUG [pipe] route report delivered=1 dropped_late=0 skipped=0
+2026-03-09T15:40:56.056294Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=1 batches=1 gap=false
+2026-03-09T15:40:56.056293Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=1 batches=1 gap=false
+2026-03-09T15:40:56.057751Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=1 batches=1 gap=false
+2026-03-09T15:40:56.058868Z DEBUG [pipe] frame decoded stream="wparse" rows=113
+2026-03-09T15:40:56.058890Z DEBUG [pipe] route report delivered=1 dropped_late=0 skipped=0
+2026-03-09T15:40:56.058911Z  INFO [conn] file source replay complete source=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/data/wparse_events.ndjson stream="wparse" rows=2161
+2026-03-09T15:40:56.068990Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=2 batches=1 gap=false
+2026-03-09T15:40:56.069015Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=2 batches=1 gap=false
+2026-03-09T15:40:56.069131Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=2 batches=1 gap=false
+2026-03-09T15:40:57.035159Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=2 new_cursor=2 batches=0 gap=false
+2026-03-09T15:40:57.035099Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=2 new_cursor=2 batches=0 gap=false
+2026-03-09T15:40:57.035280Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=2 new_cursor=2 batches=0 gap=false
+2026-03-09T15:40:57.035520Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=2 dropped_late=0 matches=0 alerts=0 window_bytes=344024
+2026-03-09T15:40:57.035623Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|    2156.5 |       0.0 |       0.0 |       6.0 |     336.0KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T15:40:58.034114Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=2 new_cursor=2 batches=0 gap=false
+2026-03-09T15:40:58.034091Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=2 new_cursor=2 batches=0 gap=false
+2026-03-09T15:40:58.034195Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=2 new_cursor=2 batches=0 gap=false
+2026-03-09T15:40:58.034340Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=2 dropped_late=0 matches=0 alerts=0 window_bytes=344024
+2026-03-09T15:40:58.034513Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     336.0KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T15:40:59.034724Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=2 new_cursor=2 batches=0 gap=false
+2026-03-09T15:40:59.034749Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=2 new_cursor=2 batches=0 gap=false
+2026-03-09T15:40:59.034927Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=2 new_cursor=2 batches=0 gap=false
+2026-03-09T15:40:59.034961Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=2 dropped_late=0 matches=0 alerts=0 window_bytes=344024
+2026-03-09T15:40:59.035157Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     336.0KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T15:41:00.034428Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=2 new_cursor=2 batches=0 gap=false
+2026-03-09T15:41:00.034428Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=2 new_cursor=2 batches=0 gap=false
+2026-03-09T15:41:00.034428Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=2 new_cursor=2 batches=0 gap=false
+2026-03-09T15:41:00.034500Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=2 dropped_late=0 matches=0 alerts=0 window_bytes=344024
+2026-03-09T15:41:00.034536Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     336.0KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T15:41:01.035288Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=2 new_cursor=2 batches=0 gap=false
+2026-03-09T15:41:01.035310Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=2 new_cursor=2 batches=0 gap=false
+2026-03-09T15:41:01.035288Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=2 new_cursor=2 batches=0 gap=false
+2026-03-09T15:41:01.035426Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=2 dropped_late=0 matches=0 alerts=0 window_bytes=344024
+2026-03-09T15:41:01.035464Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     336.0KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T15:41:02.029110Z  INFO [sys] received signal, initiating graceful shutdown signal="SIGINT"
+2026-03-09T15:41:02.029324Z  INFO [sys] initiating graceful shutdown
+2026-03-09T15:41:02.029356Z DEBUG [sys] waiting for task group to finish task_group="metrics"
+2026-03-09T15:41:02.029577Z  INFO [res] 
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
+| stat    | row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
+| avg     |     359.4 |       0.0 |       0.0 |       1.0 |     336.0KB |       0.0 |
+| max     |    2156.5 |       0.0 |       0.0 |       6.0 |     336.0KB |       0.0 |
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
++---------+------------+------------+------------+------------+------------+
+| total   | rows       | late       | rules      | sm_delta   | out        |
++---------+------------+------------+------------+------------+------------+
+| count   |       2161 |          0 |          0 |         +6 |          0 |
++---------+------------+------------+------------+------------+------------+ runtime=5.9959245s intervals=6
+2026-03-09T15:41:02.029866Z DEBUG [sys] task group finished task_group="metrics"
+2026-03-09T15:41:02.029888Z DEBUG [sys] waiting for task group to finish task_group="receiver"
+2026-03-09T15:41:02.029912Z DEBUG [sys] task group finished task_group="receiver"
+2026-03-09T15:41:02.029958Z DEBUG [sys] waiting for task group to finish task_group="rules"
+2026-03-09T15:41:02.030035Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=2 new_cursor=2 batches=0 gap=false
+2026-03-09T15:41:02.030063Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=2 new_cursor=2 batches=0 gap=false
+2026-03-09T15:41:02.030229Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=2 new_cursor=2 batches=0 gap=false
+2026-03-09T15:41:02.030468Z DEBUG [pipe] <anomaly_burst_signal#2> flush complete alerts=2
+2026-03-09T15:41:02.030465Z DEBUG [pipe] <prepare_stage_signal#0> flush complete alerts=2
+2026-03-09T15:41:02.030487Z DEBUG [pipe] <anomaly_burst_signal#2> rule task shutdown complete
+2026-03-09T15:41:02.030485Z DEBUG [pipe] <prepare_stage_signal#0> rule task shutdown complete
+2026-03-09T15:41:02.030505Z DEBUG [pipe] <running_stage_signal#1> flush complete alerts=2
+2026-03-09T15:41:02.030517Z DEBUG [pipe] <running_stage_signal#1> rule task shutdown complete
+2026-03-09T15:41:02.030762Z DEBUG [sys] task group finished task_group="rules"
+2026-03-09T15:41:02.030778Z DEBUG [sys] waiting for task group to finish task_group="evictor"
+2026-03-09T15:41:02.030792Z DEBUG [sys] task group finished task_group="evictor"
+2026-03-09T15:41:02.030796Z DEBUG [sys] waiting for task group to finish task_group="alert"
+2026-03-09T15:41:02.034044Z DEBUG [sys] task group finished task_group="alert"
+2026-03-09T15:42:25.758819Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: loaded schema file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/schemas/wparse_semantic.wfs schemas=2
+2026-03-09T15:42:25.760015Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: compiled rule file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/rules/wparse_semantic.wfl rules=3
+2026-03-09T15:42:25.760068Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: over vs over_cap validation passed windows=2
+2026-03-09T15:42:25.761185Z  INFO [sys] engine.start{listen=tcp://127.0.0.1:9800}: engine bootstrap complete schemas=2 rules=3
+2026-03-09T15:42:25.761352Z DEBUG [pipe] <running_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:42:25.761351Z DEBUG [pipe] <prepare_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:42:25.761356Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:42:25.761433Z  INFO engine.start{listen=tcp://127.0.0.1:9800}: suc! engine-bootstrap: 
+call context:
+	listen : tcp://127.0.0.1:9800
+	base_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse
+ mod_path=wf_runtime::lifecycle
+2026-03-09T15:42:25.761457Z  INFO [sys] metrics exporter started listen=127.0.0.1:9901 interval=1s
+2026-03-09T15:42:25.761465Z  INFO [sys] WarpFusion reactor started listen=127.0.0.1:9800
+2026-03-09T15:42:25.761476Z  INFO [res] runtime metrics enabled interval=1s listen=127.0.0.1:9901
+2026-03-09T15:42:25.761497Z  INFO [conn] starting file source replay source=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/data/wparse_events.ndjson stream="wparse"
+2026-03-09T15:42:25.762627Z DEBUG [pipe] <prepare_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:42:25.762628Z DEBUG [pipe] <running_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:42:25.762633Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:42:25.783858Z DEBUG [pipe] frame decoded stream="wparse" rows=2048
+2026-03-09T15:42:25.784042Z DEBUG [pipe] route report delivered=1 dropped_late=0 skipped=0
+2026-03-09T15:42:25.784070Z DEBUG [pipe] <running_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=1 batches=1 gap=false
+2026-03-09T15:42:25.784071Z DEBUG [pipe] <prepare_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=1 batches=1 gap=false
+2026-03-09T15:42:25.785274Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=1 batches=1 gap=false
+2026-03-09T15:42:25.786522Z DEBUG [pipe] frame decoded stream="wparse" rows=113
+2026-03-09T15:42:25.786540Z DEBUG [pipe] route report delivered=0 dropped_late=1 skipped=0
+2026-03-09T15:42:25.786555Z  INFO [conn] file source replay complete source=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/data/wparse_events.ndjson stream="wparse" rows=2161
+2026-03-09T15:42:26.763644Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:42:26.763637Z DEBUG [pipe] <prepare_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:42:26.763916Z DEBUG [pipe] <running_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:42:26.763998Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=0 window_bytes=320872
+2026-03-09T15:42:26.764108Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|    2157.9 |       1.0 |       0.0 |       6.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T15:42:27.763285Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:42:27.763272Z DEBUG [pipe] <running_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:42:27.763305Z DEBUG [pipe] <prepare_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:42:27.763366Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=0 window_bytes=320872
+2026-03-09T15:42:27.763415Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T15:42:28.763786Z DEBUG [pipe] <prepare_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:42:28.763863Z DEBUG [pipe] <running_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:42:28.763917Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=0 window_bytes=320872
+2026-03-09T15:42:28.763946Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:42:28.764082Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T15:42:29.763154Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:42:29.763226Z DEBUG [pipe] <running_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:42:29.763287Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=0 window_bytes=320872
+2026-03-09T15:42:29.763382Z DEBUG [pipe] <prepare_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:42:29.763420Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T15:42:30.763215Z DEBUG [pipe] <prepare_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:42:30.763215Z DEBUG [pipe] <running_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:42:30.763363Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:42:30.763542Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=0 window_bytes=320872
+2026-03-09T15:42:30.763663Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T15:42:31.758543Z  INFO [sys] received signal, initiating graceful shutdown signal="SIGINT"
+2026-03-09T15:42:31.758629Z  INFO [sys] initiating graceful shutdown
+2026-03-09T15:42:31.758642Z DEBUG [sys] waiting for task group to finish task_group="metrics"
+2026-03-09T15:42:31.758790Z  INFO [res] 
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
+| stat    | row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
+| avg     |     359.7 |       0.2 |       0.0 |       1.0 |     313.4KB |       0.0 |
+| max     |    2157.9 |       1.0 |       0.0 |       6.0 |     313.4KB |       0.0 |
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
++---------+------------+------------+------------+------------+------------+
+| total   | rows       | late       | rules      | sm_delta   | out        |
++---------+------------+------------+------------+------------+------------+
+| count   |       2161 |          1 |          0 |         +6 |          0 |
++---------+------------+------------+------------+------------+------------+ runtime=5.996129708s intervals=6
+2026-03-09T15:42:31.758863Z DEBUG [sys] task group finished task_group="metrics"
+2026-03-09T15:42:31.758881Z DEBUG [sys] waiting for task group to finish task_group="receiver"
+2026-03-09T15:42:31.758898Z DEBUG [sys] task group finished task_group="receiver"
+2026-03-09T15:42:31.758920Z DEBUG [sys] waiting for task group to finish task_group="rules"
+2026-03-09T15:42:31.758953Z DEBUG [pipe] <prepare_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:42:31.758950Z DEBUG [pipe] <running_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:42:31.758967Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:42:31.759209Z DEBUG [pipe] <running_stage_signal#0> flush complete alerts=2
+2026-03-09T15:42:31.759209Z DEBUG [pipe] <anomaly_burst_signal#2> flush complete alerts=2
+2026-03-09T15:42:31.759210Z DEBUG [pipe] <prepare_stage_signal#1> flush complete alerts=2
+2026-03-09T15:42:31.759237Z DEBUG [pipe] <running_stage_signal#0> rule task shutdown complete
+2026-03-09T15:42:31.759242Z DEBUG [pipe] <anomaly_burst_signal#2> rule task shutdown complete
+2026-03-09T15:42:31.759248Z DEBUG [pipe] <prepare_stage_signal#1> rule task shutdown complete
+2026-03-09T15:42:31.759340Z DEBUG [sys] task group finished task_group="rules"
+2026-03-09T15:42:31.759355Z DEBUG [sys] waiting for task group to finish task_group="evictor"
+2026-03-09T15:42:31.759372Z DEBUG [sys] task group finished task_group="evictor"
+2026-03-09T15:42:31.759378Z DEBUG [sys] waiting for task group to finish task_group="alert"
+2026-03-09T15:42:31.760481Z DEBUG [sys] task group finished task_group="alert"
+2026-03-09T15:46:04.049137Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: loaded schema file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/schemas/wparse_semantic.wfs schemas=2
+2026-03-09T15:46:04.050028Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: compiled rule file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/rules/wparse_semantic.wfl rules=3
+2026-03-09T15:46:04.050069Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: over vs over_cap validation passed windows=2
+2026-03-09T15:46:04.050799Z  INFO [sys] engine.start{listen=tcp://127.0.0.1:9800}: engine bootstrap complete schemas=2 rules=3
+2026-03-09T15:46:04.050906Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:46:04.050907Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:46:04.050983Z  INFO engine.start{listen=tcp://127.0.0.1:9800}: suc! engine-bootstrap: 
+call context:
+	listen : tcp://127.0.0.1:9800
+	base_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse
+ mod_path=wf_runtime::lifecycle
+2026-03-09T15:46:04.050996Z  INFO [sys] metrics exporter started listen=127.0.0.1:9901 interval=1s
+2026-03-09T15:46:04.050983Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:46:04.051009Z  INFO [sys] WarpFusion reactor started listen=127.0.0.1:9800
+2026-03-09T15:46:04.051022Z  INFO [conn] starting file source replay source=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/data/wparse_events.ndjson stream="wparse"
+2026-03-09T15:46:04.051028Z  INFO [res] runtime metrics enabled interval=1s listen=127.0.0.1:9901
+2026-03-09T15:46:04.052136Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:46:04.052137Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:46:04.052151Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T15:46:04.069960Z DEBUG [pipe] frame decoded stream="wparse" rows=2048
+2026-03-09T15:46:04.070155Z DEBUG [pipe] route report delivered=1 dropped_late=0 skipped=0
+2026-03-09T15:46:04.070200Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=1 batches=1 gap=false
+2026-03-09T15:46:04.070202Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=1 batches=1 gap=false
+2026-03-09T15:46:04.071405Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=1 batches=1 gap=false
+2026-03-09T15:46:04.072669Z DEBUG [pipe] frame decoded stream="wparse" rows=113
+2026-03-09T15:46:04.072689Z DEBUG [pipe] route report delivered=0 dropped_late=1 skipped=0
+2026-03-09T15:46:04.072706Z  INFO [conn] file source replay complete source=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/data/wparse_events.ndjson stream="wparse" rows=2161
+2026-03-09T15:46:05.052503Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:46:05.052504Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:46:05.052505Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:46:05.052654Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=0 window_bytes=320872
+2026-03-09T15:46:05.052689Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|    2159.9 |       1.0 |       0.0 |       6.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T15:46:06.052971Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:46:06.052935Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:46:06.052943Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:46:06.053052Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=0 window_bytes=320872
+2026-03-09T15:46:06.053088Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T15:46:07.052352Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:46:07.052352Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:46:07.052352Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:46:07.052484Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=0 window_bytes=320872
+2026-03-09T15:46:07.052512Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T15:46:08.052696Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:46:08.052696Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:46:08.052701Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:46:08.052812Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=0 window_bytes=320872
+2026-03-09T15:46:08.052849Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T15:46:09.052460Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=0 window_bytes=320872
+2026-03-09T15:46:09.052625Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T15:46:09.052798Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:46:09.052369Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:46:09.052485Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:46:10.050897Z  INFO [sys] received signal, initiating graceful shutdown signal="SIGINT"
+2026-03-09T15:46:10.051063Z  INFO [sys] initiating graceful shutdown
+2026-03-09T15:46:10.051088Z DEBUG [sys] waiting for task group to finish task_group="metrics"
+2026-03-09T15:46:10.051260Z  INFO [res] 
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
+| stat    | row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
+| avg     |     360.0 |       0.2 |       0.0 |       1.0 |     313.4KB |       0.0 |
+| max     |    2159.9 |       1.0 |       0.0 |       6.0 |     313.4KB |       0.0 |
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
++---------+------------+------------+------------+------------+------------+
+| total   | rows       | late       | rules      | sm_delta   | out        |
++---------+------------+------------+------------+------------+------------+
+| count   |       2161 |          1 |          0 |         +6 |          0 |
++---------+------------+------------+------------+------------+------------+ runtime=5.998931292s intervals=6
+2026-03-09T15:46:10.051373Z DEBUG [sys] task group finished task_group="metrics"
+2026-03-09T15:46:10.051386Z DEBUG [sys] waiting for task group to finish task_group="receiver"
+2026-03-09T15:46:10.051404Z DEBUG [sys] task group finished task_group="receiver"
+2026-03-09T15:46:10.051425Z DEBUG [sys] waiting for task group to finish task_group="rules"
+2026-03-09T15:46:10.051467Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:46:10.051474Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:46:10.051467Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T15:46:10.051781Z DEBUG [pipe] <anomaly_burst_signal#2> flush complete alerts=2
+2026-03-09T15:46:10.051782Z DEBUG [pipe] <running_stage_signal#1> flush complete alerts=2
+2026-03-09T15:46:10.051782Z DEBUG [pipe] <prepare_stage_signal#0> flush complete alerts=2
+2026-03-09T15:46:10.051801Z DEBUG [pipe] <running_stage_signal#1> rule task shutdown complete
+2026-03-09T15:46:10.051802Z DEBUG [pipe] <anomaly_burst_signal#2> rule task shutdown complete
+2026-03-09T15:46:10.051806Z DEBUG [pipe] <prepare_stage_signal#0> rule task shutdown complete
+2026-03-09T15:46:10.051917Z DEBUG [sys] task group finished task_group="rules"
+2026-03-09T15:46:10.051929Z DEBUG [sys] waiting for task group to finish task_group="evictor"
+2026-03-09T15:46:10.051941Z DEBUG [sys] task group finished task_group="evictor"
+2026-03-09T15:46:10.051946Z DEBUG [sys] waiting for task group to finish task_group="alert"
+2026-03-09T15:46:10.053307Z DEBUG [sys] task group finished task_group="alert"
+2026-03-09T16:01:29.694898Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: loaded schema file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/schemas/wparse_semantic.wfs schemas=2
+2026-03-09T16:01:29.696312Z ERROR engine.start{listen=tcp://127.0.0.1:9800}: fail! engine-bootstrap: 
+call context:
+	listen : tcp://127.0.0.1:9800
+	base_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse
+ mod_path=wf_runtime::lifecycle
+2026-03-09T16:02:44.668828Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: loaded schema file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/schemas/wparse_semantic.wfs schemas=2
+2026-03-09T16:02:44.670270Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: compiled rule file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/rules/wparse_semantic.wfl rules=3
+2026-03-09T16:02:44.670322Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: over vs over_cap validation passed windows=2
+2026-03-09T16:02:44.673456Z  INFO [sys] engine.start{listen=tcp://127.0.0.1:9800}: engine bootstrap complete schemas=2 rules=3
+2026-03-09T16:02:44.673868Z DEBUG [pipe] <running_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:02:44.673868Z DEBUG [pipe] <prepare_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:02:44.673869Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:02:44.673921Z  INFO engine.start{listen=tcp://127.0.0.1:9800}: suc! engine-bootstrap: 
+call context:
+	listen : tcp://127.0.0.1:9800
+	base_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse
+ mod_path=wf_runtime::lifecycle
+2026-03-09T16:02:44.673943Z  INFO [sys] WarpFusion reactor started listen=127.0.0.1:9800
+2026-03-09T16:02:44.673956Z  INFO [res] runtime metrics enabled interval=1s listen=127.0.0.1:9901
+2026-03-09T16:02:44.674016Z  INFO [sys] metrics exporter started listen=127.0.0.1:9901 interval=1s
+2026-03-09T16:02:44.674095Z  INFO [conn] starting file source replay source=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/data/wparse_events.ndjson stream="wparse"
+2026-03-09T16:02:44.675131Z DEBUG [pipe] <prepare_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:02:44.675135Z DEBUG [pipe] <running_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:02:44.675132Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:02:44.693977Z DEBUG [pipe] frame decoded stream="wparse" rows=2048
+2026-03-09T16:02:44.694143Z DEBUG [pipe] route report delivered=1 dropped_late=0 skipped=0
+2026-03-09T16:02:44.694180Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=1 batches=1 gap=false
+2026-03-09T16:02:44.694182Z DEBUG [pipe] <prepare_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=1 batches=1 gap=false
+2026-03-09T16:02:44.695296Z DEBUG [pipe] <running_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=1 batches=1 gap=false
+2026-03-09T16:02:44.696546Z DEBUG [pipe] frame decoded stream="wparse" rows=113
+2026-03-09T16:02:44.696573Z DEBUG [pipe] route report delivered=0 dropped_late=1 skipped=0
+2026-03-09T16:02:44.696599Z  INFO [conn] file source replay complete source=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/data/wparse_events.ndjson stream="wparse" rows=2161
+2026-03-09T16:02:45.675506Z DEBUG [pipe] <prepare_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:02:45.675506Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:02:45.675506Z DEBUG [pipe] <running_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:02:45.675616Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=2679 alerts=2679 window_bytes=320872
+2026-03-09T16:02:45.675653Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|    2159.8 |       1.0 |    2677.6 |       6.0 |     313.4KB |    2677.6 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T16:02:46.675954Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:02:46.675954Z DEBUG [pipe] <prepare_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:02:46.675954Z DEBUG [pipe] <running_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:02:46.676070Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=2679 alerts=2679 window_bytes=320872
+2026-03-09T16:02:46.676103Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T16:02:47.675211Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:02:47.675211Z DEBUG [pipe] <running_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:02:47.675211Z DEBUG [pipe] <prepare_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:02:47.675277Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=2679 alerts=2679 window_bytes=320872
+2026-03-09T16:02:47.675308Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T16:02:48.675537Z DEBUG [pipe] <running_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:02:48.675531Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:02:48.675537Z DEBUG [pipe] <prepare_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:02:48.675624Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=2679 alerts=2679 window_bytes=320872
+2026-03-09T16:02:48.675657Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T16:02:49.676023Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:02:49.676038Z DEBUG [pipe] <prepare_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:02:49.676088Z DEBUG [pipe] <running_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:02:49.676124Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=2679 alerts=2679 window_bytes=320872
+2026-03-09T16:02:49.676184Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T16:02:50.670086Z  INFO [sys] received signal, initiating graceful shutdown signal="SIGINT"
+2026-03-09T16:02:50.670155Z  INFO [sys] initiating graceful shutdown
+2026-03-09T16:02:50.670171Z DEBUG [sys] waiting for task group to finish task_group="metrics"
+2026-03-09T16:02:50.670290Z  INFO [res] 
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
+| stat    | row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
+| avg     |     360.0 |       0.2 |     446.3 |       1.0 |     313.4KB |     446.3 |
+| max     |    2159.8 |       1.0 |    2677.6 |       6.0 |     313.4KB |    2677.6 |
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
++---------+------------+------------+------------+------------+------------+
+| total   | rows       | late       | rules      | sm_delta   | out        |
++---------+------------+------------+------------+------------+------------+
+| count   |       2161 |          1 |       2679 |         +6 |       2679 |
++---------+------------+------------+------------+------------+------------+ runtime=5.995132666s intervals=6
+2026-03-09T16:02:50.670376Z DEBUG [sys] task group finished task_group="metrics"
+2026-03-09T16:02:50.670391Z DEBUG [sys] waiting for task group to finish task_group="receiver"
+2026-03-09T16:02:50.670404Z DEBUG [sys] task group finished task_group="receiver"
+2026-03-09T16:02:50.670422Z DEBUG [sys] waiting for task group to finish task_group="rules"
+2026-03-09T16:02:50.670458Z DEBUG [pipe] <prepare_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:02:50.670452Z DEBUG [pipe] <running_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:02:50.670472Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:02:50.670514Z DEBUG [pipe] <anomaly_burst_signal#2> rule task shutdown complete
+2026-03-09T16:02:50.670513Z DEBUG [pipe] <running_stage_signal#0> rule task shutdown complete
+2026-03-09T16:02:50.670513Z DEBUG [pipe] <prepare_stage_signal#1> rule task shutdown complete
+2026-03-09T16:02:50.670602Z DEBUG [sys] task group finished task_group="rules"
+2026-03-09T16:02:50.670613Z DEBUG [sys] waiting for task group to finish task_group="evictor"
+2026-03-09T16:02:50.670623Z DEBUG [sys] task group finished task_group="evictor"
+2026-03-09T16:02:50.670629Z DEBUG [sys] waiting for task group to finish task_group="alert"
+2026-03-09T16:02:50.671822Z DEBUG [sys] task group finished task_group="alert"
+2026-03-09T16:03:48.434008Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: loaded schema file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/schemas/wparse_semantic.wfs schemas=2
+2026-03-09T16:03:48.434348Z ERROR engine.start{listen=tcp://127.0.0.1:9800}: fail! engine-bootstrap: 
+call context:
+	listen : tcp://127.0.0.1:9800
+	base_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse
+ mod_path=wf_runtime::lifecycle
+2026-03-09T16:04:35.830812Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: loaded schema file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/schemas/wparse_semantic.wfs schemas=2
+2026-03-09T16:04:35.831724Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: compiled rule file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/rules/wparse_semantic.wfl rules=3
+2026-03-09T16:04:35.831763Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: over vs over_cap validation passed windows=2
+2026-03-09T16:04:35.832528Z  INFO [sys] engine.start{listen=tcp://127.0.0.1:9800}: engine bootstrap complete schemas=2 rules=3
+2026-03-09T16:04:35.832636Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:04:35.832644Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:04:35.832657Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:04:35.832735Z  INFO [sys] metrics exporter started listen=127.0.0.1:9901 interval=1s
+2026-03-09T16:04:35.832748Z  INFO engine.start{listen=tcp://127.0.0.1:9800}: suc! engine-bootstrap: 
+call context:
+	listen : tcp://127.0.0.1:9800
+	base_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse
+ mod_path=wf_runtime::lifecycle
+2026-03-09T16:04:35.832781Z  INFO [sys] WarpFusion reactor started listen=127.0.0.1:9800
+2026-03-09T16:04:35.832799Z  INFO [conn] starting file source replay source=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/data/wparse_events.ndjson stream="wparse"
+2026-03-09T16:04:35.832811Z  INFO [res] runtime metrics enabled interval=1s listen=127.0.0.1:9901
+2026-03-09T16:04:35.833833Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:04:35.833840Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:04:35.833858Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:04:35.851198Z DEBUG [pipe] frame decoded stream="wparse" rows=2048
+2026-03-09T16:04:35.851336Z DEBUG [pipe] route report delivered=1 dropped_late=0 skipped=0
+2026-03-09T16:04:35.851354Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=1 batches=1 gap=false
+2026-03-09T16:04:35.851358Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=1 batches=1 gap=false
+2026-03-09T16:04:35.852491Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=1 batches=1 gap=false
+2026-03-09T16:04:35.853771Z DEBUG [pipe] frame decoded stream="wparse" rows=113
+2026-03-09T16:04:35.853796Z DEBUG [pipe] route report delivered=0 dropped_late=1 skipped=0
+2026-03-09T16:04:35.853819Z  INFO [conn] file source replay complete source=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/data/wparse_events.ndjson stream="wparse" rows=2161
+2026-03-09T16:04:36.834933Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:04:36.834933Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:04:36.834932Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:04:36.835136Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=89 window_bytes=320872
+2026-03-09T16:04:36.835247Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|    2158.1 |       1.0 |       0.0 |       6.0 |     313.4KB |      88.9 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T16:04:37.834415Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=89 window_bytes=320872
+2026-03-09T16:04:37.834418Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:04:37.834415Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:04:37.834541Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:04:37.834553Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T16:04:38.835042Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:04:38.835250Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:04:38.835204Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=89 window_bytes=320872
+2026-03-09T16:04:38.835363Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:04:38.835455Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T16:04:39.835115Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=89 window_bytes=320872
+2026-03-09T16:04:39.835359Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T16:04:39.835346Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:04:39.835575Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:04:39.835720Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:04:40.834784Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:04:40.834784Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:04:40.834784Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:04:40.834893Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=89 window_bytes=320872
+2026-03-09T16:04:40.834925Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T16:04:41.832883Z  INFO [sys] received signal, initiating graceful shutdown signal="SIGINT"
+2026-03-09T16:04:41.833031Z  INFO [sys] initiating graceful shutdown
+2026-03-09T16:04:41.833059Z DEBUG [sys] waiting for task group to finish task_group="metrics"
+2026-03-09T16:04:41.833272Z  INFO [res] 
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
+| stat    | row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
+| avg     |     359.7 |       0.2 |       0.0 |       1.0 |     313.4KB |      14.8 |
+| max     |    2158.1 |       1.0 |       0.0 |       6.0 |     313.4KB |      88.9 |
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
++---------+------------+------------+------------+------------+------------+
+| total   | rows       | late       | rules      | sm_delta   | out        |
++---------+------------+------------+------------+------------+------------+
+| count   |       2161 |          1 |          0 |         +6 |         89 |
++---------+------------+------------+------------+------------+------------+ runtime=5.999328791s intervals=6
+2026-03-09T16:04:41.833435Z DEBUG [sys] task group finished task_group="metrics"
+2026-03-09T16:04:41.833470Z DEBUG [sys] waiting for task group to finish task_group="receiver"
+2026-03-09T16:04:41.833492Z DEBUG [sys] task group finished task_group="receiver"
+2026-03-09T16:04:41.833524Z DEBUG [sys] waiting for task group to finish task_group="rules"
+2026-03-09T16:04:41.833584Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:04:41.833594Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:04:41.833630Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:04:41.833703Z DEBUG [pipe] <running_stage_signal#1> rule task shutdown complete
+2026-03-09T16:04:41.833703Z DEBUG [pipe] <anomaly_burst_signal#2> rule task shutdown complete
+2026-03-09T16:04:41.833706Z DEBUG [pipe] <prepare_stage_signal#0> rule task shutdown complete
+2026-03-09T16:04:41.833867Z DEBUG [sys] task group finished task_group="rules"
+2026-03-09T16:04:41.833915Z DEBUG [sys] waiting for task group to finish task_group="evictor"
+2026-03-09T16:04:41.833935Z DEBUG [sys] task group finished task_group="evictor"
+2026-03-09T16:04:41.833941Z DEBUG [sys] waiting for task group to finish task_group="alert"
+2026-03-09T16:04:41.834541Z DEBUG [sys] task group finished task_group="alert"
+2026-03-09T16:12:24.148130Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: loaded schema file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/schemas/wparse_semantic.wfs schemas=2
+2026-03-09T16:12:24.148886Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: compiled rule file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/rules/wparse_semantic.wfl rules=3
+2026-03-09T16:12:24.148926Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: over vs over_cap validation passed windows=2
+2026-03-09T16:12:24.149652Z  INFO [sys] engine.start{listen=tcp://127.0.0.1:9800}: engine bootstrap complete schemas=2 rules=3
+2026-03-09T16:12:24.149755Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:12:24.149766Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:12:24.149772Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:12:24.149848Z  INFO [sys] metrics exporter started listen=127.0.0.1:9901 interval=1s
+2026-03-09T16:12:24.149860Z  INFO engine.start{listen=tcp://127.0.0.1:9800}: suc! engine-bootstrap: 
+call context:
+	listen : tcp://127.0.0.1:9800
+	base_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse
+ mod_path=wf_runtime::lifecycle
+2026-03-09T16:12:24.149879Z  INFO [conn] starting file source replay source=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/data/wparse_events.ndjson stream="wparse"
+2026-03-09T16:12:24.149893Z  INFO [sys] WarpFusion reactor started listen=127.0.0.1:9800
+2026-03-09T16:12:24.149910Z  INFO [res] runtime metrics enabled interval=1s listen=127.0.0.1:9901
+2026-03-09T16:12:24.150617Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:12:24.150619Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:12:24.150625Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:12:24.168347Z DEBUG [pipe] frame decoded stream="wparse" rows=2048
+2026-03-09T16:12:24.168484Z DEBUG [pipe] route report delivered=1 dropped_late=0 skipped=0
+2026-03-09T16:12:24.168501Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=1 batches=1 gap=false
+2026-03-09T16:12:24.168505Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=1 batches=1 gap=false
+2026-03-09T16:12:24.169652Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=1 batches=1 gap=false
+2026-03-09T16:12:24.170888Z DEBUG [pipe] frame decoded stream="wparse" rows=113
+2026-03-09T16:12:24.170908Z DEBUG [pipe] route report delivered=0 dropped_late=1 skipped=0
+2026-03-09T16:12:24.170923Z  INFO [conn] file source replay complete source=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/data/wparse_events.ndjson stream="wparse" rows=2161
+2026-03-09T16:12:25.152119Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:12:25.152089Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:12:25.152253Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:12:25.152416Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=89 window_bytes=320872
+2026-03-09T16:12:25.152535Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|    2157.0 |       1.0 |       0.0 |       6.0 |     313.4KB |      88.8 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T16:12:26.152112Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=89 window_bytes=320872
+2026-03-09T16:12:26.152286Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T16:12:26.152394Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:12:26.152419Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:12:26.152509Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:12:27.151771Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:12:27.151875Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:12:27.151894Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:12:27.151929Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=89 window_bytes=320872
+2026-03-09T16:12:27.151984Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T16:12:28.152197Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:12:28.152197Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:12:28.152215Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:12:28.152263Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=89 window_bytes=320872
+2026-03-09T16:12:28.152312Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T16:12:29.151787Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:12:29.151774Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:12:29.151818Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:12:29.151919Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=89 window_bytes=320872
+2026-03-09T16:12:29.152118Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T16:12:30.145639Z  INFO [sys] received signal, initiating graceful shutdown signal="SIGINT"
+2026-03-09T16:12:30.145725Z  INFO [sys] initiating graceful shutdown
+2026-03-09T16:12:30.145738Z DEBUG [sys] waiting for task group to finish task_group="metrics"
+2026-03-09T16:12:30.145875Z  INFO [res] 
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
+| stat    | row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
+| avg     |     359.5 |       0.2 |       0.0 |       1.0 |     313.4KB |      14.8 |
+| max     |    2157.0 |       1.0 |       0.0 |       6.0 |     313.4KB |      88.8 |
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
++---------+------------+------------+------------+------------+------------+
+| total   | rows       | late       | rules      | sm_delta   | out        |
++---------+------------+------------+------------+------------+------------+
+| count   |       2161 |          1 |          0 |         +6 |         89 |
++---------+------------+------------+------------+------------+------------+ runtime=5.995218875s intervals=6
+2026-03-09T16:12:30.145958Z DEBUG [sys] task group finished task_group="metrics"
+2026-03-09T16:12:30.145970Z DEBUG [sys] waiting for task group to finish task_group="receiver"
+2026-03-09T16:12:30.145987Z DEBUG [sys] task group finished task_group="receiver"
+2026-03-09T16:12:30.146003Z DEBUG [sys] waiting for task group to finish task_group="rules"
+2026-03-09T16:12:30.146041Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:12:30.146042Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:12:30.146053Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:12:30.146146Z DEBUG [pipe] <prepare_stage_signal#0> rule task shutdown complete
+2026-03-09T16:12:30.146147Z DEBUG [pipe] <running_stage_signal#1> rule task shutdown complete
+2026-03-09T16:12:30.146148Z DEBUG [pipe] <anomaly_burst_signal#2> rule task shutdown complete
+2026-03-09T16:12:30.146264Z DEBUG [sys] task group finished task_group="rules"
+2026-03-09T16:12:30.146283Z DEBUG [sys] waiting for task group to finish task_group="evictor"
+2026-03-09T16:12:30.146295Z DEBUG [sys] task group finished task_group="evictor"
+2026-03-09T16:12:30.146299Z DEBUG [sys] waiting for task group to finish task_group="alert"
+2026-03-09T16:12:30.146600Z DEBUG [sys] task group finished task_group="alert"
+2026-03-09T16:18:34.200329Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: loaded schema file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/schemas/wparse_semantic.wfs schemas=2
+2026-03-09T16:18:34.201130Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: compiled rule file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/rules/wparse_semantic.wfl rules=3
+2026-03-09T16:18:34.201169Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: over vs over_cap validation passed windows=2
+2026-03-09T16:18:34.201924Z  INFO [sys] engine.start{listen=tcp://127.0.0.1:9800}: engine bootstrap complete schemas=2 rules=3
+2026-03-09T16:18:34.202048Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:18:34.202049Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:18:34.202067Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:18:34.202121Z  INFO engine.start{listen=tcp://127.0.0.1:9800}: suc! engine-bootstrap: 
+call context:
+	listen : tcp://127.0.0.1:9800
+	base_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse
+ mod_path=wf_runtime::lifecycle
+2026-03-09T16:18:34.202133Z  INFO [sys] metrics exporter started listen=127.0.0.1:9901 interval=1s
+2026-03-09T16:18:34.202149Z  INFO [sys] WarpFusion reactor started listen=127.0.0.1:9800
+2026-03-09T16:18:34.202164Z  INFO [res] runtime metrics enabled interval=1s listen=127.0.0.1:9901
+2026-03-09T16:18:34.202179Z  INFO [conn] starting file source replay source=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/data/wparse_events.ndjson stream="wparse"
+2026-03-09T16:18:34.203287Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:18:34.203292Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:18:34.203298Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:18:34.220869Z DEBUG [pipe] frame decoded stream="wparse" rows=2048
+2026-03-09T16:18:34.221013Z DEBUG [pipe] route report delivered=1 dropped_late=0 skipped=0
+2026-03-09T16:18:34.221034Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=1 batches=1 gap=false
+2026-03-09T16:18:34.221038Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=1 batches=1 gap=false
+2026-03-09T16:18:34.222174Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=1 batches=1 gap=false
+2026-03-09T16:18:34.223464Z DEBUG [pipe] frame decoded stream="wparse" rows=113
+2026-03-09T16:18:34.223485Z DEBUG [pipe] route report delivered=0 dropped_late=1 skipped=0
+2026-03-09T16:18:34.223497Z  INFO [conn] file source replay complete source=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/data/wparse_events.ndjson stream="wparse" rows=2161
+2026-03-09T16:18:35.204211Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:18:35.204191Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:18:35.204191Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:18:35.204787Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=89 window_bytes=320872
+2026-03-09T16:18:35.205162Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|    2157.6 |       1.0 |       0.0 |       6.0 |     313.4KB |      88.9 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T16:18:36.204116Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:18:36.204124Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:18:36.204269Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=89 window_bytes=320872
+2026-03-09T16:18:36.204201Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:18:36.204458Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T16:18:37.204121Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:18:37.204153Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:18:37.204276Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=89 window_bytes=320872
+2026-03-09T16:18:37.204253Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:18:37.204847Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T16:18:38.203807Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:18:38.203905Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:18:38.203837Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:18:38.204018Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=89 window_bytes=320872
+2026-03-09T16:18:38.204136Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T16:18:39.203722Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:18:39.203748Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:18:39.203833Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:18:39.203900Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=89 window_bytes=320872
+2026-03-09T16:18:39.204103Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T16:18:40.199765Z  INFO [sys] received signal, initiating graceful shutdown signal="SIGINT"
+2026-03-09T16:18:40.199854Z  INFO [sys] initiating graceful shutdown
+2026-03-09T16:18:40.199869Z DEBUG [sys] waiting for task group to finish task_group="metrics"
+2026-03-09T16:18:40.199959Z  INFO [res] 
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
+| stat    | row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
+| avg     |     359.6 |       0.2 |       0.0 |       1.0 |     313.4KB |      14.8 |
+| max     |    2157.6 |       1.0 |       0.0 |       6.0 |     313.4KB |      88.9 |
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
++---------+------------+------------+------------+------------+------------+
+| total   | rows       | late       | rules      | sm_delta   | out        |
++---------+------------+------------+------------+------------+------------+
+| count   |       2161 |          1 |          0 |         +6 |         89 |
++---------+------------+------------+------------+------------+------------+ runtime=5.996644208s intervals=6
+2026-03-09T16:18:40.200035Z DEBUG [sys] task group finished task_group="metrics"
+2026-03-09T16:18:40.200049Z DEBUG [sys] waiting for task group to finish task_group="receiver"
+2026-03-09T16:18:40.200060Z DEBUG [sys] task group finished task_group="receiver"
+2026-03-09T16:18:40.200079Z DEBUG [sys] waiting for task group to finish task_group="rules"
+2026-03-09T16:18:40.200111Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:18:40.200108Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:18:40.200130Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:18:40.200172Z DEBUG [pipe] <anomaly_burst_signal#2> rule task shutdown complete
+2026-03-09T16:18:40.200173Z DEBUG [pipe] <prepare_stage_signal#0> rule task shutdown complete
+2026-03-09T16:18:40.200172Z DEBUG [pipe] <running_stage_signal#1> rule task shutdown complete
+2026-03-09T16:18:40.200270Z DEBUG [sys] task group finished task_group="rules"
+2026-03-09T16:18:40.200287Z DEBUG [sys] waiting for task group to finish task_group="evictor"
+2026-03-09T16:18:40.200299Z DEBUG [sys] task group finished task_group="evictor"
+2026-03-09T16:18:40.200304Z DEBUG [sys] waiting for task group to finish task_group="alert"
+2026-03-09T16:18:40.200602Z DEBUG [sys] task group finished task_group="alert"
+2026-03-09T16:36:51.372903Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: loaded schema file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/schemas/wparse_semantic.wfs schemas=2
+2026-03-09T16:36:51.374292Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: compiled rule file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/rules/wparse_semantic.wfl rules=3
+2026-03-09T16:36:51.374353Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: over vs over_cap validation passed windows=2
+2026-03-09T16:36:51.378659Z  INFO [sys] engine.start{listen=tcp://127.0.0.1:9800}: engine bootstrap complete schemas=2 rules=3
+2026-03-09T16:36:51.378894Z DEBUG [pipe] <prepare_stage_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:36:51.378895Z DEBUG [pipe] <anomaly_burst_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:36:51.378895Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:36:51.378936Z ERROR engine.start{listen=tcp://127.0.0.1:9800}: fail! engine-bootstrap: 
+call context:
+	listen : tcp://127.0.0.1:9800
+	base_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse
+ mod_path=wf_runtime::lifecycle
+2026-03-09T16:40:00.822516Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: loaded schema file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/schemas/wparse_semantic.wfs schemas=2
+2026-03-09T16:40:00.823333Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: compiled rule file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/rules/wparse_semantic.wfl rules=3
+2026-03-09T16:40:00.823381Z DEBUG [conf] engine.start{listen=tcp://127.0.0.1:9800}: over vs over_cap validation passed windows=2
+2026-03-09T16:40:00.824194Z  INFO [sys] engine.start{listen=tcp://127.0.0.1:9800}: engine bootstrap complete schemas=2 rules=3
+2026-03-09T16:40:00.824315Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:40:00.824315Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:40:00.824326Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:40:00.824378Z  INFO engine.start{listen=tcp://127.0.0.1:9800}: suc! engine-bootstrap: 
+call context:
+	listen : tcp://127.0.0.1:9800
+	base_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse
+ mod_path=wf_runtime::lifecycle
+2026-03-09T16:40:00.824402Z  INFO [sys] WarpFusion reactor started listen=127.0.0.1:9800
+2026-03-09T16:40:00.824412Z  INFO [res] runtime metrics enabled interval=1s listen=127.0.0.1:9901
+2026-03-09T16:40:00.824469Z  INFO [sys] metrics exporter started listen=127.0.0.1:9901 interval=1s
+2026-03-09T16:40:00.824820Z  INFO [conn] starting file source replay source=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/data/wparse_events.ndjson stream="wparse"
+2026-03-09T16:40:00.825580Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:40:00.825590Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:40:00.825588Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-09T16:40:00.845907Z DEBUG [pipe] frame decoded stream="wparse" rows=2048
+2026-03-09T16:40:00.846108Z DEBUG [pipe] route report delivered=1 dropped_late=0 skipped=0
+2026-03-09T16:40:00.846155Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=0 new_cursor=1 batches=1 gap=false
+2026-03-09T16:40:00.846151Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=0 new_cursor=1 batches=1 gap=false
+2026-03-09T16:40:00.847279Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=0 new_cursor=1 batches=1 gap=false
+2026-03-09T16:40:00.848543Z DEBUG [pipe] frame decoded stream="wparse" rows=113
+2026-03-09T16:40:00.848568Z DEBUG [pipe] route report delivered=0 dropped_late=1 skipped=0
+2026-03-09T16:40:00.848586Z  INFO [conn] file source replay complete source=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/data/wparse_events.ndjson stream="wparse" rows=2161
+2026-03-09T16:40:01.824835Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:40:01.824835Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:40:01.824835Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:40:01.826183Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=89 window_bytes=320872
+2026-03-09T16:40:01.826239Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|    2159.6 |       1.0 |       0.0 |       6.0 |     313.4KB |      88.9 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T16:40:02.826039Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:40:02.826039Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:40:02.826039Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:40:02.826200Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=89 window_bytes=320872
+2026-03-09T16:40:02.826244Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T16:40:03.825517Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:40:03.825517Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:40:03.825517Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:40:03.825785Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=89 window_bytes=320872
+2026-03-09T16:40:03.825841Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T16:40:04.826294Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:40:04.826418Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:40:04.826466Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:40:04.826482Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=89 window_bytes=320872
+2026-03-09T16:40:04.826579Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T16:40:05.826188Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:40:05.826185Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:40:05.826185Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:40:05.826406Z  INFO [res] metrics snapshot summary=rx_rows=2161 routed=1 dropped_late=1 matches=0 alerts=89 window_bytes=320872
+2026-03-09T16:40:05.826557Z  INFO [res] 
++-----------+-----------+-----------+-----------+-------------+-----------+
+| row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++-----------+-----------+-----------+-----------+-------------+-----------+
+|       0.0 |       0.0 |       0.0 |       0.0 |     313.4KB |       0.0 |
++-----------+-----------+-----------+-----------+-------------+-----------+
+2026-03-09T16:40:06.819032Z  INFO [sys] received signal, initiating graceful shutdown signal="SIGINT"
+2026-03-09T16:40:06.819078Z  INFO [sys] initiating graceful shutdown
+2026-03-09T16:40:06.819086Z DEBUG [sys] waiting for task group to finish task_group="metrics"
+2026-03-09T16:40:06.819135Z  INFO [res] 
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
+| stat    | row/s     | late/s    | rules/s   | sm/s      | memory      | out/s     |
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
+| avg     |     359.9 |       0.2 |       0.0 |       1.0 |     313.4KB |      14.8 |
+| max     |    2159.6 |       1.0 |       0.0 |       6.0 |     313.4KB |      88.9 |
++---------+-----------+-----------+-----------+-----------+-------------+-----------+
++---------+------------+------------+------------+------------+------------+
+| total   | rows       | late       | rules      | sm_delta   | out        |
++---------+------------+------------+------------+------------+------------+
+| count   |       2161 |          1 |          0 |         +6 |         89 |
++---------+------------+------------+------------+------------+------------+ runtime=5.993566459s intervals=6
+2026-03-09T16:40:06.819181Z DEBUG [sys] task group finished task_group="metrics"
+2026-03-09T16:40:06.819194Z DEBUG [sys] waiting for task group to finish task_group="receiver"
+2026-03-09T16:40:06.819204Z DEBUG [sys] task group finished task_group="receiver"
+2026-03-09T16:40:06.819214Z DEBUG [sys] waiting for task group to finish task_group="rules"
+2026-03-09T16:40:06.819235Z DEBUG [pipe] <running_stage_signal#1> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:40:06.819236Z DEBUG [pipe] <prepare_stage_signal#0> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:40:06.819256Z DEBUG [pipe] <anomaly_burst_signal#2> read_since window=wparse_events cursor=1 new_cursor=1 batches=0 gap=false
+2026-03-09T16:40:06.819290Z DEBUG [pipe] <running_stage_signal#1> rule task shutdown complete
+2026-03-09T16:40:06.819290Z DEBUG [pipe] <anomaly_burst_signal#2> rule task shutdown complete
+2026-03-09T16:40:06.819293Z DEBUG [pipe] <prepare_stage_signal#0> rule task shutdown complete
+2026-03-09T16:40:06.819358Z DEBUG [sys] task group finished task_group="rules"
+2026-03-09T16:40:06.819365Z DEBUG [sys] waiting for task group to finish task_group="evictor"
+2026-03-09T16:40:06.819372Z DEBUG [sys] task group finished task_group="evictor"
+2026-03-09T16:40:06.819375Z DEBUG [sys] waiting for task group to finish task_group="alert"
+2026-03-09T16:40:06.819416Z DEBUG [sys] task group finished task_group="alert"

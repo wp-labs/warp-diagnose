@@ -1,0 +1,51 @@
+sinks = "sinks"
+
+[server]
+listen = "tcp://127.0.0.1:9800"
+
+[[sources]]
+type = "tcp"
+name = "ingress_tcp"
+listen = "tcp://127.0.0.1:9800"
+
+[[sources]]
+type = "file"
+name = "wparse_seed"
+path = "data/wparse_events.ndjson"
+stream = "wparse"
+format = "ndjson"
+
+[runtime]
+executor_parallelism = 2
+rule_exec_timeout = "30s"
+schemas = "schemas/*.wfs"
+rules = "rules/*.wfl"
+
+[window_defaults]
+evict_interval = "30s"
+max_window_bytes = "128MB"
+max_total_bytes = "1GB"
+evict_policy = "time_first"
+watermark = "3s"
+allowed_lateness = "0s"
+late_policy = "drop"
+
+[window.wparse_events]
+mode = "local"
+max_window_bytes = "128MB"
+over_cap = "60m"
+
+[window.semantic_alerts]
+mode = "local"
+max_window_bytes = "64MB"
+over_cap = "2h"
+
+[vars]
+PREP_THRESHOLD = "2"
+RUN_THRESHOLD = "3"
+ANOMALY_THRESHOLD = "2"
+
+[logging]
+level = "info"
+format = "plain"
+file = "logs/wfusion-wparse.log"

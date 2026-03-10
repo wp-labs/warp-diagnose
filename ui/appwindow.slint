@@ -1,0 +1,706 @@
+import { Button, ScrollView } from "std-widgets.slint";
+
+export struct StageBand {
+    label: string,
+    summary: string,
+    start_pct: float,
+    end_pct: float,
+    selected: bool,
+}
+
+export struct TimelinePoint {
+    x_pct: float,
+    y_pct: float,
+    risk: float,
+    size_norm: float,
+    entity: string,
+}
+
+export struct TimeTick {
+    x_pct: float,
+    label: string,
+}
+
+export struct LaneLabel {
+    y_pct: float,
+    label: string,
+}
+
+export struct StageCard {
+    idx: int,
+    label: string,
+    action: string,
+    summary: string,
+    selected: bool,
+}
+
+component MetricCard inherits Rectangle {
+    in property <string> label;
+    in property <int> value;
+    in property <color> tone: #1d2a42;
+
+    border-radius: 10px;
+    background: tone;
+    height: 82px;
+
+    VerticalLayout {
+        padding: 10px;
+        spacing: 4px;
+
+        Text {
+            text: label;
+            color: #b9c7df;
+            font-size: 12px;
+            horizontal-alignment: left;
+        }
+
+        Text {
+            text: value;
+            color: #f5f8ff;
+            font-size: 22px;
+            font-weight: 700;
+            horizontal-alignment: left;
+        }
+    }
+}
+
+component ScrollTextPanel inherits Rectangle {
+    in property <string> title;
+    in property <string> body;
+    in property <length> body-size: 12px;
+    in property <length> body-viewport-height: 120px;
+
+    border-radius: 10px;
+    background: #131f38;
+
+    VerticalLayout {
+        padding: 10px;
+        spacing: 6px;
+
+        Text {
+            text: title;
+            color: #edf3ff;
+            font-size: 13px;
+            font-weight: 700;
+            horizontal-alignment: left;
+        }
+
+        ScrollView {
+            vertical-scrollbar-policy: ScrollBarPolicy.as-needed;
+            horizontal-scrollbar-policy: ScrollBarPolicy.as-needed;
+
+            Rectangle {
+                width: parent.width - 6px;
+                height: body-viewport-height;
+                background: #0f172a;
+                border-radius: 8px;
+
+                Text {
+                    text: body;
+                    color: #dbe6ff;
+                    x: 10px;
+                    y: 8px;
+                    width: parent.width - 20px;
+                    font-family: "Menlo";
+                    font-size: body-size;
+                    wrap: word-wrap;
+                    horizontal-alignment: left;
+                    vertical-alignment: top;
+                }
+            }
+        }
+    }
+}
+
+export component AppWindow inherits Window {
+    in-out property <string> status_text: "Ready";
+    in-out property <int> total_events: 0;
+    in-out property <int> info_events: 0;
+    in-out property <int> warn_events: 0;
+    in-out property <int> error_events: 0;
+
+    in-out property <string> recent_events_text: "No data loaded";
+    in-out property <string> top_targets_text: "No data loaded";
+    in-out property <string> top_entities_text: "No data loaded";
+    in-out property <string> source_text: "No data loaded";
+
+    in-out property <string> stage_detail_text: "No stage selected";
+    in-out property <string> point_detail_text: "Click any point";
+    in-out property <string> lane_legend_text: "No lane";
+    in-out property <string> hover_detail_text: "Hover a point to preview.";
+
+    in-out property <[StageBand]> stage_bands: [];
+    in-out property <[TimelinePoint]> timeline_points: [];
+    in-out property <[TimeTick]> time_ticks: [];
+    in-out property <int> timeline_content_px: 1400;
+    in-out property <length> timeline_canvas_x: -600px;
+    in-out property <float> timeline_zoom: 1.0;
+    in-out property <[LaneLabel]> lane_labels: [];
+    in-out property <[StageCard]> stage_cards: [];
+
+    callback reload_data();
+    callback stage_clicked(int);
+    callback point_clicked(int);
+    callback point_hovered(int);
+    callback point_unhovered();
+    callback clear_stage_filter();
+    callback clear_point_selection();
+
+    width: 1420px;
+    height: 960px;
+    title: "Warp Diagnose";
+    background: #0a1020;
+
+    VerticalLayout {
+        spacing: 10px;
+        padding: 12px;
+
+        Rectangle {
+            height: 72px;
+            border-radius: 10px;
+            background: #101a30;
+
+            HorizontalLayout {
+                padding: 10px;
+                spacing: 10px;
+
+                VerticalLayout {
+                    spacing: 2px;
+                    Text {
+                        text: "Warp Diagnose / Stage + Entity Timeline";
+                        color: #f4f7ff;
+                        font-size: 22px;
+                        font-weight: 700;
+                        horizontal-alignment: left;
+                    }
+
+                    Text {
+                        text: "Layout: Main Timeline + Inspector + Log Stream";
+                        color: #9eb1d1;
+                        font-size: 13px;
+                        horizontal-alignment: left;
+                    }
+                }
+
+                Rectangle {
+                    background: transparent;
+                }
+
+                Button {
+                    text: "Compact";
+                    clicked => {
+                        root.width = 1200px;
+                        root.height = 820px;
+                    }
+                }
+                Button {
+                    text: "Default";
+                    clicked => {
+                        root.width = 1420px;
+                        root.height = 960px;
+                    }
+                }
+                Button {
+                    text: "Wide";
+                    clicked => {
+                        root.width = 1680px;
+                        root.height = 1040px;
+                    }
+                }
+                Button {
+                    text: "Reload";
+                    clicked => {
+                        root.reload_data();
+                    }
+                }
+            }
+        }
+
+        HorizontalLayout {
+            spacing: 10px;
+            MetricCard {
+                label: "TOTAL EVENTS";
+                value: total_events;
+                tone: #1a2d4a;
+            }
+            MetricCard {
+                label: "INFO";
+                value: info_events;
+                tone: #1d3a35;
+            }
+            MetricCard {
+                label: "WARN";
+                value: warn_events;
+                tone: #4f3f19;
+            }
+            MetricCard {
+                label: "ERROR+";
+                value: error_events;
+                tone: #4a1f25;
+            }
+        }
+
+        HorizontalLayout {
+            spacing: 10px;
+
+            timeline-panel := Rectangle {
+                property <length> timeline_pan_step: 30px;
+                property <float> timeline_zoom_min: 0.5;
+                property <float> timeline_zoom_max: 6.0;
+                property <float> timeline_zoom_step: 0.25;
+                property <float> timeline_zoom_in_value: min(self.timeline_zoom_max, root.timeline_zoom + self.timeline_zoom_step);
+                property <float> timeline_zoom_out_value: max(self.timeline_zoom_min, root.timeline_zoom - self.timeline_zoom_step);
+                property <length> timeline_min_canvas_x: min(0px, timeline-viewport.width - timeline-content.width);
+                border-radius: 10px;
+                background: #101a30;
+                height: 480px;
+                min-width: 940px;
+
+                Text {
+                    text: "Stage + Entity Timeline";
+                    color: #edf3ff;
+                    font-size: 16px;
+                    font-weight: 700;
+                    x: 12px;
+                    y: 8px;
+                }
+
+                Text {
+                    text: "Drag to pan. Use zoom buttons to inspect dense ranges.";
+                    color: #9eb1d1;
+                    font-size: 11px;
+                    x: 14px;
+                    y: 27px;
+                }
+
+                Button {
+                    text: "Zoom -";
+                    x: parent.width - 860px;
+                    y: 8px;
+                    clicked => {
+                        root.timeline_canvas_x = min(
+                            0px,
+                            timeline-viewport.width / 2 - (timeline-viewport.width / 2 - timeline-content.x) * timeline-panel.timeline_zoom_out_value / root.timeline_zoom
+                        );
+                        root.timeline_zoom = timeline-panel.timeline_zoom_out_value;
+                    }
+                }
+
+                Button {
+                    text: "Zoom +";
+                    x: parent.width - 760px;
+                    y: 8px;
+                    clicked => {
+                        root.timeline_canvas_x = min(
+                            0px,
+                            timeline-viewport.width / 2 - (timeline-viewport.width / 2 - timeline-content.x) * timeline-panel.timeline_zoom_in_value / root.timeline_zoom
+                        );
+                        root.timeline_zoom = timeline-panel.timeline_zoom_in_value;
+                    }
+                }
+
+                Button {
+                    text: "1x";
+                    x: parent.width - 660px;
+                    y: 8px;
+                    clicked => {
+                        root.timeline_canvas_x = min(
+                            0px,
+                            timeline-viewport.width / 2 - (timeline-viewport.width / 2 - timeline-content.x) * 1.0 / root.timeline_zoom
+                        );
+                        root.timeline_zoom = 1.0;
+                    }
+                }
+
+                Button {
+                    text: "Home";
+                    x: parent.width - 610px;
+                    y: 8px;
+                    clicked => {
+                        root.timeline_canvas_x = 0px;
+                    }
+                }
+
+                Button {
+                    text: "Pan Left";
+                    x: parent.width - 520px;
+                    y: 8px;
+                    clicked => {
+                        root.timeline_canvas_x = min(0px, timeline-content.x + timeline-panel.timeline_pan_step);
+                    }
+                }
+
+                Button {
+                    text: "Pan Right";
+                    x: parent.width - 410px;
+                    y: 8px;
+                    clicked => {
+                        root.timeline_canvas_x = max(timeline-panel.timeline_min_canvas_x, timeline-content.x - timeline-panel.timeline_pan_step);
+                    }
+                }
+
+                Button {
+                    text: "Now";
+                    x: parent.width - 310px;
+                    y: 8px;
+                    clicked => {
+                        root.timeline_canvas_x = timeline-panel.timeline_min_canvas_x;
+                    }
+                }
+
+                Button {
+                    text: "Clear Stage";
+                    x: parent.width - 220px;
+                    y: 8px;
+                    clicked => {
+                        root.clear_stage_filter();
+                    }
+                }
+
+                Button {
+                    text: "Clear Point";
+                    x: parent.width - 110px;
+                    y: 8px;
+                    clicked => {
+                        root.clear_point_selection();
+                    }
+                }
+
+                Rectangle {
+                    x: 12px;
+                    y: 38px;
+                    width: parent.width - 24px;
+                    height: 434px;
+                    border-radius: 8px;
+                    background: #0d1527;
+
+                    for lane in lane_labels: Text {
+                        text: lane.label;
+                        color: #90a5c8;
+                        x: 8px;
+                        y: 96px + (350px - 52px) * lane.y_pct;
+                        font-size: 10px;
+                        width: 74px;
+                        horizontal-alignment: left;
+                    }
+
+                    timeline-viewport := Rectangle {
+                        x: 82px;
+                        y: 0px;
+                        width: parent.width - 92px;
+                        height: parent.height;
+                        clip: true;
+                        background: transparent;
+
+                        TouchArea {
+                            property <length> start_canvas_x: 0px;
+                            x: 0px;
+                            y: 84px;
+                            width: parent.width;
+                            height: 350px;
+
+                            pointer-event(event) => {
+                                if (event.button == PointerEventButton.left && event.kind == PointerEventKind.down) {
+                                    self.start_canvas_x = timeline-content.x;
+                                }
+                            }
+
+                            moved => {
+                                if (self.enabled && self.pressed) {
+                                    root.timeline_canvas_x = self.start_canvas_x + (self.mouse-x - self.pressed-x);
+                                }
+                            }
+                        }
+
+                        timeline-content := Rectangle {
+                            x: max(min(0px, timeline-viewport.width - self.width), min(0px, root.timeline_canvas_x));
+                            y: 0px;
+                            width: max(parent.width - 6px, root.timeline_content_px * 1px * root.timeline_zoom);
+                            height: parent.height;
+                            background: transparent;
+
+                            Rectangle {
+                                x: 0px;
+                                y: 0px;
+                                width: parent.width;
+                                height: 76px;
+                                border-radius: 8px;
+                                background: #0f172a;
+
+                                Text {
+                                    text: "Stage Track (click to filter)";
+                                    color: #90a5c8;
+                                    x: 10px;
+                                    y: 4px;
+                                    font-size: 11px;
+                                }
+
+                                for stage[i] in stage_bands: Rectangle {
+                                    x: 8px + (parent.width - 16px) * stage.start_pct;
+                                    y: 20px;
+                                    width: max(6px, (parent.width - 16px) * (stage.end_pct - stage.start_pct));
+                                    height: 50px;
+                                    border-radius: 6px;
+                                    background: stage.selected ? #4e7dff : #2a3d66;
+                                    border-width: stage.selected ? 2px : 1px;
+                                    border-color: stage.selected ? #dfe8ff : #475b85;
+
+                                    Text {
+                                        text: stage.label;
+                                        color: #f4f8ff;
+                                        horizontal-alignment: center;
+                                        vertical-alignment: center;
+                                        font-size: 11px;
+                                    }
+
+                                    TouchArea {
+                                        clicked => {
+                                            root.stage_clicked(i);
+                                        }
+                                    }
+                                }
+                            }
+
+                            Rectangle {
+                                x: 0px;
+                                y: 84px;
+                                width: parent.width;
+                                height: 350px;
+                                border-radius: 8px;
+                                background: #0a1020;
+
+                                for tick in time_ticks: Rectangle {
+                                    x: (parent.width - 1px) * tick.x_pct;
+                                    y: 0px;
+                                    width: 1px;
+                                    height: parent.height;
+                                    background: #20314f;
+                                }
+
+                                for lane in lane_labels: Rectangle {
+                                    x: 0px;
+                                    y: (parent.height - 1px) * lane.y_pct;
+                                    width: parent.width;
+                                    height: 1px;
+                                    background: #1d2a44;
+                                }
+
+                                for point[i] in timeline_points: Rectangle {
+                                    width: 7px + point.size_norm * 14px;
+                                    height: 7px + point.size_norm * 14px;
+                                    x: (parent.width - 8px) * point.x_pct - self.width / 2 + 4px;
+                                    y: (parent.height - 8px) * point.y_pct - self.height / 2 + 4px;
+                                    border-radius: self.width / 2;
+                                    background: point.risk >= 0.85 ? #ff5f77 : (point.risk >= 0.60 ? #ffb44d : #56d6a3);
+                                    border-width: 0px;
+
+                                    TouchArea {
+                                        property <length> start_canvas_x: 0px;
+                                        property <bool> dragged: false;
+
+                                        pointer-event(event) => {
+                                            if (event.button == PointerEventButton.left && event.kind == PointerEventKind.down) {
+                                                self.start_canvas_x = timeline-content.x;
+                                                self.dragged = false;
+                                            }
+                                        }
+
+                                        moved => {
+                                            if (self.enabled && self.pressed) {
+                                                if (self.mouse-x > self.pressed-x + 3px || self.mouse-x < self.pressed-x - 3px) {
+                                                    self.dragged = true;
+                                                }
+                                            }
+                                        }
+
+                                        clicked => {
+                                            if (!self.dragged) {
+                                                root.point_clicked(i);
+                                            }
+                                        }
+
+                                        changed has-hover => {
+                                            if self.has-hover {
+                                                root.point_hovered(i);
+                                            } else {
+                                                root.point_unhovered();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            for tick in time_ticks: Text {
+                                text: tick.label;
+                                color: #90a5c8;
+                                x: parent.width * tick.x_pct - 24px;
+                                y: parent.height - 24px;
+                                width: 52px;
+                                font-size: 10px;
+                                horizontal-alignment: center;
+                            }
+                        }
+                    }
+                }
+            }
+
+            Rectangle {
+                width: 370px;
+                height: 480px;
+                border-radius: 10px;
+                background: #131f38;
+
+                VerticalLayout {
+                    padding: 10px;
+                    spacing: 6px;
+
+                    Text {
+                        text: "Inspector";
+                        color: #edf3ff;
+                        font-size: 14px;
+                        font-weight: 700;
+                        horizontal-alignment: left;
+                    }
+
+                    Rectangle {
+                        border-radius: 8px;
+                        background: #0f172a;
+                        height: 170px;
+
+                        Text {
+                            text: "Stages";
+                            color: #b9c7df;
+                            x: 10px;
+                            y: 6px;
+                            font-size: 11px;
+                        }
+
+                        ScrollView {
+                            x: 6px;
+                            y: 24px;
+                            width: parent.width - 12px;
+                            height: parent.height - 30px;
+                            vertical-scrollbar-policy: ScrollBarPolicy.as-needed;
+                            horizontal-scrollbar-policy: ScrollBarPolicy.as-needed;
+
+                            Rectangle {
+                                width: parent.width - 6px;
+                                height: 620px;
+                                background: transparent;
+
+                                for card in stage_cards: Rectangle {
+                                    x: 0px;
+                                    y: 2px + card.idx * 74px;
+                                    width: parent.width;
+                                    height: 66px;
+                                    border-radius: 7px;
+                                    background: card.selected ? #274888 : #16243f;
+                                    border-width: card.selected ? 2px : 1px;
+                                    border-color: card.selected ? #dce7ff : #30466f;
+
+                                    VerticalLayout {
+                                        padding: 6px;
+                                        spacing: 1px;
+
+                                        Text {
+                                            text: card.label;
+                                            color: #edf3ff;
+                                            font-size: 12px;
+                                            font-weight: 700;
+                                            horizontal-alignment: left;
+                                        }
+
+                                        Text {
+                                            text: "action=" + card.action;
+                                            color: #c7d6f4;
+                                            font-size: 10px;
+                                            horizontal-alignment: left;
+                                        }
+
+                                        Text {
+                                            text: card.summary;
+                                            color: #b5c7ec;
+                                            font-size: 10px;
+                                            horizontal-alignment: left;
+                                        }
+                                    }
+
+                                    TouchArea {
+                                        clicked => {
+                                            root.stage_clicked(card.idx);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    ScrollTextPanel {
+                        title: "Hover Preview";
+                        body: hover_detail_text;
+                        body-size: 11px;
+                        body-viewport-height: 86px;
+                    }
+
+                    ScrollTextPanel {
+                        title: "Point Detail";
+                        body: point_detail_text;
+                        body-size: 11px;
+                        body-viewport-height: 126px;
+                    }
+                }
+            }
+        }
+
+        HorizontalLayout {
+            spacing: 10px;
+
+            ScrollTextPanel {
+                title: "Recent Event Stream";
+                body: recent_events_text;
+                body-size: 11px;
+                body-viewport-height: 196px;
+                min-width: 760px;
+            }
+
+            Rectangle {
+                width: 550px;
+                border-radius: 10px;
+                background: #131f38;
+
+                VerticalLayout {
+                    padding: 10px;
+                    spacing: 8px;
+
+                    ScrollTextPanel {
+                        title: "Stage Detail";
+                        body: stage_detail_text;
+                        body-size: 11px;
+                        body-viewport-height: 70px;
+                    }
+
+                    ScrollTextPanel {
+                        title: "Top Targets";
+                        body: top_targets_text;
+                        body-size: 11px;
+                        body-viewport-height: 64px;
+                    }
+
+                    ScrollTextPanel {
+                        title: "Top Entities";
+                        body: top_entities_text;
+                        body-size: 11px;
+                        body-viewport-height: 64px;
+                    }
+
+                    ScrollTextPanel {
+                        title: "Source & Status";
+                        body: source_text + "\n\n" + status_text;
+                        body-size: 10px;
+                        body-viewport-height: 70px;
+                    }
+                }
+            }
+        }
+    }
+}

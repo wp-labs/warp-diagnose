@@ -1,0 +1,29 @@
+window wparse_events {
+    stream = "wparse"
+    time = event_time
+    over = 20m
+
+    fields {
+        event_time: time
+        level: chars
+        target: chars
+        subject: chars
+        action: chars
+        status: chars
+        content: chars
+        source: chars
+    }
+}
+
+window semantic_alerts {
+    over = 0
+
+    fields {
+        target: chars
+        subject: chars
+        action: chars
+        status: chars
+        event_count: digit
+        message: chars
+    }
+}

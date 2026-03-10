@@ -1,0 +1,85 @@
+use "wparse_semantic.wfs"
+
+rule prepare_stage_signal {
+  events {
+    e : wparse_events
+      && (action == "init" || action == "load" || action == "alloc" || action == "create" || action == "start")
+  }
+
+  match<target,subject:1s:fixed> {
+    on event {
+      e | count >= 1;
+    }
+    and close {
+      e | count >= ${PREP_THRESHOLD:2};
+    }
+  } -> score(32.0)
+
+  entity(service, concat(e.target, ":", e.subject))
+
+  yield semantic_alerts (
+    target = e.target,
+    subject = e.subject,
+    action = e.action,
+    status = "prepare",
+    event_count = count(e),
+    message = fmt("prepare-stage target={} action={} cnt={}", e.target, e.action, count(e))
+  )
+}
+
+rule running_stage_signal {
+  events {
+    e : wparse_events
+      && (action == "parse" || action == "run" || action == "work" || action == "spawn" || action == "dispatch" || action == "speed")
+  }
+
+  match<target,subject:1s:fixed> {
+    on event {
+      e | count >= 1;
+    }
+    and close {
+      e | count >= ${RUN_THRESHOLD:3};
+    }
+  } -> score(52.0)
+
+  entity(service, concat(e.target, ":", e.subject))
+
+  yield semantic_alerts (
+    target = e.target,
+    subject = e.subject,
+    action = e.action,
+    status = "running",
+    event_count = count(e),
+    message = fmt("running-stage target={} action={} cnt={}", e.target, e.action, count(e))
+  )
+}
+
+rule anomaly_burst_signal {
+  events {
+    e : wparse_events
+      && (
+        level == "WARN" || level == "ERROR"
+        || status == "warn" || status == "error" || status == "failed" || status == "timeout"
+      )
+  }
+
+  match<target,subject:1s:fixed> {
+    on event {
+      e | count >= 1;
+    }
+    and close {
+      e | count >= ${ANOMALY_THRESHOLD:2};
+    }
+  } -> score(85.0)
+
+  entity(service, concat(e.target, ":", e.subject))
+
+  yield semantic_alerts (
+    target = e.target,
+    subject = e.subject,
+    action = e.action,
+    status = "anomaly",
+    event_count = count(e),
+    message = fmt("anomaly-burst target={} action={} cnt={}", e.target, e.action, count(e))
+  )
+}
