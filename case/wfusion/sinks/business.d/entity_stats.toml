@@ -1,0 +1,30 @@
+[sink_group]
+name = "entity_stats_output"
+windows = ["entity_*"]
+
+[[sink_group.sinks]]
+connect = "arrow_file"
+name = "entity_stats_arrow"
+
+[sink_group.sinks.params]
+file = "wf-entity.arrow"
+fields = [
+  { name = "__wfu_id", type = "chars" },
+  { name = "__wfu_rule_name", type = "chars" },
+  { name = "__wfu_entity_type", type = "chars" },
+  { name = "__wfu_entity_id", type = "chars" },
+  { name = "subject", type = "chars" },
+  { name = "risk_level", type = "chars" },
+  { name = "avg_risk_score", type = "float" },
+  { name = "event_count", type = "digit" },
+  { name = "high_event_count", type = "digit" },
+  { name = "elevated_event_count", type = "digit" },
+]
+
+[[sink_group.sinks]]
+connect = "file_json"
+name = "entity_stats_json"
+fields = ["__wfu_entity_id", "subject", "event_count" ]
+
+[sink_group.sinks.params]
+file = "wf-entity.json"

@@ -87,9 +87,9 @@ case/scripts/run_wp_wf_case.sh
 ```bash
 cd /Users/zuowenjian/devspace/wp-labs/warp-diagnose
 WARP_DIAGNOSE_USE_WFUSION=1 \
-WARP_DIAGNOSE_DEMO_JSON=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/data/out_dat/wp-log.arrow \
+WARP_DIAGNOSE_LOG_WFU=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/data/out_dat/wp-log.arrow \
 WARP_DIAGNOSE_WPARSE_LOG=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/target_data/raw_log.dat \
-WARP_DIAGNOSE_WFUSION_ALERTS=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wfusion/alerts/wf-alert.arrow \
+WARP_DIAGNOSE_ALERT_WFU_DIR=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wfusion/alerts \
 cargo run
 ```
 

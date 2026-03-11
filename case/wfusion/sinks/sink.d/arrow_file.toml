@@ -9,12 +9,20 @@ file = "default.arrow"
 tag = "wf_alert"
 sync = false
 fields = [
-  { name = "wfx_id", type = "chars" },
-  { name = "rule_name", type = "chars" },
-  { name = "score", type = "float" },
-  { name = "entity_type", type = "chars" },
-  { name = "entity_id", type = "chars" },
-  { name = "origin", type = "chars" },
-  { name = "fired_at", type = "chars" },
-  { name = "summary", type = "chars" },
+  { name = "__wfu_id", type = "chars" },
+  { name = "__wfu_rule_name", type = "chars" },
+  { name = "__wfu_score", type = "float" },
+  { name = "__wfu_entity_type", type = "chars" },
+  { name = "__wfu_entity_id", type = "chars" },
+  { name = "__wfu_origin", type = "chars" },
+  { name = "__wfu_close_reason", type = "chars" },
+  { name = "__wfu_fired_at", type = "chars" },
+  { name = "__wfu_emit_time", type = "chars" },
+  { name = "__wfu_summary", type = "chars" },
+  { name = "target", type = "chars" },
+  { name = "subject", type = "chars" },
+  { name = "action", type = "chars" },
+  { name = "status", type = "chars" },
+  { name = "event_count", type = "digit" },
+  { name = "message", type = "chars" },
 ]

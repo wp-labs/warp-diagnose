@@ -1,85 +1,102 @@
 use "wparse_semantic.wfs"
 
-rule prepare_stage_signal {
+rule event_semantic_project {
   events {
     e : wparse_events
-      && (action == "init" || action == "load" || action == "alloc" || action == "create" || action == "start")
+      && subject != ""
   }
 
-  match<target,subject:1s:fixed> {
-    on event {
-      e | count >= 1;
-    }
-    and close {
-      e | count >= ${PREP_THRESHOLD:2};
-    }
-  } -> score(32.0)
+  on each e -> score(
+    if lower(e.status) in ("error", "failed", "failure", "timeout", "fatal", "panic", "abort")
+    then 90.0 else if lower(e.status) in ("miss", "disabled", "retry", "partial", "degraded")
+    then 80.0 else if lower(e.status) in ("warn", "warning")
+    then 70.0 else if lower(e.status) in ("success", "suc", "ok", "end", "enabled", "done", "pass")
+    then 20.0 else 40.0
+  )
 
-  entity(service, concat(e.target, ":", e.subject))
+  entity(service, e.subject)
 
-  yield semantic_alerts (
+  yield semantic_events (
+    event_time = e.event_time,
+    level = e.level,
     target = e.target,
     subject = e.subject,
     action = e.action,
-    status = "prepare",
-    event_count = count(e),
-    message = fmt("prepare-stage target={} action={} cnt={}", e.target, e.action, count(e))
+    status = e.status,
+    risk_score = @score,
+    content = e.content,
+    source = e.source
   )
 }
 
-rule running_stage_signal {
+rule window_risk {
   events {
-    e : wparse_events
-      && (action == "parse" || action == "run" || action == "work" || action == "spawn" || action == "dispatch" || action == "speed")
+    x : semantic_events
+    hi : semantic_events && risk_score >= 85
+    elevated : semantic_events && risk_score >= 70
   }
 
-  match<target,subject:1s:fixed> {
+  match<subject:1s:fixed> {
     on event {
-      e | count >= 1;
+      x | count >= 1;
     }
     and close {
-      e | count >= ${RUN_THRESHOLD:3};
+      x | count >= 1;
     }
-  } -> score(52.0)
+  } -> score(coalesce(avg(x.__wfu_score), 0.0))
 
-  entity(service, concat(e.target, ":", e.subject))
+  entity(service, x.subject)
 
-  yield semantic_alerts (
-    target = e.target,
-    subject = e.subject,
-    action = e.action,
-    status = "running",
-    event_count = count(e),
-    message = fmt("running-stage target={} action={} cnt={}", e.target, e.action, count(e))
+  yield risk_alerts (
+    window_bucket_time = time_bucket(first(x.event_time), 1),
+    target = coalesce(first(x.target), ""),
+    subject = x.subject,
+    action = coalesce(first(x.action), ""),
+    status = if coalesce(count(hi), 0) >= 1 && coalesce(count(elevated), 0) >= 2 then "high"
+      else if coalesce(count(elevated), 0) >= 1 then "medium"
+      else "low",
+    risk_score = coalesce(avg(x.risk_score), 0.0),
+    event_count = coalesce(count(x), 0),
+    message = fmt(
+      "subject={} level={} avg_score={} high_cnt={} elevated_cnt={} total={}",
+      x.subject,
+      if coalesce(count(hi), 0) >= 1 && coalesce(count(elevated), 0) >= 2 then "high"
+      else if coalesce(count(elevated), 0) >= 1 then "medium"
+      else "low",
+      coalesce(avg(x.risk_score), 0.0),
+      coalesce(count(hi), 0),
+      coalesce(count(elevated), 0),
+      coalesce(count(x), 0)
+    )
   )
 }
 
-rule anomaly_burst_signal {
+rule window_entity_stats {
   events {
-    e : wparse_events
-      && (
-        level == "WARN" || level == "ERROR"
-        || status == "warn" || status == "error" || status == "failed" || status == "timeout"
-      )
+    x : semantic_events
+    hi : semantic_events && risk_score >= 85
+    elevated : semantic_events && risk_score >= 70
   }
 
-  match<target,subject:1s:fixed> {
+  match<subject:1m:fixed> {
     on event {
-      e | count >= 1;
+      x | count >= 1;
     }
     and close {
-      e | count >= ${ANOMALY_THRESHOLD:2};
+      x | count >= 1;
     }
-  } -> score(85.0)
+  } -> score(coalesce(avg(x.__wfu_score), 0.0))
 
-  entity(service, concat(e.target, ":", e.subject))
+  entity(service, x.subject)
 
-  yield semantic_alerts (
-    target = e.target,
-    subject = e.subject,
-    action = e.action,
-    status = "anomaly",
-    event_count = count(e),
-    message = fmt("anomaly-burst target={} action={} cnt={}", e.target, e.action, count(e))
+  yield entity_stats (
+    subject = x.subject,
+    risk_level = if coalesce(count(hi), 0) >= 1 && coalesce(count(elevated), 0) >= 2 then "high"
+      else if coalesce(count(elevated), 0) >= 1 then "medium"
+      else "low",
+    avg_risk_score = coalesce(avg(x.risk_score), 0.0),
+    event_count = coalesce(count(x), 0),
+    high_event_count = coalesce(count(hi), 0),
+    elevated_event_count = coalesce(count(elevated), 0)
   )
 }

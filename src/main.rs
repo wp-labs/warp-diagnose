@@ -6,6 +6,19 @@ use warp_diagnose::data;
 
 slint::include_modules!();
 
+const TABLE_WINDOW_CHROME_PX: usize = 308;
+const TABLE_ROW_HEIGHT_PX: usize = 34;
+const TABLE_MIN_PAGE_SIZE: usize = 20;
+
+fn table_page_size(app: &AppWindow) -> usize {
+    let window_height = app.window().size().height as usize;
+    let computed = window_height
+        .saturating_sub(TABLE_WINDOW_CHROME_PX)
+        .max(TABLE_ROW_HEIGHT_PX)
+        / TABLE_ROW_HEIGHT_PX;
+    computed.max(TABLE_MIN_PAGE_SIZE)
+}
+
 fn level_filter_to_ui_idx(filter: Option<data::LevelFilter>) -> i32 {
     match filter {
         None => 0,
@@ -89,6 +102,9 @@ fn source_filter_label(filter: Option<data::SourceFilter>) -> String {
 
 struct UiState {
     dashboard: data::DashboardData,
+    active_page: i32,
+    log_page: usize,
+    alert_page: usize,
     selected_stage: Option<usize>,
     selected_level: Option<data::LevelFilter>,
     selected_risk: Option<data::RiskFilter>,
@@ -99,6 +115,96 @@ struct UiState {
     point_detail_rows: Vec<Vec<data::DetailRowVm>>,
     point_previews: Vec<String>,
     point_hint: String,
+}
+
+fn apply_log_page(app: &AppWindow, state: &mut UiState) {
+    let page_size = table_page_size(app);
+    let page = state.dashboard.build_log_page(
+        state.selected_stage,
+        state.selected_level,
+        state.selected_risk,
+        state.selected_source,
+        state.log_page,
+        page_size,
+    );
+    state.log_page = page.page_idx;
+    app.set_filtered_log_summary(page.summary.into());
+    app.set_filtered_log_rows(
+        Rc::new(VecModel::from(
+            page.rows
+                .iter()
+                .map(|row| DetailRow {
+                    row_no: row.row_no.clone().into(),
+                    time: row.time.clone().into(),
+                    level: row.level.clone().into(),
+                    risk_score: row.risk_score.clone().into(),
+                    rule: row.rule.clone().into(),
+                    target: row.target.clone().into(),
+                    entity: row.entity.clone().into(),
+                    action: row.action.clone().into(),
+                    status: row.status.clone().into(),
+                    content: row.content.clone().into(),
+                })
+                .collect::<Vec<_>>(),
+        ))
+        .into(),
+    );
+    app.set_log_page_text(
+        format!(
+            "Page {}/{} · {} rows",
+            page.page_idx + 1,
+            page.total_pages,
+            page.total_rows
+        )
+        .into(),
+    );
+    app.set_has_prev_log_page(page.page_idx > 0);
+    app.set_has_next_log_page(page.page_idx + 1 < page.total_pages);
+}
+
+fn apply_alert_page(app: &AppWindow, state: &mut UiState) {
+    let page_size = table_page_size(app);
+    let page = state.dashboard.build_alert_page(
+        state.selected_stage,
+        state.selected_level,
+        state.selected_risk,
+        state.selected_source,
+        state.alert_page,
+        page_size,
+    );
+    state.alert_page = page.page_idx;
+    app.set_filtered_alert_summary(page.summary.into());
+    app.set_filtered_alert_rows(
+        Rc::new(VecModel::from(
+            page.rows
+                .iter()
+                .map(|row| DetailRow {
+                    row_no: row.row_no.clone().into(),
+                    time: row.time.clone().into(),
+                    level: row.level.clone().into(),
+                    risk_score: row.risk_score.clone().into(),
+                    rule: row.rule.clone().into(),
+                    target: row.target.clone().into(),
+                    entity: row.entity.clone().into(),
+                    action: row.action.clone().into(),
+                    status: row.status.clone().into(),
+                    content: row.content.clone().into(),
+                })
+                .collect::<Vec<_>>(),
+        ))
+        .into(),
+    );
+    app.set_alert_page_text(
+        format!(
+            "Page {}/{} · {} rows",
+            page.page_idx + 1,
+            page.total_pages,
+            page.total_rows
+        )
+        .into(),
+    );
+    app.set_has_prev_alert_page(page.page_idx > 0);
+    app.set_has_next_alert_page(page.page_idx + 1 < page.total_pages);
 }
 
 fn apply_view(app: &AppWindow, state: &mut UiState) {
@@ -201,24 +307,12 @@ fn apply_view(app: &AppWindow, state: &mut UiState) {
     app.set_timeline_content_px(view.timeline_content_px);
     app.set_lane_labels(Rc::new(VecModel::from(lane_rows)).into());
     app.set_stage_cards(Rc::new(VecModel::from(card_rows)).into());
-    app.set_filtered_log_summary(view.filtered_log_summary.into());
-    app.set_filtered_log_rows(
-        Rc::new(VecModel::from(
-            view.filtered_log_rows
-                .iter()
-                .map(|row| DetailRow {
-                    time: row.time.clone().into(),
-                    level: row.level.clone().into(),
-                    target: row.target.clone().into(),
-                    entity: row.entity.clone().into(),
-                    action: row.action.clone().into(),
-                    status: row.status.clone().into(),
-                    content: row.content.clone().into(),
-                })
-                .collect::<Vec<_>>(),
-        ))
-        .into(),
-    );
+    app.set_active_page(state.active_page);
+    if state.active_page == 1 {
+        apply_log_page(app, state);
+    } else if state.active_page == 2 {
+        apply_alert_page(app, state);
+    }
 
     state.point_detail_summaries = view.point_detail_summaries;
     state.point_detail_rows = view.point_detail_rows;
@@ -241,8 +335,11 @@ fn apply_view(app: &AppWindow, state: &mut UiState) {
         Some(idx) if idx < state.point_detail_rows.len() => state.point_detail_rows[idx]
             .iter()
             .map(|row| DetailRow {
+                row_no: row.row_no.clone().into(),
                 time: row.time.clone().into(),
                 level: row.level.clone().into(),
+                risk_score: row.risk_score.clone().into(),
+                rule: row.rule.clone().into(),
                 target: row.target.clone().into(),
                 entity: row.entity.clone().into(),
                 action: row.action.clone().into(),
@@ -259,6 +356,8 @@ fn apply_view(app: &AppWindow, state: &mut UiState) {
 
 fn reload_data(app: &AppWindow, state: &mut UiState) {
     state.dashboard = data::load_default_sources();
+    state.log_page = 0;
+    state.alert_page = 0;
     state.selected_stage = None;
     state.selected_level = None;
     state.selected_risk = None;
@@ -279,6 +378,9 @@ fn main() -> Result<(), slint::PlatformError> {
 
     let state = Rc::new(RefCell::new(UiState {
         dashboard: data::load_default_sources(),
+        active_page: 0,
+        log_page: 0,
+        alert_page: 0,
         selected_stage: None,
         selected_level: None,
         selected_risk: None,
@@ -320,6 +422,8 @@ fn main() -> Result<(), slint::PlatformError> {
                 } else {
                     next
                 };
+                st.log_page = 0;
+                st.alert_page = 0;
                 st.selected_point = None;
                 st.hover_point = None;
                 apply_view(&app, &mut st);
@@ -335,6 +439,8 @@ fn main() -> Result<(), slint::PlatformError> {
                 let mut st = state.borrow_mut();
                 let next = risk_filter_from_ui_idx(idx);
                 st.selected_risk = if st.selected_risk == next { None } else { next };
+                st.log_page = 0;
+                st.alert_page = 0;
                 st.selected_point = None;
                 st.hover_point = None;
                 apply_view(&app, &mut st);
@@ -354,6 +460,8 @@ fn main() -> Result<(), slint::PlatformError> {
                 } else {
                     next
                 };
+                st.log_page = 0;
+                st.alert_page = 0;
                 st.selected_point = None;
                 st.hover_point = None;
                 apply_view(&app, &mut st);
@@ -368,6 +476,8 @@ fn main() -> Result<(), slint::PlatformError> {
             if let Some(app) = weak.upgrade() {
                 let mut st = state.borrow_mut();
                 st.selected_level = None;
+                st.log_page = 0;
+                st.alert_page = 0;
                 st.selected_point = None;
                 st.hover_point = None;
                 apply_view(&app, &mut st);
@@ -382,6 +492,8 @@ fn main() -> Result<(), slint::PlatformError> {
             if let Some(app) = weak.upgrade() {
                 let mut st = state.borrow_mut();
                 st.selected_risk = None;
+                st.log_page = 0;
+                st.alert_page = 0;
                 st.selected_point = None;
                 st.hover_point = None;
                 apply_view(&app, &mut st);
@@ -396,6 +508,8 @@ fn main() -> Result<(), slint::PlatformError> {
             if let Some(app) = weak.upgrade() {
                 let mut st = state.borrow_mut();
                 st.selected_source = None;
+                st.log_page = 0;
+                st.alert_page = 0;
                 st.selected_point = None;
                 st.hover_point = None;
                 apply_view(&app, &mut st);
@@ -413,6 +527,8 @@ fn main() -> Result<(), slint::PlatformError> {
                 st.selected_level = None;
                 st.selected_risk = None;
                 st.selected_source = None;
+                st.log_page = 0;
+                st.alert_page = 0;
                 st.selected_point = None;
                 st.hover_point = None;
                 apply_view(&app, &mut st);
@@ -432,6 +548,8 @@ fn main() -> Result<(), slint::PlatformError> {
                 } else {
                     st.selected_stage = Some(idx);
                 }
+                st.log_page = 0;
+                st.alert_page = 0;
                 st.selected_point = None;
                 st.hover_point = None;
                 apply_view(&app, &mut st);
@@ -446,9 +564,95 @@ fn main() -> Result<(), slint::PlatformError> {
             if let Some(app) = weak.upgrade() {
                 let mut st = state.borrow_mut();
                 st.selected_stage = None;
+                st.log_page = 0;
+                st.alert_page = 0;
                 st.selected_point = None;
                 st.hover_point = None;
                 apply_view(&app, &mut st);
+            }
+        });
+    }
+
+    {
+        let weak = app.as_weak();
+        let state = Rc::clone(&state);
+        app.on_page_changed(move |page| {
+            if let Some(app) = weak.upgrade() {
+                let mut st = state.borrow_mut();
+                st.active_page = page.clamp(0, 2);
+                app.set_active_page(st.active_page);
+                if st.active_page == 1 {
+                    apply_log_page(&app, &mut st);
+                } else if st.active_page == 2 {
+                    apply_alert_page(&app, &mut st);
+                }
+            }
+        });
+    }
+
+    {
+        let weak = app.as_weak();
+        let state = Rc::clone(&state);
+        app.on_log_prev_page(move || {
+            if let Some(app) = weak.upgrade() {
+                let mut st = state.borrow_mut();
+                if st.log_page > 0 {
+                    st.log_page -= 1;
+                }
+                apply_log_page(&app, &mut st);
+            }
+        });
+    }
+
+    {
+        let weak = app.as_weak();
+        let state = Rc::clone(&state);
+        app.on_log_next_page(move || {
+            if let Some(app) = weak.upgrade() {
+                let mut st = state.borrow_mut();
+                st.log_page += 1;
+                apply_log_page(&app, &mut st);
+            }
+        });
+    }
+
+    {
+        let weak = app.as_weak();
+        let state = Rc::clone(&state);
+        app.on_alert_prev_page(move || {
+            if let Some(app) = weak.upgrade() {
+                let mut st = state.borrow_mut();
+                if st.alert_page > 0 {
+                    st.alert_page -= 1;
+                }
+                apply_alert_page(&app, &mut st);
+            }
+        });
+    }
+
+    {
+        let weak = app.as_weak();
+        let state = Rc::clone(&state);
+        app.on_alert_next_page(move || {
+            if let Some(app) = weak.upgrade() {
+                let mut st = state.borrow_mut();
+                st.alert_page += 1;
+                apply_alert_page(&app, &mut st);
+            }
+        });
+    }
+
+    {
+        let weak = app.as_weak();
+        let state = Rc::clone(&state);
+        app.on_window_resized(move || {
+            if let Some(app) = weak.upgrade() {
+                let mut st = state.borrow_mut();
+                if st.active_page == 1 {
+                    apply_log_page(&app, &mut st);
+                } else if st.active_page == 2 {
+                    apply_alert_page(&app, &mut st);
+                }
             }
         });
     }
@@ -468,8 +672,11 @@ fn main() -> Result<(), slint::PlatformError> {
                         .map(|rows| {
                             rows.iter()
                                 .map(|row| DetailRow {
+                                    row_no: row.row_no.clone().into(),
                                     time: row.time.clone().into(),
                                     level: row.level.clone().into(),
+                                    risk_score: row.risk_score.clone().into(),
+                                    rule: row.rule.clone().into(),
                                     target: row.target.clone().into(),
                                     entity: row.entity.clone().into(),
                                     action: row.action.clone().into(),

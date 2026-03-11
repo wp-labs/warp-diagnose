@@ -5,7 +5,11 @@ __meta : auto = pipe read(content) | extract_subject_object ;
 event_time : time = read(time) ;
 level : chars = read(level) ;
 target : chars = read(target) ;
-subject : chars = pipe read(__meta) | get(subject) ;
+subject_raw : chars = pipe read(__meta) | get(subject) ;
+subject : chars = match read(subject_raw) {
+    iequals('wpl') | iequals('wpls') => chars(wpl) ;
+    _ => read(subject_raw) ;
+} ;
 action : chars = pipe read(__meta) | get(action) ;
 status : chars = pipe read(__meta) | get(status) ;
 content : chars = read(content) ;

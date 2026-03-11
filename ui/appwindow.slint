@@ -27,8 +27,11 @@ export struct LaneLabel {
 }
 
 export struct DetailRow {
+    row_no: string,
     time: string,
     level: string,
+    risk_score: string,
+    rule: string,
     target: string,
     entity: string,
     action: string,
@@ -292,13 +295,14 @@ component ScrollTextPanel inherits Rectangle {
             horizontal-alignment: left;
         }
 
-        ScrollView {
+        body-scroll := ScrollView {
+            vertical-stretch: 1;
             vertical-scrollbar-policy: ScrollBarPolicy.as-needed;
             horizontal-scrollbar-policy: ScrollBarPolicy.as-needed;
 
             Rectangle {
                 width: parent.width - 6px;
-                height: body-viewport-height;
+                height: max(body-viewport-height, body-scroll.height);
                 background: #f6f9fc;
                 border-radius: 8px;
                 border-width: 1px;
@@ -380,13 +384,31 @@ component DetailTablePanel inherits Rectangle {
     in property <string> title;
     in property <string> summary: "";
     in property <[DetailRow]> rows: [];
+    in property <string> time-title: "Time";
+    in property <string> level-title: "Level";
+    in property <bool> show-rule: false;
+    in property <string> rule-title: "Rule";
+    in property <string> target-title: "Target";
+    in property <string> content-title: "Content";
+    in property <string> status-title: "Status";
+    in property <bool> show-status: true;
+    in property <bool> show-content: true;
+    in property <bool> show-risk-score: false;
+    in property <bool> semantic-alert-layout: false;
     in property <length> table-width: 900px;
     in property <length> body-viewport-height: 252px;
+    in property <bool> show-pagination: false;
+    in property <bool> has-prev-page: false;
+    in property <bool> has-next-page: false;
+    in property <string> pagination-text: "";
+    callback prev-page();
+    callback next-page();
 
     border-radius: 10px;
     background: #ffffff;
     border-width: 1px;
     border-color: #d6e0ea;
+    min-height: 220px;
 
     VerticalLayout {
         padding: 10px;
@@ -407,6 +429,35 @@ component DetailTablePanel inherits Rectangle {
             horizontal-alignment: left;
         }
 
+        if (show-pagination) : HorizontalLayout {
+            spacing: 8px;
+
+            Text {
+                text: pagination-text;
+                color: #51657c;
+                font-size: 11px;
+                vertical-alignment: center;
+            }
+
+            Rectangle { background: transparent; }
+
+            Button {
+                text: "Prev";
+                enabled: has-prev-page;
+                clicked => {
+                    root.prev-page();
+                }
+            }
+
+            Button {
+                text: "Next";
+                enabled: has-next-page;
+                clicked => {
+                    root.next-page();
+                }
+            }
+        }
+
         Rectangle {
             width: table-width;
             height: 34px;
@@ -415,19 +466,22 @@ component DetailTablePanel inherits Rectangle {
             border-width: 1px;
             border-color: #d8e3ee;
 
-            HorizontalLayout {
+            if (!semantic-alert-layout) : HorizontalLayout {
                 padding-left: 10px;
                 padding-right: 10px;
                 spacing: 8px;
 
-                Text { text: "Time"; min-width: 150px; color: #24384d; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
-                Text { text: "Level"; min-width: 62px; color: #24384d; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
-                Text { text: "Target"; min-width: 96px; color: #24384d; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
+                Text { text: "#"; min-width: 44px; color: #24384d; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
+                Text { text: time-title; min-width: 150px; color: #24384d; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
+                Text { text: level-title; min-width: 74px; color: #24384d; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
+                if (show-risk-score) : Text { text: "RiskScore"; min-width: 76px; color: #24384d; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
+                if (show-rule) : Text { text: rule-title; min-width: 128px; color: #24384d; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
+                Text { text: target-title; min-width: 96px; color: #24384d; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
                 Text { text: "Entity"; min-width: 120px; color: #24384d; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
                 Text { text: "Action"; min-width: 88px; color: #24384d; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
-                Text { text: "Status"; min-width: 76px; color: #24384d; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
-                Text {
-                    text: "Content";
+                if (show-status) : Text { text: status-title; min-width: 76px; color: #24384d; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
+                if (show-content) : Text {
+                    text: content-title;
                     min-width: 180px;
                     horizontal-stretch: 1;
                     color: #24384d;
@@ -437,15 +491,42 @@ component DetailTablePanel inherits Rectangle {
                     vertical-alignment: center;
                 }
             }
+
+            if (semantic-alert-layout) : HorizontalLayout {
+                padding-left: 10px;
+                padding-right: 10px;
+                spacing: 8px;
+
+                Text { text: "#"; min-width: 44px; color: #1f5fd6; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
+                Text { text: time-title; min-width: 150px; color: #1f5fd6; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
+                Text { text: level-title; min-width: 74px; color: #1f5fd6; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
+                if (show-risk-score) : Text { text: "RiskScore"; min-width: 76px; color: #1f5fd6; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
+                if (show-rule) : Text { text: rule-title; min-width: 128px; color: #1f5fd6; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
+                Text { text: "Entity"; min-width: 120px; color: #1f5fd6; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
+                Text { text: target-title; min-width: 96px; color: #23734f; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
+                Text { text: "Action"; min-width: 88px; color: #9b5f00; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
+                if (show-status) : Text { text: status-title; min-width: 76px; color: #b54752; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
+                if (show-content) : Text {
+                    text: content-title;
+                    min-width: 180px;
+                    horizontal-stretch: 1;
+                    color: #35506e;
+                    font-size: 12px;
+                    font-weight: 700;
+                    horizontal-alignment: center;
+                    vertical-alignment: center;
+                }
+            }
         }
 
-        ScrollView {
+        body-scroll := ScrollView {
+            vertical-stretch: 1;
             vertical-scrollbar-policy: ScrollBarPolicy.as-needed;
             horizontal-scrollbar-policy: ScrollBarPolicy.as-needed;
 
             Rectangle {
                 width: table-width;
-                height: max(body-viewport-height, rows.length * 34px);
+                height: max(max(body-viewport-height, body-scroll.height), rows.length * 34px + 2px);
                 border-radius: 8px;
                 background: #f6f9fc;
                 border-width: 1px;
@@ -453,27 +534,55 @@ component DetailTablePanel inherits Rectangle {
 
                 for row[i] in rows: Rectangle {
                     x: 0px;
-                    y: i * 34px;
+                    y: 2px + i * 34px;
                     width: parent.width;
                     height: 34px;
                     background: Math.mod(i, 2) == 0 ? #f8fbfe : #f2f7fb;
 
-                    HorizontalLayout {
+                    if (!semantic-alert-layout) : HorizontalLayout {
                         padding-left: 10px;
                         padding-right: 10px;
                         spacing: 8px;
 
+                        Text { text: row.row_no; min-width: 44px; color: #334155; font-size: 12px; vertical-alignment: center; horizontal-alignment: center; }
                         Text { text: row.time; min-width: 150px; color: #334155; font-size: 12px; vertical-alignment: center; }
-                        Text { text: row.level; min-width: 62px; color: #334155; font-size: 12px; vertical-alignment: center; }
+                        Text { text: row.level; min-width: 74px; color: #334155; font-size: 12px; vertical-alignment: center; }
+                        if (show-risk-score) : Text { text: row.risk_score; min-width: 76px; color: #334155; font-size: 12px; vertical-alignment: center; horizontal-alignment: center; }
+                        if (show-rule) : Text { text: row.rule; min-width: 128px; color: #334155; font-size: 12px; vertical-alignment: center; }
                         Text { text: row.target; min-width: 96px; color: #334155; font-size: 12px; vertical-alignment: center; }
                         Text { text: row.entity; min-width: 120px; color: #334155; font-size: 12px; vertical-alignment: center; }
                         Text { text: row.action; min-width: 88px; color: #334155; font-size: 12px; vertical-alignment: center; }
-                        Text { text: row.status; min-width: 76px; color: #334155; font-size: 12px; vertical-alignment: center; }
-                        Text {
+                        if (show-status) : Text { text: row.status; min-width: 76px; color: #334155; font-size: 12px; vertical-alignment: center; }
+                        if (show-content) : Text {
                             text: row.content;
                             min-width: 180px;
                             horizontal-stretch: 1;
                             color: #334155;
+                            font-size: 12px;
+                            vertical-alignment: center;
+                            overflow: elide;
+                        }
+                    }
+
+                    if (semantic-alert-layout) : HorizontalLayout {
+                        padding-left: 10px;
+                        padding-right: 10px;
+                        spacing: 8px;
+
+                        Text { text: row.row_no; min-width: 44px; color: #294b75; font-size: 12px; vertical-alignment: center; horizontal-alignment: center; }
+                        Text { text: row.time; min-width: 150px; color: #294b75; font-size: 12px; vertical-alignment: center; }
+                        Text { text: row.level; min-width: 74px; color: #294b75; font-size: 12px; vertical-alignment: center; }
+                        if (show-risk-score) : Text { text: row.risk_score; min-width: 76px; color: #294b75; font-size: 12px; vertical-alignment: center; horizontal-alignment: center; }
+                        if (show-rule) : Text { text: row.rule; min-width: 128px; color: #294b75; font-size: 12px; vertical-alignment: center; }
+                        Text { text: row.entity; min-width: 120px; color: #294b75; font-size: 12px; vertical-alignment: center; }
+                        Text { text: row.target; min-width: 96px; color: #2e6b53; font-size: 12px; vertical-alignment: center; }
+                        Text { text: row.action; min-width: 88px; color: #8a5a12; font-size: 12px; vertical-alignment: center; }
+                        if (show-status) : Text { text: row.status; min-width: 76px; color: #a23a44; font-size: 12px; vertical-alignment: center; }
+                        if (show-content) : Text {
+                            text: row.content;
+                            min-width: 180px;
+                            horizontal-stretch: 1;
+                            color: #425f7d;
                             font-size: 12px;
                             vertical-alignment: center;
                             overflow: elide;
@@ -524,9 +633,18 @@ export component AppWindow inherits Window {
     in-out property <[StageCard]> stage_cards: [];
     in-out property <string> filtered_log_summary: "No log data loaded.";
     in-out property <[DetailRow]> filtered_log_rows: [];
-    property <int> active_page: 0;
+    in-out property <string> log_page_text: "Page 1/1 · 0 rows";
+    in-out property <bool> has_prev_log_page: false;
+    in-out property <bool> has_next_log_page: false;
+    in-out property <string> filtered_alert_summary: "No alert data loaded.";
+    in-out property <[DetailRow]> filtered_alert_rows: [];
+    in-out property <string> alert_page_text: "Page 1/1 · 0 rows";
+    in-out property <bool> has_prev_alert_page: false;
+    in-out property <bool> has_next_alert_page: false;
+    in-out property <int> active_page: 0;
 
     callback reload_data();
+    callback page_changed(int);
     callback level_filter_clicked(int);
     callback risk_filter_clicked(int);
     callback source_filter_clicked(int);
@@ -540,10 +658,21 @@ export component AppWindow inherits Window {
     callback point_unhovered();
     callback clear_stage_filter();
     callback clear_point_selection();
+    callback log_prev_page();
+    callback log_next_page();
+    callback alert_prev_page();
+    callback alert_next_page();
+    callback window_resized();
 
     title: "Warp Diagnose";
     no-frame: false;
     background: #eef3f8;
+    changed width => {
+        root.window_resized();
+    }
+    changed height => {
+        root.window_resized();
+    }
 
     VerticalLayout {
         spacing: 10px;
@@ -833,30 +962,6 @@ export component AppWindow inherits Window {
                         }
                     }
 
-                    Text {
-                        text: "Stage";
-                        color: #64748b;
-                        font-size: 10px;
-                        vertical-alignment: center;
-                    }
-
-                    if (root.has_stage_filter) : ActiveFilterChip {
-                        label: root.active_stage_filter_text + " ×";
-                        chip-background-color: #e4edf7;
-                        chip-border-color: #9fb4cd;
-                        chip-text-color: #35506e;
-                        clicked => {
-                            root.clear_stage_filter();
-                        }
-                    }
-
-                    if (!root.has_stage_filter) : Text {
-                        text: "Any";
-                        color: #8a99ab;
-                        font-size: 10px;
-                        vertical-alignment: center;
-                    }
-
                     Rectangle {
                         background: transparent;
                     }
@@ -902,17 +1007,7 @@ export component AppWindow inherits Window {
                         }
                     }
 
-                    if (root.has_stage_filter) : ActiveFilterChip {
-                        label: root.active_stage_filter_text + " ×";
-                        chip-background-color: #e4edf7;
-                        chip-border-color: #9fb4cd;
-                        chip-text-color: #35506e;
-                        clicked => {
-                            root.clear_stage_filter();
-                        }
-                    }
-
-                    if (!root.has_level_filter && !root.has_risk_filter && !root.has_source_filter && !root.has_stage_filter) : Text {
+                    if (!root.has_level_filter && !root.has_risk_filter && !root.has_source_filter) : Text {
                         text: "No filters applied";
                         color: #8a99ab;
                         font-size: 10px;
@@ -923,7 +1018,7 @@ export component AppWindow inherits Window {
                         background: transparent;
                     }
 
-                    if (root.has_level_filter || root.has_risk_filter || root.has_source_filter || root.has_stage_filter) : InlineIconButton {
+                    if (root.has_level_filter || root.has_risk_filter || root.has_source_filter) : InlineIconButton {
                         tool-icon: @image-url("icons/clear-filters.svg");
                         clicked => {
                             root.clear_all_filters();
@@ -943,6 +1038,8 @@ export component AppWindow inherits Window {
             HorizontalLayout {
                 padding-left: 10px;
                 padding-right: 10px;
+                padding-top: 5px;
+                padding-bottom: 5px;
                 spacing: 6px;
 
                 Text {
@@ -957,7 +1054,7 @@ export component AppWindow inherits Window {
                     label: "Overview";
                     selected: root.active_page == 0;
                     clicked => {
-                        root.active_page = 0;
+                        root.page_changed(0);
                     }
                 }
 
@@ -965,7 +1062,15 @@ export component AppWindow inherits Window {
                     label: "Log Data";
                     selected: root.active_page == 1;
                     clicked => {
-                        root.active_page = 1;
+                        root.page_changed(1);
+                    }
+                }
+
+                PageSwitchButton {
+                    label: "Alert Data";
+                    selected: root.active_page == 2;
+                    clicked => {
+                        root.page_changed(2);
                     }
                 }
 
@@ -976,6 +1081,7 @@ export component AppWindow inherits Window {
         }
 
         if (root.active_page == 0) : VerticalLayout {
+            vertical-stretch: 1;
             spacing: 10px;
 
             timeline-panel := Rectangle {
@@ -986,9 +1092,12 @@ export component AppWindow inherits Window {
                 property <float> timeline_zoom_in_value: min(self.timeline_zoom_max, root.timeline_zoom + self.timeline_zoom_step);
                 property <float> timeline_zoom_out_value: max(self.timeline_zoom_min, root.timeline_zoom - self.timeline_zoom_step);
                 property <length> timeline_min_canvas_x: min(0px, timeline-viewport.width - timeline-content.width);
+                property <length> plot_box_height: max(250px, self.height - 46px);
+                property <length> plot_grid_height: max(220px, self.plot_box_height - 30px);
                 border-radius: 10px;
                 background: #ffffff;
-                height: 480px;
+                vertical-stretch: 3;
+                min-height: 360px;
                 border-width: 1px;
                 border-color: #d6e0ea;
 
@@ -1081,7 +1190,7 @@ export component AppWindow inherits Window {
                     x: 12px;
                     y: 38px;
                     width: parent.width - 24px;
-                    height: 434px;
+                    height: timeline-panel.plot_box_height;
                     border-radius: 8px;
                     background: #edf3f8;
                     border-width: 1px;
@@ -1091,7 +1200,7 @@ export component AppWindow inherits Window {
                         text: lane.label;
                         color: #6b7f95;
                         x: 8px;
-                        y: 96px + (350px - 52px) * lane.y_pct;
+                        y: 12px + max(0px, timeline-panel.plot_grid_height - 52px) * lane.y_pct;
                         font-size: 10px;
                         width: 74px;
                         horizontal-alignment: left;
@@ -1108,9 +1217,9 @@ export component AppWindow inherits Window {
                         TouchArea {
                             property <length> start_canvas_x: 0px;
                             x: 0px;
-                            y: 84px;
+                            y: 0px;
                             width: parent.width;
-                            height: 350px;
+                            height: timeline-panel.plot_grid_height;
 
                             pointer-event(event) => {
                                 if (event.button == PointerEventButton.left && event.kind == PointerEventKind.down) {
@@ -1136,51 +1245,7 @@ export component AppWindow inherits Window {
                                 x: 0px;
                                 y: 0px;
                                 width: parent.width;
-                                height: 76px;
-                                border-radius: 8px;
-                                background: #f5f8fc;
-                                border-width: 1px;
-                                border-color: #d8e3ee;
-
-                                Text {
-                                    text: "Stage Track (click to filter)";
-                                    color: #6b7f95;
-                                    x: 10px;
-                                    y: 4px;
-                                    font-size: 11px;
-                                }
-
-                                for stage[i] in stage_bands: Rectangle {
-                                    x: 8px + (parent.width - 16px) * stage.start_pct;
-                                    y: 20px;
-                                    width: max(6px, (parent.width - 16px) * (stage.end_pct - stage.start_pct));
-                                    height: 50px;
-                                    border-radius: 6px;
-                                    background: stage.selected ? #5b8def : #d9e5f5;
-                                    border-width: stage.selected ? 2px : 1px;
-                                    border-color: stage.selected ? #2f6fed : #abc0db;
-
-                                    Text {
-                                        text: stage.label;
-                                        color: stage.selected ? #ffffff : #203047;
-                                        horizontal-alignment: center;
-                                        vertical-alignment: center;
-                                        font-size: 11px;
-                                    }
-
-                                    TouchArea {
-                                        clicked => {
-                                            root.stage_clicked(i);
-                                        }
-                                    }
-                                }
-                            }
-
-                            Rectangle {
-                                x: 0px;
-                                y: 84px;
-                                width: parent.width;
-                                height: 350px;
+                                height: timeline-panel.plot_grid_height;
                                 border-radius: 8px;
                                 background: #f8fbff;
                                 border-width: 1px;
@@ -1286,11 +1351,13 @@ export component AppWindow inherits Window {
             }
 
             HorizontalLayout {
+                vertical-stretch: 2;
+                min-height: 260px;
                 spacing: 10px;
 
                 DetailTablePanel {
                     min-width: 900px;
-                    height: 340px;
+                    vertical-stretch: 1;
                     title: "Selection Detail";
                     rows: root.point_detail_rows;
                     table-width: 900px;
@@ -1298,7 +1365,9 @@ export component AppWindow inherits Window {
                 }
 
                 Rectangle {
-                    width: 470px;
+                    min-width: 370px;
+                    preferred-width: 470px;
+                    vertical-stretch: 1;
                     border-radius: 10px;
                     background: #ffffff;
                     border-width: 1px;
@@ -1309,6 +1378,7 @@ export component AppWindow inherits Window {
                         spacing: 8px;
 
                         ScrollTextPanel {
+                            vertical-stretch: 1;
                             title: "Entity Lanes";
                             body: lane_legend_text;
                             body-size: 10px;
@@ -1316,6 +1386,7 @@ export component AppWindow inherits Window {
                         }
 
                         ScrollTextPanel {
+                            vertical-stretch: 1;
                             title: "Top Targets";
                             body: top_targets_text;
                             body-size: 11px;
@@ -1323,6 +1394,7 @@ export component AppWindow inherits Window {
                         }
 
                         ScrollTextPanel {
+                            vertical-stretch: 2;
                             title: "Source & Status";
                             body: source_text + "\n\n" + status_text;
                             body-size: 10px;
@@ -1333,13 +1405,62 @@ export component AppWindow inherits Window {
             }
         }
 
-        if (root.active_page == 1) : DetailTablePanel {
-            height: 760px;
-            title: "Filtered Log Data";
-            summary: root.filtered_log_summary;
-            rows: root.filtered_log_rows;
-            table-width: 1280px;
-            body-viewport-height: 660px;
+        if (root.active_page == 1) : VerticalLayout {
+            vertical-stretch: 1;
+            spacing: 10px;
+
+            DetailTablePanel {
+                vertical-stretch: 1;
+                title: "Filtered Log Data";
+                summary: root.filtered_log_summary;
+                rows: root.filtered_log_rows;
+                table-width: 1280px;
+                body-viewport-height: 652px;
+                show-pagination: true;
+                pagination-text: root.log_page_text;
+                has-prev-page: root.has_prev_log_page;
+                has-next-page: root.has_next_log_page;
+                prev-page => {
+                    root.log_prev_page();
+                }
+                next-page => {
+                    root.log_next_page();
+                }
+            }
+        }
+
+        if (root.active_page == 2) : VerticalLayout {
+            vertical-stretch: 1;
+            spacing: 10px;
+
+            DetailTablePanel {
+                vertical-stretch: 1;
+                title: "Filtered Alert Data";
+                summary: root.filtered_alert_summary;
+                rows: root.filtered_alert_rows;
+                time-title: "FiredAt";
+                level-title: "RiskLevel";
+                show-rule: true;
+                rule-title: "Rule";
+                target-title: "Target";
+                show-status: false;
+                show-content: false;
+                content-title: "Message";
+                show-risk-score: true;
+                semantic-alert-layout: true;
+                table-width: 1420px;
+                body-viewport-height: 652px;
+                show-pagination: true;
+                pagination-text: root.alert_page_text;
+                has-prev-page: root.has_prev_alert_page;
+                has-next-page: root.has_next_alert_page;
+                prev-page => {
+                    root.alert_prev_page();
+                }
+                next-page => {
+                    root.alert_next_page();
+                }
+            }
         }
     }
 }

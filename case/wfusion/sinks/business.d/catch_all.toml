@@ -1,10 +1,37 @@
 [sink_group]
 name = "catch_all"
-windows = ["*"]
+windows = ["risk_*"]
 
 [[sink_group.sinks]]
-connect = "file_json"
+connect = "arrow_file"
 name = "all_alerts"
 
 [sink_group.sinks.params]
-file = "wf-alert.jsonl"
+file = "wf-alert.arrow"
+fields = [
+  { name = "__wfu_id", type = "chars" },
+  { name = "__wfu_rule_name", type = "chars" },
+  { name = "__wfu_score", type = "float" },
+  { name = "__wfu_entity_type", type = "chars" },
+  { name = "__wfu_entity_id", type = "chars" },
+  { name = "__wfu_origin", type = "chars" },
+  { name = "__wfu_close_reason", type = "chars" },
+  { name = "__wfu_fired_at", type = "chars" },
+  { name = "__wfu_emit_time", type = "chars" },
+  { name = "__wfu_summary", type = "chars" },
+  { name = "window_bucket_time", type = "time" },
+  { name = "target", type = "chars" },
+  { name = "subject", type = "chars" },
+  { name = "action", type = "chars" },
+  { name = "status", type = "chars" },
+  { name = "risk_score", type = "float" },
+  { name = "event_count", type = "digit" },
+  { name = "message", type = "chars" },
+]
+
+[[sink_group.sinks]]
+connect = "file_json"
+name = "all_alerts_json"
+
+[sink_group.sinks.params]
+file = "wf-alert.json"
