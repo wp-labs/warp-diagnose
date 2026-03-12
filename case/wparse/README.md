@@ -73,6 +73,7 @@ case/scripts/run_wp_wf_case.sh
 1. `wparse` 读取 `case/target_data/raw_log.dat`
 2. 直接生成 `case/wparse/data/out_dat/wp-log.arrow`
 3. OML 已直接将输出字段收敛为 `wfusion` 期望 schema
+   其中 `risk_score` 表示危害得分，按 `impl_importance * action_weight * status_weight` 计算
 4. 顶层脚本将同一个文件复制到 `case/wfusion/data/in_dat/wp-log.arrow`
 5. `wfusion` 直接以 `arrow_framed` 读取该文件
 6. 运行 `wfusion`

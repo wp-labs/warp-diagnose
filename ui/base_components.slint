@@ -1,0 +1,711 @@
+import { Button, ScrollView } from "std-widgets.slint";
+
+export struct TimelinePoint {
+    x_pct: float,
+    y_pct: float,
+    risk: float,
+    size_norm: float,
+    entity: string,
+}
+
+export struct TimeTick {
+    x_pct: float,
+    label: string,
+}
+
+export struct LaneLabel {
+    y_pct: float,
+    label: string,
+}
+
+export struct DetailRow {
+    row_no: string,
+    time: string,
+    level: string,
+    risk_score: string,
+    rule: string,
+    target: string,
+    entity: string,
+    action: string,
+    status: string,
+    content: string,
+}
+
+export component AppLogo inherits Rectangle {
+    border-radius: 12px;
+    background: #ffffff;
+    border-width: 1px;
+    border-color: #c7d5e6;
+
+    Rectangle {
+        x: 6px;
+        y: 6px;
+        width: parent.width - 12px;
+        height: parent.height - 12px;
+        border-radius: 9px;
+        background: #edf4ff;
+    }
+
+    Rectangle {
+        x: 10px;
+        y: parent.height / 2;
+        width: parent.width - 20px;
+        height: 2px;
+        background: #95a9c3;
+    }
+
+    Rectangle {
+        x: 12px;
+        y: 14px;
+        width: parent.width - 24px;
+        height: 2px;
+        background: #c2d3e8;
+    }
+
+    Rectangle {
+        x: 12px;
+        y: parent.height - 16px;
+        width: parent.width - 24px;
+        height: 2px;
+        background: #c2d3e8;
+    }
+
+    Rectangle {
+        x: 11px;
+        y: parent.height / 2 - 7px;
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        background: #35b883;
+    }
+
+    Rectangle {
+        x: parent.width / 2 - 5px;
+        y: 10px;
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        background: #d9a23b;
+    }
+
+    Rectangle {
+        x: parent.width - 21px;
+        y: parent.height / 2 - 11px;
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        background: #e66a73;
+    }
+
+    Rectangle {
+        x: 16px;
+        y: parent.height / 2 - 2px;
+        width: 8px;
+        height: 2px;
+        background: #5b8def;
+    }
+
+    Rectangle {
+        x: 24px;
+        y: parent.height / 2 - 6px;
+        width: 7px;
+        height: 2px;
+        background: #5b8def;
+    }
+
+    Rectangle {
+        x: 31px;
+        y: parent.height / 2 - 10px;
+        width: 7px;
+        height: 2px;
+        background: #5b8def;
+    }
+
+    Rectangle {
+        x: 38px;
+        y: parent.height / 2 - 8px;
+        width: 7px;
+        height: 2px;
+        background: #5b8def;
+    }
+
+    Rectangle {
+        x: 45px;
+        y: parent.height / 2 - 4px;
+        width: 7px;
+        height: 2px;
+        background: #5b8def;
+    }
+}
+
+export component MetricCard inherits Rectangle {
+    in property <string> label;
+    in property <int> value;
+    in property <color> tone: #dce8f8;
+    in property <bool> selected: false;
+    in property <bool> interactive: false;
+    callback clicked;
+
+    border-radius: 10px;
+    background: tone;
+    height: 82px;
+    border-width: selected ? 2px : 1px;
+    border-color: selected ? #2f6fed : #c7d5e6;
+
+    VerticalLayout {
+        padding: 10px;
+        spacing: 4px;
+
+        Text {
+            text: label;
+            color: #5c6d82;
+            font-size: 12px;
+            horizontal-alignment: left;
+        }
+
+        Text {
+            text: value;
+            color: #132238;
+            font-size: 22px;
+            font-weight: 700;
+            horizontal-alignment: left;
+        }
+    }
+
+    TouchArea {
+        enabled: interactive;
+        mouse-cursor: pointer;
+        clicked => {
+            root.clicked();
+        }
+    }
+}
+
+export component FilterPill inherits Rectangle {
+    in property <string> label;
+    in property <bool> selected: false;
+    in property <color> idle-background: #f6f8fb;
+    in property <color> idle-border: #d7e0ea;
+    in property <color> idle-text: #4f6279;
+    in property <color> selected-background: #e7f0ff;
+    in property <color> selected-border: #8eb2ef;
+    in property <color> selected-text: #1f5fd6;
+    callback clicked;
+
+    private property <length> chip-width: max(45px, (label-text.min-width + 12px) * 1.5);
+    min-width: chip-width;
+    preferred-width: chip-width;
+    max-width: chip-width;
+    horizontal-stretch: 0;
+    height: 22px;
+    border-radius: 11px;
+    background: selected ? selected-background : idle-background;
+    border-width: 1px;
+    border-color: selected ? selected-border : idle-border;
+
+    label-text := Text {
+        text: label;
+        color: selected ? selected-text : idle-text;
+        font-size: 10px;
+        font-weight: selected ? 700 : 600;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+        x: 6px;
+        width: parent.width - 12px;
+    }
+
+    TouchArea {
+        mouse-cursor: pointer;
+        clicked => {
+            root.clicked();
+        }
+    }
+}
+
+export component ActiveFilterChip inherits Rectangle {
+    in property <string> label;
+    in property <color> chip-background-color: #f4f7fb;
+    in property <color> chip-border-color: #d8e1eb;
+    in property <color> chip-text-color: #51657c;
+    callback clicked;
+
+    private property <length> chip-width: max(54px, chip-text.min-width + 20px);
+    min-width: chip-width;
+    preferred-width: chip-width;
+    max-width: chip-width;
+    horizontal-stretch: 0;
+    height: 22px;
+    border-radius: 11px;
+    background: chip-background-color;
+    border-width: 1px;
+    border-color: chip-border-color;
+
+    chip-text := Text {
+        text: label;
+        color: chip-text-color;
+        font-size: 10px;
+        font-weight: 600;
+        x: 10px;
+        width: parent.width - 20px;
+        vertical-alignment: center;
+    }
+
+    TouchArea {
+        mouse-cursor: pointer;
+        clicked => {
+            root.clicked();
+        }
+    }
+}
+
+export component ScrollTextPanel inherits Rectangle {
+    in property <string> title;
+    in property <string> body;
+    in property <length> body-size: 12px;
+    in property <length> body-viewport-height: 120px;
+
+    border-radius: 10px;
+    background: #ffffff;
+
+    VerticalLayout {
+        padding: 10px;
+        spacing: 6px;
+
+        Text {
+            text: title;
+            color: #203047;
+            font-size: 13px;
+            font-weight: 700;
+            horizontal-alignment: left;
+        }
+
+        body-scroll := ScrollView {
+            vertical-stretch: 1;
+            vertical-scrollbar-policy: ScrollBarPolicy.as-needed;
+            horizontal-scrollbar-policy: ScrollBarPolicy.as-needed;
+
+            Rectangle {
+                width: parent.width - 6px;
+                height: max(body-viewport-height, body-scroll.height);
+                background: #f6f9fc;
+                border-radius: 8px;
+                border-width: 1px;
+                border-color: #d8e3ee;
+
+                Text {
+                    text: body;
+                    color: #334155;
+                    x: 10px;
+                    y: 8px;
+                    width: parent.width - 20px;
+                    font-family: "Menlo";
+                    font-size: body-size;
+                    wrap: word-wrap;
+                    horizontal-alignment: left;
+                    vertical-alignment: top;
+                }
+            }
+        }
+    }
+}
+
+export component TimelineToolButton inherits Button {
+    in property <image> tool-icon;
+
+    min-width: 34px;
+    min-height: 30px;
+    max-width: 34px;
+    max-height: 30px;
+    text: "";
+    icon: tool-icon;
+    icon-size: 16px;
+    colorize-icon: true;
+}
+
+export component InlineIconButton inherits Button {
+    in property <image> tool-icon;
+
+    min-width: 30px;
+    min-height: 24px;
+    max-width: 30px;
+    max-height: 24px;
+    text: "";
+    icon: tool-icon;
+    icon-size: 16px;
+    colorize-icon: true;
+}
+
+export component PageSwitchButton inherits Rectangle {
+    in property <string> label;
+    in property <bool> selected: false;
+    callback clicked;
+
+    min-width: 112px;
+    height: 28px;
+    border-radius: 14px;
+    background: selected ? #dfeafd : #f4f7fb;
+    border-width: 1px;
+    border-color: selected ? #8eb2ef : #d6e0ea;
+
+    Text {
+        text: label;
+        color: selected ? #1f5fd6 : #51657c;
+        font-size: 11px;
+        font-weight: selected ? 700 : 600;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+    }
+
+    TouchArea {
+        mouse-cursor: pointer;
+        clicked => {
+            root.clicked();
+        }
+    }
+}
+
+export component TableHeaderCell inherits Rectangle {
+    in property <string> text;
+    in-out property <length> col-width: 100px;
+    in property <color> text-color: #24384d;
+    in property <length> min-col-width: 48px;
+    in property <bool> resizable: true;
+    callback width-changed(length);
+
+    width: col-width;
+    background: transparent;
+
+    Text {
+        text: root.text;
+        x: 0px;
+        y: 0px;
+        width: parent.width - (root.resizable ? 8px : 0px);
+        height: parent.height;
+        color: root.text-color;
+        font-size: 12px;
+        font-weight: 700;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+        overflow: elide;
+    }
+
+    Rectangle {
+        visible: root.resizable;
+        x: parent.width - 1px;
+        y: 7px;
+        width: 1px;
+        height: parent.height - 14px;
+        background: #c8d7e8;
+    }
+
+    resize-handle := TouchArea {
+        enabled: root.resizable;
+        mouse-cursor: ew-resize;
+        property <length> start-width: 0px;
+
+        x: parent.width - 6px;
+        y: 0px;
+        width: 12px;
+        height: parent.height;
+
+        pointer-event(event) => {
+            if (event.button == PointerEventButton.left && event.kind == PointerEventKind.down) {
+                self.start-width = root.col-width;
+            }
+        }
+
+        moved => {
+            if (self.enabled && self.pressed) {
+                let next-width = max(root.min-col-width, self.start-width + (self.mouse-x - self.pressed-x));
+                root.col-width = next-width;
+                root.width-changed(next-width);
+            }
+        }
+    }
+}
+
+export component TableBodyCell inherits Rectangle {
+    in property <string> text;
+    in property <length> col-width: 100px;
+    in property <color> text-color: #334155;
+    in property <TextHorizontalAlignment> align: center;
+    in property <bool> elide: false;
+
+    width: col-width;
+    background: transparent;
+
+    Text {
+        text: root.text;
+        x: 0px;
+        y: 0px;
+        width: parent.width;
+        height: parent.height;
+        color: root.text-color;
+        font-size: 12px;
+        vertical-alignment: center;
+        horizontal-alignment: root.align;
+        overflow: root.elide ? TextOverflow.elide : TextOverflow.clip;
+    }
+}
+
+export component DataGridFrame inherits Rectangle {
+    in property <string> title;
+    in property <string> summary: "";
+    in property <bool> show-summary: true;
+    in property <[DetailRow]> rows: [];
+    in property <string> time-title: "Time";
+    in property <string> level-title: "Level";
+    in property <bool> show-rule: false;
+    in property <string> rule-title: "Rule";
+    in property <string> target-title: "Target";
+    in property <string> content-title: "Content";
+    in property <string> status-title: "Status";
+    in property <bool> show-status: true;
+    in property <bool> show-content: true;
+    in property <bool> show-risk-score: false;
+    in property <bool> semantic-alert-layout: false;
+    in property <length> table-width: 900px;
+    in property <length> body-viewport-height: 252px;
+    in property <bool> show-pagination: false;
+    in property <bool> has-prev-page: false;
+    in property <bool> has-next-page: false;
+    in property <string> pagination-text: "";
+    in property <int> reset-token: 0;
+    callback prev-page();
+    callback next-page();
+    out property <length> body-visible-height: max(120px, table-shell.height - root.header-height - 6px);
+    private property <length> header-height: 34px;
+    private property <length> row-height: 34px;
+    private property <length> body-height: max(root.body-visible-height, rows.length * root.row-height);
+    private property <length> col-gap: 8px;
+    private property <length> col-row-no-width: 44px;
+    private property <length> col-time-width: 150px;
+    private property <length> col-level-width: 74px;
+    private property <length> col-risk-width: 76px;
+    private property <length> col-rule-width: 128px;
+    private property <length> col-target-width: 96px;
+    private property <length> col-entity-width: 120px;
+    private property <length> col-action-width: 88px;
+    private property <length> col-status-width: 76px;
+    private property <length> col-content-width: 360px;
+    private property <length> computed-table-width:
+        20px
+        + col-row-no-width
+        + col-gap + col-time-width
+        + col-gap + col-level-width
+        + (show-risk-score ? col-gap + col-risk-width : 0px)
+        + (show-rule ? col-gap + col-rule-width : 0px)
+        + col-gap + col-target-width
+        + col-gap + col-entity-width
+        + col-gap + col-action-width
+        + (show-status ? col-gap + col-status-width : 0px)
+        + (show-content ? col-gap + col-content-width : 0px);
+
+    border-radius: 10px;
+    background: #ffffff;
+    border-width: 1px;
+    border-color: #d6e0ea;
+    min-height: 220px;
+    changed rows => {
+        table-scroll.viewport-x = 0px;
+    }
+    changed reset-token => {
+        table-scroll.viewport-x = 0px;
+    }
+
+    VerticalLayout {
+        padding: 10px;
+        spacing: 4px;
+
+        Text {
+            text: title;
+            color: #203047;
+            font-size: 14px;
+            font-weight: 700;
+            horizontal-alignment: left;
+        }
+
+        if (show-summary && summary != "") : Text {
+            text: summary;
+            color: #64748b;
+            font-size: 11px;
+            horizontal-alignment: left;
+        }
+
+        if (show-pagination) : HorizontalLayout {
+            spacing: 8px;
+
+            Text {
+                text: pagination-text;
+                color: #51657c;
+                font-size: 11px;
+                vertical-alignment: center;
+            }
+
+            Rectangle { background: transparent; }
+
+            Button {
+                text: "Prev";
+                enabled: has-prev-page;
+                clicked => {
+                    root.prev-page();
+                }
+            }
+
+            Button {
+                text: "Next";
+                enabled: has-next-page;
+                clicked => {
+                    root.next-page();
+                }
+            }
+        }
+
+        table-shell := Rectangle {
+            vertical-stretch: 1;
+            clip: true;
+            table-scroll := ScrollView {
+                x: 0px;
+                y: 0px;
+                width: parent.width;
+                height: parent.height;
+                viewport-y: 0px;
+                vertical-scrollbar-policy: ScrollBarPolicy.always-off;
+                horizontal-scrollbar-policy: ScrollBarPolicy.as-needed;
+
+                Rectangle {
+                    width: max(max(table-width, root.computed-table-width), table-scroll.visible-width);
+                    height: parent.height;
+
+                    Rectangle {
+                        x: 0px;
+                        y: 0px;
+                        width: parent.width;
+                        height: root.header-height;
+                        border-radius: 8px;
+                        background: #dde8f3;
+                        border-width: 1px;
+                        border-color: #d8e3ee;
+
+                        if (!semantic-alert-layout) : HorizontalLayout {
+                            padding-left: 10px;
+                            padding-right: 10px;
+                            spacing: root.col-gap;
+
+                            TableHeaderCell { text: "#"; col-width <=> root.col-row-no-width; min-col-width: 36px; }
+                            TableHeaderCell { text: time-title; col-width <=> root.col-time-width; min-col-width: 120px; }
+                            TableHeaderCell { text: level-title; col-width <=> root.col-level-width; min-col-width: 64px; }
+                            if (show-risk-score) : TableHeaderCell { text: "RiskScore"; col-width <=> root.col-risk-width; min-col-width: 68px; }
+                            if (show-rule) : TableHeaderCell { text: rule-title; col-width <=> root.col-rule-width; min-col-width: 96px; }
+                            TableHeaderCell { text: target-title; col-width <=> root.col-target-width; min-col-width: 80px; }
+                            TableHeaderCell { text: "Entity"; col-width <=> root.col-entity-width; min-col-width: 88px; }
+                            TableHeaderCell { text: "Action"; col-width <=> root.col-action-width; min-col-width: 76px; }
+                            if (show-status) : TableHeaderCell { text: status-title; col-width <=> root.col-status-width; min-col-width: 68px; }
+                            if (show-content) : TableHeaderCell { text: content-title; col-width <=> root.col-content-width; min-col-width: 140px; }
+                        }
+
+                        if (semantic-alert-layout) : HorizontalLayout {
+                            padding-left: 10px;
+                            padding-right: 10px;
+                            spacing: root.col-gap;
+
+                            TableHeaderCell { text: "#"; col-width <=> root.col-row-no-width; min-col-width: 36px; text-color: #1f5fd6; }
+                            TableHeaderCell { text: time-title; col-width <=> root.col-time-width; min-col-width: 120px; text-color: #1f5fd6; }
+                            TableHeaderCell { text: level-title; col-width <=> root.col-level-width; min-col-width: 64px; text-color: #1f5fd6; }
+                            if (show-risk-score) : TableHeaderCell { text: "RiskScore"; col-width <=> root.col-risk-width; min-col-width: 68px; text-color: #1f5fd6; }
+                            if (show-rule) : TableHeaderCell { text: rule-title; col-width <=> root.col-rule-width; min-col-width: 96px; text-color: #1f5fd6; }
+                            TableHeaderCell { text: "Entity"; col-width <=> root.col-entity-width; min-col-width: 88px; text-color: #1f5fd6; }
+                            TableHeaderCell { text: target-title; col-width <=> root.col-target-width; min-col-width: 80px; text-color: #23734f; }
+                            TableHeaderCell { text: "Action"; col-width <=> root.col-action-width; min-col-width: 76px; text-color: #9b5f00; }
+                            if (show-status) : TableHeaderCell { text: status-title; col-width <=> root.col-status-width; min-col-width: 68px; text-color: #b54752; }
+                            if (show-content) : TableHeaderCell { text: content-title; col-width <=> root.col-content-width; min-col-width: 140px; text-color: #35506e; }
+                        }
+                    }
+
+                    Rectangle {
+                        x: 0px;
+                        y: root.header-height + 6px;
+                        width: parent.width;
+                        height: max(0px, parent.height - root.header-height - 6px);
+                        border-radius: 8px;
+                        background: #f6f9fc;
+                        border-width: 1px;
+                        border-color: #d8e3ee;
+                        clip: true;
+
+                        for row[i] in rows: Rectangle {
+                            x: 0px;
+                            y: i * root.row-height;
+                            width: parent.width;
+                            height: root.row-height;
+                            background: Math.mod(i, 2) == 0 ? #f8fbfe : #f2f7fb;
+
+                            if (!semantic-alert-layout) : HorizontalLayout {
+                                padding-left: 10px;
+                                padding-right: 10px;
+                                spacing: root.col-gap;
+
+                                TableBodyCell { text: row.row_no; col-width: root.col-row-no-width; text-color: #334155; align: center; }
+                                TableBodyCell { text: row.time; col-width: root.col-time-width; text-color: #334155; align: left; }
+                                TableBodyCell { text: row.level; col-width: root.col-level-width; text-color: #334155; align: left; }
+                                if (show-risk-score) : TableBodyCell { text: row.risk_score; col-width: root.col-risk-width; text-color: #334155; align: center; }
+                                if (show-rule) : TableBodyCell { text: row.rule; col-width: root.col-rule-width; text-color: #334155; align: left; }
+                                TableBodyCell { text: row.target; col-width: root.col-target-width; text-color: #334155; align: left; }
+                                TableBodyCell { text: row.entity; col-width: root.col-entity-width; text-color: #334155; align: left; }
+                                TableBodyCell { text: row.action; col-width: root.col-action-width; text-color: #334155; align: left; }
+                                if (show-status) : TableBodyCell { text: row.status; col-width: root.col-status-width; text-color: #334155; align: left; }
+                                if (show-content) : TableBodyCell { text: row.content; col-width: root.col-content-width; text-color: #334155; align: left; elide: true; }
+                            }
+
+                            if (semantic-alert-layout) : HorizontalLayout {
+                                padding-left: 10px;
+                                padding-right: 10px;
+                                spacing: root.col-gap;
+
+                                TableBodyCell { text: row.row_no; col-width: root.col-row-no-width; text-color: #294b75; align: center; }
+                                TableBodyCell { text: row.time; col-width: root.col-time-width; text-color: #294b75; align: left; }
+                                TableBodyCell { text: row.level; col-width: root.col-level-width; text-color: #294b75; align: left; }
+                                if (show-risk-score) : TableBodyCell { text: row.risk_score; col-width: root.col-risk-width; text-color: #294b75; align: center; }
+                                if (show-rule) : TableBodyCell { text: row.rule; col-width: root.col-rule-width; text-color: #294b75; align: left; }
+                                TableBodyCell { text: row.entity; col-width: root.col-entity-width; text-color: #294b75; align: left; }
+                                TableBodyCell { text: row.target; col-width: root.col-target-width; text-color: #2e6b53; align: left; }
+                                TableBodyCell { text: row.action; col-width: root.col-action-width; text-color: #8a5a12; align: left; }
+                                if (show-status) : TableBodyCell { text: row.status; col-width: root.col-status-width; text-color: #a23a44; align: left; }
+                                if (show-content) : TableBodyCell { text: row.content; col-width: root.col-content-width; text-color: #425f7d; align: left; elide: true; }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+export component LogTableView inherits DataGridFrame {
+    vertical-stretch: 1;
+    title: "Filtered Log Data";
+    show-summary: false;
+    show-risk-score: true;
+    table-width: 1280px;
+    body-viewport-height: 652px;
+    show-pagination: true;
+}
+
+export component AlertTableView inherits DataGridFrame {
+    vertical-stretch: 1;
+    title: "Filtered Alert Data";
+    show-summary: false;
+    time-title: "FiredAt";
+    level-title: "RiskLevel";
+    show-rule: true;
+    rule-title: "Rule";
+    target-title: "Target";
+    show-status: false;
+    show-content: false;
+    content-title: "Message";
+    show-risk-score: true;
+    semantic-alert-layout: true;
+    table-width: 1420px;
+    body-viewport-height: 652px;
+    show-pagination: true;
+}

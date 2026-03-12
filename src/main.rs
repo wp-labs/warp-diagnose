@@ -2,21 +2,31 @@ use std::cell::RefCell;
 use std::rc::Rc;
 
 use slint::VecModel;
+use warp_diagnose::config::runtime_config;
 use warp_diagnose::data;
 
 slint::include_modules!();
 
-const TABLE_WINDOW_CHROME_PX: usize = 308;
-const TABLE_ROW_HEIGHT_PX: usize = 34;
-const TABLE_MIN_PAGE_SIZE: usize = 20;
-
-fn table_page_size(app: &AppWindow) -> usize {
-    let window_height = app.window().size().height as usize;
+fn fallback_table_page_size(app: &AppWindow) -> usize {
+    let table = &runtime_config().table;
+    let window_height = app.get_logical_window_height() as usize;
     let computed = window_height
-        .saturating_sub(TABLE_WINDOW_CHROME_PX)
-        .max(TABLE_ROW_HEIGHT_PX)
-        / TABLE_ROW_HEIGHT_PX;
-    computed.max(TABLE_MIN_PAGE_SIZE)
+        .saturating_sub(table.window_chrome_px)
+        .max(table.row_height_px)
+        / table.row_height_px;
+    computed.max(table.min_page_size)
+}
+
+fn table_page_size_from_visible_height(app: &AppWindow, visible_height: f32) -> usize {
+    let table = &runtime_config().table;
+    let fallback = fallback_table_page_size(app);
+    if visible_height <= 0.0 {
+        return fallback;
+    }
+
+    ((visible_height as usize) / table.row_height_px)
+        .max(table.min_page_size)
+        .min(fallback.max(table.min_page_size))
 }
 
 fn level_filter_to_ui_idx(filter: Option<data::LevelFilter>) -> i32 {
@@ -100,15 +110,15 @@ fn source_filter_label(filter: Option<data::SourceFilter>) -> String {
     }
 }
 
-struct UiState {
-    dashboard: data::DashboardData,
-    active_page: i32,
-    log_page: usize,
-    alert_page: usize,
-    selected_stage: Option<usize>,
+#[derive(Default)]
+struct GlobalFilterState {
     selected_level: Option<data::LevelFilter>,
     selected_risk: Option<data::RiskFilter>,
     selected_source: Option<data::SourceFilter>,
+}
+
+#[derive(Default)]
+struct OverviewState {
     selected_point: Option<usize>,
     hover_point: Option<usize>,
     point_detail_summaries: Vec<String>,
@@ -117,148 +127,99 @@ struct UiState {
     point_hint: String,
 }
 
-fn apply_log_page(app: &AppWindow, state: &mut UiState) {
-    let page_size = table_page_size(app);
-    let page = state.dashboard.build_log_page(
-        state.selected_stage,
-        state.selected_level,
-        state.selected_risk,
-        state.selected_source,
-        state.log_page,
-        page_size,
-    );
-    state.log_page = page.page_idx;
-    app.set_filtered_log_summary(page.summary.into());
-    app.set_filtered_log_rows(
-        Rc::new(VecModel::from(
-            page.rows
-                .iter()
-                .map(|row| DetailRow {
-                    row_no: row.row_no.clone().into(),
-                    time: row.time.clone().into(),
-                    level: row.level.clone().into(),
-                    risk_score: row.risk_score.clone().into(),
-                    rule: row.rule.clone().into(),
-                    target: row.target.clone().into(),
-                    entity: row.entity.clone().into(),
-                    action: row.action.clone().into(),
-                    status: row.status.clone().into(),
-                    content: row.content.clone().into(),
-                })
-                .collect::<Vec<_>>(),
-        ))
-        .into(),
-    );
-    app.set_log_page_text(
-        format!(
-            "Page {}/{} · {} rows",
-            page.page_idx + 1,
-            page.total_pages,
-            page.total_rows
-        )
-        .into(),
-    );
-    app.set_has_prev_log_page(page.page_idx > 0);
-    app.set_has_next_log_page(page.page_idx + 1 < page.total_pages);
+#[derive(Default)]
+struct LogPageState {
+    page_idx: usize,
+    page_size: usize,
 }
 
-fn apply_alert_page(app: &AppWindow, state: &mut UiState) {
-    let page_size = table_page_size(app);
-    let page = state.dashboard.build_alert_page(
-        state.selected_stage,
-        state.selected_level,
-        state.selected_risk,
-        state.selected_source,
-        state.alert_page,
-        page_size,
-    );
-    state.alert_page = page.page_idx;
-    app.set_filtered_alert_summary(page.summary.into());
-    app.set_filtered_alert_rows(
-        Rc::new(VecModel::from(
-            page.rows
-                .iter()
-                .map(|row| DetailRow {
-                    row_no: row.row_no.clone().into(),
-                    time: row.time.clone().into(),
-                    level: row.level.clone().into(),
-                    risk_score: row.risk_score.clone().into(),
-                    rule: row.rule.clone().into(),
-                    target: row.target.clone().into(),
-                    entity: row.entity.clone().into(),
-                    action: row.action.clone().into(),
-                    status: row.status.clone().into(),
-                    content: row.content.clone().into(),
-                })
-                .collect::<Vec<_>>(),
-        ))
-        .into(),
-    );
-    app.set_alert_page_text(
-        format!(
-            "Page {}/{} · {} rows",
-            page.page_idx + 1,
-            page.total_pages,
-            page.total_rows
-        )
-        .into(),
-    );
-    app.set_has_prev_alert_page(page.page_idx > 0);
-    app.set_has_next_alert_page(page.page_idx + 1 < page.total_pages);
+#[derive(Default)]
+struct AlertPageState {
+    page_idx: usize,
+    page_size: usize,
 }
 
-fn apply_view(app: &AppWindow, state: &mut UiState) {
-    let view = state.dashboard.build_view(
-        state.selected_stage,
-        state.selected_level,
-        state.selected_risk,
-        state.selected_source,
-    );
+struct UiState {
+    dashboard: data::DashboardData,
+    active_page: i32,
+    filters: GlobalFilterState,
+    overview: OverviewState,
+    log_page: LogPageState,
+    alert_page: AlertPageState,
+}
 
-    app.set_total_events(view.report.total_rows as i32);
-    app.set_risk_low_events(view.report.risk_low_rows as i32);
-    app.set_risk_mid_events(view.report.risk_mid_rows as i32);
-    app.set_risk_high_events(view.report.risk_high_rows as i32);
+impl UiState {
+    fn reset_table_pages(&mut self) {
+        self.log_page.page_idx = 0;
+        self.alert_page.page_idx = 0;
+    }
 
-    let status_text = view.report.to_status_text();
+    fn clear_overview_selection(&mut self) {
+        self.overview.selected_point = None;
+        self.overview.hover_point = None;
+    }
 
-    app.set_recent_events_text(view.report.recent_events_text.into());
-    app.set_top_targets_text(view.report.top_targets_text.into());
-    app.set_top_entities_text(view.report.top_entities_text.into());
-    app.set_source_text(view.report.source_text.into());
-    app.set_status_text(status_text.into());
-    app.set_active_level_filter(level_filter_to_ui_idx(state.selected_level));
-    app.set_active_risk_filter(risk_filter_to_ui_idx(state.selected_risk));
-    app.set_active_source_filter(source_filter_to_ui_idx(state.selected_source));
-    app.set_has_level_filter(state.selected_level.is_some());
-    app.set_has_risk_filter(state.selected_risk.is_some());
-    app.set_has_source_filter(state.selected_source.is_some());
-    app.set_has_stage_filter(state.selected_stage.is_some());
-    app.set_active_level_filter_text(level_filter_label(state.selected_level).into());
-    app.set_active_risk_filter_text(risk_filter_label(state.selected_risk).into());
-    app.set_active_source_filter_text(source_filter_label(state.selected_source).into());
-    let active_stage = state
-        .selected_stage
-        .and_then(|idx| state.dashboard.stage_label(idx))
-        .map(|label| format!("Stage: {label}"))
-        .unwrap_or_else(|| "All stages".to_string());
-    app.set_active_stage_filter_text(active_stage.into());
+    fn clear_all_filters(&mut self) {
+        self.filters = GlobalFilterState::default();
+        self.reset_table_pages();
+        self.clear_overview_selection();
+    }
+}
 
-    app.set_stage_detail_text(view.stage_detail_text.into());
-    app.set_lane_legend_text(view.lane_legend_text.into());
+fn map_detail_row(row: &data::DetailRowVm) -> DetailRow {
+    DetailRow {
+        row_no: row.row_no.clone().into(),
+        time: row.time.clone().into(),
+        level: row.level.clone().into(),
+        risk_score: row.risk_score.clone().into(),
+        rule: row.rule.clone().into(),
+        target: row.target.clone().into(),
+        entity: row.entity.clone().into(),
+        action: row.action.clone().into(),
+        status: row.status.clone().into(),
+        content: row.content.clone().into(),
+    }
+}
 
-    let stage_rows: Vec<StageBand> = view
-        .stage_bands
-        .iter()
-        .map(|s| StageBand {
-            label: s.label.clone().into(),
-            summary: s.summary.clone().into(),
-            start_pct: s.start_pct,
-            end_pct: s.end_pct,
-            selected: s.selected,
-        })
-        .collect();
+fn map_detail_rows(rows: &[data::DetailRowVm]) -> Vec<DetailRow> {
+    rows.iter().map(map_detail_row).collect()
+}
 
+fn schedule_table_reset(app: &AppWindow, reset_log: bool, reset_alert: bool) {
+    let weak = app.as_weak();
+    let _ = slint::invoke_from_event_loop(move || {
+        if let Some(app) = weak.upgrade() {
+            if reset_log {
+                app.set_log_table_reset_token(app.get_log_table_reset_token() + 1);
+            }
+            if reset_alert {
+                app.set_alert_table_reset_token(app.get_alert_table_reset_token() + 1);
+            }
+        }
+    });
+}
+
+fn apply_global_shell(app: &AppWindow, state: &UiState, report: &data::LoadReport) {
+    app.set_total_events(report.total_rows as i32);
+    app.set_risk_low_events(report.risk_low_rows as i32);
+    app.set_risk_mid_events(report.risk_mid_rows as i32);
+    app.set_risk_high_events(report.risk_high_rows as i32);
+    app.set_top_targets_text(report.top_targets_text.clone().into());
+    app.set_source_text(report.source_text.clone().into());
+    app.set_status_text(report.to_status_text().into());
+    app.set_active_level_filter(level_filter_to_ui_idx(state.filters.selected_level));
+    app.set_active_risk_filter(risk_filter_to_ui_idx(state.filters.selected_risk));
+    app.set_active_source_filter(source_filter_to_ui_idx(state.filters.selected_source));
+    app.set_has_level_filter(state.filters.selected_level.is_some());
+    app.set_has_risk_filter(state.filters.selected_risk.is_some());
+    app.set_has_source_filter(state.filters.selected_source.is_some());
+    app.set_active_level_filter_text(level_filter_label(state.filters.selected_level).into());
+    app.set_active_risk_filter_text(risk_filter_label(state.filters.selected_risk).into());
+    app.set_active_source_filter_text(source_filter_label(state.filters.selected_source).into());
+    app.set_active_page(state.active_page);
+}
+
+fn apply_overview_page(app: &AppWindow, state: &mut UiState, view: data::DashboardView) {
     let point_rows: Vec<TimelinePoint> = view
         .timeline_points
         .iter()
@@ -289,64 +250,42 @@ fn apply_view(app: &AppWindow, state: &mut UiState) {
         })
         .collect();
 
-    let card_rows: Vec<StageCard> = view
-        .stage_cards
-        .iter()
-        .map(|c| StageCard {
-            idx: c.idx as i32,
-            label: c.label.clone().into(),
-            action: c.action.clone().into(),
-            summary: c.summary.clone().into(),
-            selected: c.selected,
-        })
-        .collect();
-
-    app.set_stage_bands(Rc::new(VecModel::from(stage_rows)).into());
+    app.set_lane_legend_text(view.lane_legend_text.into());
     app.set_timeline_points(Rc::new(VecModel::from(point_rows)).into());
     app.set_time_ticks(Rc::new(VecModel::from(tick_rows)).into());
     app.set_timeline_content_px(view.timeline_content_px);
     app.set_lane_labels(Rc::new(VecModel::from(lane_rows)).into());
-    app.set_stage_cards(Rc::new(VecModel::from(card_rows)).into());
-    app.set_active_page(state.active_page);
-    if state.active_page == 1 {
-        apply_log_page(app, state);
-    } else if state.active_page == 2 {
-        apply_alert_page(app, state);
-    }
+    app.set_hovered_timeline_point_index(-1);
+    app.set_selected_timeline_point_index(
+        state
+            .overview
+            .selected_point
+            .map(|idx| idx as i32)
+            .unwrap_or(-1),
+    );
 
-    state.point_detail_summaries = view.point_detail_summaries;
-    state.point_detail_rows = view.point_detail_rows;
-    state.point_previews = view.point_previews;
-    state.point_hint = view.point_hint_text;
-    state.hover_point = None;
+    state.overview.point_detail_summaries = view.point_detail_summaries;
+    state.overview.point_detail_rows = view.point_detail_rows;
+    state.overview.point_previews = view.point_previews;
+    state.overview.point_hint = view.point_hint_text;
+    state.overview.hover_point = None;
     app.set_hover_detail_text("Hover a point to preview.".into());
 
-    let point_summary = match state.selected_point {
-        Some(idx) if idx < state.point_detail_summaries.len() => {
-            state.point_detail_summaries[idx].clone()
+    let point_summary = match state.overview.selected_point {
+        Some(idx) if idx < state.overview.point_detail_summaries.len() => {
+            state.overview.point_detail_summaries[idx].clone()
         }
         _ => {
-            state.selected_point = None;
-            state.point_hint.clone()
+            state.overview.selected_point = None;
+            app.set_selected_timeline_point_index(-1);
+            state.overview.point_hint.clone()
         }
     };
 
-    let point_rows = match state.selected_point {
-        Some(idx) if idx < state.point_detail_rows.len() => state.point_detail_rows[idx]
-            .iter()
-            .map(|row| DetailRow {
-                row_no: row.row_no.clone().into(),
-                time: row.time.clone().into(),
-                level: row.level.clone().into(),
-                risk_score: row.risk_score.clone().into(),
-                rule: row.rule.clone().into(),
-                target: row.target.clone().into(),
-                entity: row.entity.clone().into(),
-                action: row.action.clone().into(),
-                status: row.status.clone().into(),
-                content: row.content.clone().into(),
-            })
-            .collect::<Vec<_>>(),
+    let point_rows = match state.overview.selected_point {
+        Some(idx) if idx < state.overview.point_detail_rows.len() => {
+            map_detail_rows(&state.overview.point_detail_rows[idx])
+        }
         _ => Vec::new(),
     };
 
@@ -354,43 +293,114 @@ fn apply_view(app: &AppWindow, state: &mut UiState) {
     app.set_point_detail_rows(Rc::new(VecModel::from(point_rows)).into());
 }
 
+fn apply_log_page(app: &AppWindow, state: &mut UiState) {
+    let visible_height = app.get_log_table_body_viewport_height();
+    let page_size = table_page_size_from_visible_height(app, visible_height);
+    if state.log_page.page_size != page_size {
+        let first_row_idx = state.log_page.page_idx * state.log_page.page_size.max(1);
+        state.log_page.page_idx = first_row_idx / page_size;
+        state.log_page.page_size = page_size;
+    }
+    let page = state.dashboard.build_log_page(
+        state.filters.selected_level,
+        state.filters.selected_risk,
+        state.filters.selected_source,
+        state.log_page.page_idx,
+        page_size,
+    );
+    state.log_page.page_idx = page.page_idx;
+    app.set_filtered_log_summary(page.summary.into());
+    app.set_filtered_log_rows(
+        Rc::new(VecModel::from(map_detail_rows(&page.rows))).into(),
+    );
+    app.set_log_page_text(
+        format!(
+            "Page {}/{} · {} rows",
+            page.page_idx + 1,
+            page.total_pages,
+            page.total_rows,
+        )
+        .into(),
+    );
+    app.set_has_prev_log_page(page.page_idx > 0);
+    app.set_has_next_log_page(page.page_idx + 1 < page.total_pages);
+}
+
+fn apply_alert_page(app: &AppWindow, state: &mut UiState) {
+    let visible_height = app.get_alert_table_body_viewport_height();
+    let page_size = table_page_size_from_visible_height(app, visible_height);
+    if state.alert_page.page_size != page_size {
+        let first_row_idx = state.alert_page.page_idx * state.alert_page.page_size.max(1);
+        state.alert_page.page_idx = first_row_idx / page_size;
+        state.alert_page.page_size = page_size;
+    }
+    let page = state.dashboard.build_alert_page(
+        state.filters.selected_level,
+        state.filters.selected_risk,
+        state.filters.selected_source,
+        state.alert_page.page_idx,
+        page_size,
+    );
+    state.alert_page.page_idx = page.page_idx;
+    app.set_filtered_alert_summary(page.summary.into());
+    app.set_filtered_alert_rows(
+        Rc::new(VecModel::from(map_detail_rows(&page.rows))).into(),
+    );
+    app.set_alert_page_text(
+        format!(
+            "Page {}/{} · {} rows",
+            page.page_idx + 1,
+            page.total_pages,
+            page.total_rows,
+        )
+        .into(),
+    );
+    app.set_has_prev_alert_page(page.page_idx > 0);
+    app.set_has_next_alert_page(page.page_idx + 1 < page.total_pages);
+}
+
+fn apply_current_page(app: &AppWindow, state: &mut UiState) {
+    if state.active_page == 1 {
+        apply_log_page(app, state);
+    } else if state.active_page == 2 {
+        apply_alert_page(app, state);
+    }
+}
+
+fn apply_view(app: &AppWindow, state: &mut UiState) {
+    let view = state.dashboard.build_view(
+        state.filters.selected_level,
+        state.filters.selected_risk,
+        state.filters.selected_source,
+    );
+    apply_global_shell(app, state, &view.report);
+    apply_overview_page(app, state, view);
+    apply_current_page(app, state);
+}
+
 fn reload_data(app: &AppWindow, state: &mut UiState) {
     state.dashboard = data::load_default_sources();
-    state.log_page = 0;
-    state.alert_page = 0;
-    state.selected_stage = None;
-    state.selected_level = None;
-    state.selected_risk = None;
-    state.selected_source = None;
-    state.selected_point = None;
-    state.hover_point = None;
-    state.point_detail_summaries.clear();
-    state.point_detail_rows.clear();
-    state.point_previews.clear();
-    state.point_hint.clear();
+    state.filters = GlobalFilterState::default();
+    state.overview = OverviewState::default();
+    state.log_page = LogPageState::default();
+    state.alert_page = AlertPageState::default();
     apply_view(app, state);
+    schedule_table_reset(app, true, true);
 }
 
 fn main() -> Result<(), slint::PlatformError> {
     let app = AppWindow::new()?;
+    let window = &runtime_config().window;
     app.window()
-        .set_size(slint::LogicalSize::new(1420.0, 960.0));
+        .set_size(slint::LogicalSize::new(window.width, window.height));
 
     let state = Rc::new(RefCell::new(UiState {
         dashboard: data::load_default_sources(),
         active_page: 0,
-        log_page: 0,
-        alert_page: 0,
-        selected_stage: None,
-        selected_level: None,
-        selected_risk: None,
-        selected_source: None,
-        selected_point: None,
-        hover_point: None,
-        point_detail_summaries: Vec::new(),
-        point_detail_rows: Vec::new(),
-        point_previews: Vec::new(),
-        point_hint: String::new(),
+        filters: GlobalFilterState::default(),
+        overview: OverviewState::default(),
+        log_page: LogPageState::default(),
+        alert_page: AlertPageState::default(),
     }));
 
     {
@@ -417,16 +427,15 @@ fn main() -> Result<(), slint::PlatformError> {
             if let Some(app) = weak.upgrade() {
                 let mut st = state.borrow_mut();
                 let next = level_filter_from_ui_idx(idx);
-                st.selected_level = if st.selected_level == next {
+                st.filters.selected_level = if st.filters.selected_level == next {
                     None
                 } else {
                     next
                 };
-                st.log_page = 0;
-                st.alert_page = 0;
-                st.selected_point = None;
-                st.hover_point = None;
+                st.reset_table_pages();
+                st.clear_overview_selection();
                 apply_view(&app, &mut st);
+                schedule_table_reset(&app, true, true);
             }
         });
     }
@@ -438,12 +447,15 @@ fn main() -> Result<(), slint::PlatformError> {
             if let Some(app) = weak.upgrade() {
                 let mut st = state.borrow_mut();
                 let next = risk_filter_from_ui_idx(idx);
-                st.selected_risk = if st.selected_risk == next { None } else { next };
-                st.log_page = 0;
-                st.alert_page = 0;
-                st.selected_point = None;
-                st.hover_point = None;
+                st.filters.selected_risk = if st.filters.selected_risk == next {
+                    None
+                } else {
+                    next
+                };
+                st.reset_table_pages();
+                st.clear_overview_selection();
                 apply_view(&app, &mut st);
+                schedule_table_reset(&app, true, true);
             }
         });
     }
@@ -455,16 +467,15 @@ fn main() -> Result<(), slint::PlatformError> {
             if let Some(app) = weak.upgrade() {
                 let mut st = state.borrow_mut();
                 let next = source_filter_from_ui_idx(idx);
-                st.selected_source = if st.selected_source == next {
+                st.filters.selected_source = if st.filters.selected_source == next {
                     None
                 } else {
                     next
                 };
-                st.log_page = 0;
-                st.alert_page = 0;
-                st.selected_point = None;
-                st.hover_point = None;
+                st.reset_table_pages();
+                st.clear_overview_selection();
                 apply_view(&app, &mut st);
+                schedule_table_reset(&app, true, true);
             }
         });
     }
@@ -475,12 +486,11 @@ fn main() -> Result<(), slint::PlatformError> {
         app.on_clear_level_filter(move || {
             if let Some(app) = weak.upgrade() {
                 let mut st = state.borrow_mut();
-                st.selected_level = None;
-                st.log_page = 0;
-                st.alert_page = 0;
-                st.selected_point = None;
-                st.hover_point = None;
+                st.filters.selected_level = None;
+                st.reset_table_pages();
+                st.clear_overview_selection();
                 apply_view(&app, &mut st);
+                schedule_table_reset(&app, true, true);
             }
         });
     }
@@ -491,12 +501,11 @@ fn main() -> Result<(), slint::PlatformError> {
         app.on_clear_risk_filter(move || {
             if let Some(app) = weak.upgrade() {
                 let mut st = state.borrow_mut();
-                st.selected_risk = None;
-                st.log_page = 0;
-                st.alert_page = 0;
-                st.selected_point = None;
-                st.hover_point = None;
+                st.filters.selected_risk = None;
+                st.reset_table_pages();
+                st.clear_overview_selection();
                 apply_view(&app, &mut st);
+                schedule_table_reset(&app, true, true);
             }
         });
     }
@@ -507,12 +516,11 @@ fn main() -> Result<(), slint::PlatformError> {
         app.on_clear_source_filter(move || {
             if let Some(app) = weak.upgrade() {
                 let mut st = state.borrow_mut();
-                st.selected_source = None;
-                st.log_page = 0;
-                st.alert_page = 0;
-                st.selected_point = None;
-                st.hover_point = None;
+                st.filters.selected_source = None;
+                st.reset_table_pages();
+                st.clear_overview_selection();
                 apply_view(&app, &mut st);
+                schedule_table_reset(&app, true, true);
             }
         });
     }
@@ -523,52 +531,9 @@ fn main() -> Result<(), slint::PlatformError> {
         app.on_clear_all_filters(move || {
             if let Some(app) = weak.upgrade() {
                 let mut st = state.borrow_mut();
-                st.selected_stage = None;
-                st.selected_level = None;
-                st.selected_risk = None;
-                st.selected_source = None;
-                st.log_page = 0;
-                st.alert_page = 0;
-                st.selected_point = None;
-                st.hover_point = None;
+                st.clear_all_filters();
                 apply_view(&app, &mut st);
-            }
-        });
-    }
-
-    {
-        let weak = app.as_weak();
-        let state = Rc::clone(&state);
-        app.on_stage_clicked(move |idx| {
-            if let Some(app) = weak.upgrade() {
-                let mut st = state.borrow_mut();
-                let idx = idx.max(0) as usize;
-                if st.selected_stage == Some(idx) {
-                    st.selected_stage = None;
-                } else {
-                    st.selected_stage = Some(idx);
-                }
-                st.log_page = 0;
-                st.alert_page = 0;
-                st.selected_point = None;
-                st.hover_point = None;
-                apply_view(&app, &mut st);
-            }
-        });
-    }
-
-    {
-        let weak = app.as_weak();
-        let state = Rc::clone(&state);
-        app.on_clear_stage_filter(move || {
-            if let Some(app) = weak.upgrade() {
-                let mut st = state.borrow_mut();
-                st.selected_stage = None;
-                st.log_page = 0;
-                st.alert_page = 0;
-                st.selected_point = None;
-                st.hover_point = None;
-                apply_view(&app, &mut st);
+                schedule_table_reset(&app, true, true);
             }
         });
     }
@@ -580,12 +545,14 @@ fn main() -> Result<(), slint::PlatformError> {
             if let Some(app) = weak.upgrade() {
                 let mut st = state.borrow_mut();
                 st.active_page = page.clamp(0, 2);
-                app.set_active_page(st.active_page);
                 if st.active_page == 1 {
-                    apply_log_page(&app, &mut st);
+                    st.log_page.page_idx = 0;
                 } else if st.active_page == 2 {
-                    apply_alert_page(&app, &mut st);
+                    st.alert_page.page_idx = 0;
                 }
+                app.set_active_page(st.active_page);
+                apply_current_page(&app, &mut st);
+                schedule_table_reset(&app, st.active_page == 1, st.active_page == 2);
             }
         });
     }
@@ -596,10 +563,11 @@ fn main() -> Result<(), slint::PlatformError> {
         app.on_log_prev_page(move || {
             if let Some(app) = weak.upgrade() {
                 let mut st = state.borrow_mut();
-                if st.log_page > 0 {
-                    st.log_page -= 1;
+                if st.log_page.page_idx > 0 {
+                    st.log_page.page_idx -= 1;
                 }
                 apply_log_page(&app, &mut st);
+                schedule_table_reset(&app, true, false);
             }
         });
     }
@@ -610,8 +578,9 @@ fn main() -> Result<(), slint::PlatformError> {
         app.on_log_next_page(move || {
             if let Some(app) = weak.upgrade() {
                 let mut st = state.borrow_mut();
-                st.log_page += 1;
+                st.log_page.page_idx += 1;
                 apply_log_page(&app, &mut st);
+                schedule_table_reset(&app, true, false);
             }
         });
     }
@@ -622,10 +591,11 @@ fn main() -> Result<(), slint::PlatformError> {
         app.on_alert_prev_page(move || {
             if let Some(app) = weak.upgrade() {
                 let mut st = state.borrow_mut();
-                if st.alert_page > 0 {
-                    st.alert_page -= 1;
+                if st.alert_page.page_idx > 0 {
+                    st.alert_page.page_idx -= 1;
                 }
                 apply_alert_page(&app, &mut st);
+                schedule_table_reset(&app, false, true);
             }
         });
     }
@@ -636,8 +606,9 @@ fn main() -> Result<(), slint::PlatformError> {
         app.on_alert_next_page(move || {
             if let Some(app) = weak.upgrade() {
                 let mut st = state.borrow_mut();
-                st.alert_page += 1;
+                st.alert_page.page_idx += 1;
                 apply_alert_page(&app, &mut st);
+                schedule_table_reset(&app, false, true);
             }
         });
     }
@@ -648,11 +619,7 @@ fn main() -> Result<(), slint::PlatformError> {
         app.on_window_resized(move || {
             if let Some(app) = weak.upgrade() {
                 let mut st = state.borrow_mut();
-                if st.active_page == 1 {
-                    apply_log_page(&app, &mut st);
-                } else if st.active_page == 2 {
-                    apply_alert_page(&app, &mut st);
-                }
+                apply_current_page(&app, &mut st);
             }
         });
     }
@@ -664,44 +631,20 @@ fn main() -> Result<(), slint::PlatformError> {
             if let Some(app) = weak.upgrade() {
                 let mut st = state.borrow_mut();
                 let idx = idx.max(0) as usize;
-                st.selected_point = Some(idx);
-                if idx < st.point_detail_summaries.len() {
+                st.overview.selected_point = Some(idx);
+                app.set_selected_timeline_point_index(idx as i32);
+                if idx < st.overview.point_detail_summaries.len() {
                     let rows = st
+                        .overview
                         .point_detail_rows
                         .get(idx)
-                        .map(|rows| {
-                            rows.iter()
-                                .map(|row| DetailRow {
-                                    row_no: row.row_no.clone().into(),
-                                    time: row.time.clone().into(),
-                                    level: row.level.clone().into(),
-                                    risk_score: row.risk_score.clone().into(),
-                                    rule: row.rule.clone().into(),
-                                    target: row.target.clone().into(),
-                                    entity: row.entity.clone().into(),
-                                    action: row.action.clone().into(),
-                                    status: row.status.clone().into(),
-                                    content: row.content.clone().into(),
-                                })
-                                .collect::<Vec<_>>()
-                        })
+                        .map(|rows| map_detail_rows(rows))
                         .unwrap_or_default();
-                    app.set_point_detail_summary(st.point_detail_summaries[idx].clone().into());
+                    app.set_point_detail_summary(
+                        st.overview.point_detail_summaries[idx].clone().into(),
+                    );
                     app.set_point_detail_rows(Rc::new(VecModel::from(rows)).into());
                 }
-            }
-        });
-    }
-
-    {
-        let weak = app.as_weak();
-        let state = Rc::clone(&state);
-        app.on_clear_point_selection(move || {
-            if let Some(app) = weak.upgrade() {
-                let mut st = state.borrow_mut();
-                st.selected_point = None;
-                app.set_point_detail_summary(st.point_hint.clone().into());
-                app.set_point_detail_rows(Rc::new(VecModel::from(Vec::<DetailRow>::new())).into());
             }
         });
     }
@@ -713,9 +656,10 @@ fn main() -> Result<(), slint::PlatformError> {
             if let Some(app) = weak.upgrade() {
                 let mut st = state.borrow_mut();
                 let idx = idx.max(0) as usize;
-                st.hover_point = Some(idx);
-                if idx < st.point_previews.len() {
-                    app.set_hover_detail_text(st.point_previews[idx].clone().into());
+                st.overview.hover_point = Some(idx);
+                app.set_hovered_timeline_point_index(idx as i32);
+                if idx < st.overview.point_previews.len() {
+                    app.set_hover_detail_text(st.overview.point_previews[idx].clone().into());
                 }
             }
         });
@@ -727,7 +671,8 @@ fn main() -> Result<(), slint::PlatformError> {
         app.on_point_unhovered(move || {
             if let Some(app) = weak.upgrade() {
                 let mut st = state.borrow_mut();
-                st.hover_point = None;
+                st.overview.hover_point = None;
+                app.set_hovered_timeline_point_index(-1);
                 app.set_hover_detail_text("Hover a point to preview.".into());
             }
         });

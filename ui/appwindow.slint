@@ -1,618 +1,30 @@
-import { Button, ScrollView } from "std-widgets.slint";
-
-export struct StageBand {
-    label: string,
-    summary: string,
-    start_pct: float,
-    end_pct: float,
-    selected: bool,
-}
-
-export struct TimelinePoint {
-    x_pct: float,
-    y_pct: float,
-    risk: float,
-    size_norm: float,
-    entity: string,
-}
-
-export struct TimeTick {
-    x_pct: float,
-    label: string,
-}
-
-export struct LaneLabel {
-    y_pct: float,
-    label: string,
-}
-
-export struct DetailRow {
-    row_no: string,
-    time: string,
-    level: string,
-    risk_score: string,
-    rule: string,
-    target: string,
-    entity: string,
-    action: string,
-    status: string,
-    content: string,
-}
-
-export struct StageCard {
-    idx: int,
-    label: string,
-    action: string,
-    summary: string,
-    selected: bool,
-}
-
-component AppLogo inherits Rectangle {
-    border-radius: 12px;
-    background: #ffffff;
-    border-width: 1px;
-    border-color: #c7d5e6;
-
-    Rectangle {
-        x: 6px;
-        y: 6px;
-        width: parent.width - 12px;
-        height: parent.height - 12px;
-        border-radius: 9px;
-        background: #edf4ff;
-    }
-
-    Rectangle {
-        x: 10px;
-        y: parent.height / 2;
-        width: parent.width - 20px;
-        height: 2px;
-        background: #95a9c3;
-    }
-
-    Rectangle {
-        x: 12px;
-        y: 14px;
-        width: parent.width - 24px;
-        height: 2px;
-        background: #c2d3e8;
-    }
-
-    Rectangle {
-        x: 12px;
-        y: parent.height - 16px;
-        width: parent.width - 24px;
-        height: 2px;
-        background: #c2d3e8;
-    }
-
-    Rectangle {
-        x: 11px;
-        y: parent.height / 2 - 7px;
-        width: 10px;
-        height: 10px;
-        border-radius: 5px;
-        background: #35b883;
-    }
-
-    Rectangle {
-        x: parent.width / 2 - 5px;
-        y: 10px;
-        width: 10px;
-        height: 10px;
-        border-radius: 5px;
-        background: #d9a23b;
-    }
-
-    Rectangle {
-        x: parent.width - 21px;
-        y: parent.height / 2 - 11px;
-        width: 10px;
-        height: 10px;
-        border-radius: 5px;
-        background: #e66a73;
-    }
-
-    Rectangle {
-        x: 16px;
-        y: parent.height / 2 - 2px;
-        width: 8px;
-        height: 2px;
-        background: #5b8def;
-    }
-
-    Rectangle {
-        x: 24px;
-        y: parent.height / 2 - 6px;
-        width: 7px;
-        height: 2px;
-        background: #5b8def;
-    }
-
-    Rectangle {
-        x: 31px;
-        y: parent.height / 2 - 10px;
-        width: 7px;
-        height: 2px;
-        background: #5b8def;
-    }
-
-    Rectangle {
-        x: 38px;
-        y: parent.height / 2 - 8px;
-        width: 7px;
-        height: 2px;
-        background: #5b8def;
-    }
-
-    Rectangle {
-        x: 45px;
-        y: parent.height / 2 - 4px;
-        width: 7px;
-        height: 2px;
-        background: #5b8def;
-    }
-}
-
-component MetricCard inherits Rectangle {
-    in property <string> label;
-    in property <int> value;
-    in property <color> tone: #dce8f8;
-    in property <bool> selected: false;
-    in property <bool> interactive: false;
-    callback clicked;
-
-    border-radius: 10px;
-    background: tone;
-    height: 82px;
-    border-width: selected ? 2px : 1px;
-    border-color: selected ? #2f6fed : #c7d5e6;
-
-    VerticalLayout {
-        padding: 10px;
-        spacing: 4px;
-
-        Text {
-            text: label;
-            color: #5c6d82;
-            font-size: 12px;
-            horizontal-alignment: left;
-        }
-
-        Text {
-            text: value;
-            color: #132238;
-            font-size: 22px;
-            font-weight: 700;
-            horizontal-alignment: left;
-        }
-    }
-
-    TouchArea {
-        enabled: interactive;
-        mouse-cursor: pointer;
-        clicked => {
-            root.clicked();
-        }
-    }
-}
-
-component FilterPill inherits Rectangle {
-    in property <string> label;
-    in property <bool> selected: false;
-    in property <color> idle-background: #f6f8fb;
-    in property <color> idle-border: #d7e0ea;
-    in property <color> idle-text: #4f6279;
-    in property <color> selected-background: #e7f0ff;
-    in property <color> selected-border: #8eb2ef;
-    in property <color> selected-text: #1f5fd6;
-    callback clicked;
-
-    private property <length> chip-width: max(45px, (label-text.min-width + 12px) * 1.5);
-    min-width: chip-width;
-    preferred-width: chip-width;
-    max-width: chip-width;
-    horizontal-stretch: 0;
-    height: 22px;
-    border-radius: 11px;
-    background: selected ? selected-background : idle-background;
-    border-width: 1px;
-    border-color: selected ? selected-border : idle-border;
-
-    label-text := Text {
-        text: label;
-        color: selected ? selected-text : idle-text;
-        font-size: 10px;
-        font-weight: selected ? 700 : 600;
-        horizontal-alignment: center;
-        vertical-alignment: center;
-        x: 6px;
-        width: parent.width - 12px;
-    }
-
-    TouchArea {
-        mouse-cursor: pointer;
-        clicked => {
-            root.clicked();
-        }
-    }
-}
-
-component ActiveFilterChip inherits Rectangle {
-    in property <string> label;
-    in property <color> chip-background-color: #f4f7fb;
-    in property <color> chip-border-color: #d8e1eb;
-    in property <color> chip-text-color: #51657c;
-    callback clicked;
-
-    private property <length> chip-width: max(54px, chip-text.min-width + 20px);
-    min-width: chip-width;
-    preferred-width: chip-width;
-    max-width: chip-width;
-    horizontal-stretch: 0;
-    height: 22px;
-    border-radius: 11px;
-    background: chip-background-color;
-    border-width: 1px;
-    border-color: chip-border-color;
-
-    chip-text := Text {
-        text: label;
-        color: chip-text-color;
-        font-size: 10px;
-        font-weight: 600;
-        x: 10px;
-        width: parent.width - 20px;
-        vertical-alignment: center;
-    }
-
-    TouchArea {
-        mouse-cursor: pointer;
-        clicked => {
-            root.clicked();
-        }
-    }
-}
-
-component ScrollTextPanel inherits Rectangle {
-    in property <string> title;
-    in property <string> body;
-    in property <length> body-size: 12px;
-    in property <length> body-viewport-height: 120px;
-
-    border-radius: 10px;
-    background: #ffffff;
-
-    VerticalLayout {
-        padding: 10px;
-        spacing: 6px;
-
-        Text {
-            text: title;
-            color: #203047;
-            font-size: 13px;
-            font-weight: 700;
-            horizontal-alignment: left;
-        }
-
-        body-scroll := ScrollView {
-            vertical-stretch: 1;
-            vertical-scrollbar-policy: ScrollBarPolicy.as-needed;
-            horizontal-scrollbar-policy: ScrollBarPolicy.as-needed;
-
-            Rectangle {
-                width: parent.width - 6px;
-                height: max(body-viewport-height, body-scroll.height);
-                background: #f6f9fc;
-                border-radius: 8px;
-                border-width: 1px;
-                border-color: #d8e3ee;
-
-                Text {
-                    text: body;
-                    color: #334155;
-                    x: 10px;
-                    y: 8px;
-                    width: parent.width - 20px;
-                    font-family: "Menlo";
-                    font-size: body-size;
-                    wrap: word-wrap;
-                    horizontal-alignment: left;
-                    vertical-alignment: top;
-                }
-            }
-        }
-    }
-}
-
-component TimelineToolButton inherits Button {
-    in property <image> tool-icon;
-
-    min-width: 34px;
-    min-height: 30px;
-    max-width: 34px;
-    max-height: 30px;
-    text: "";
-    icon: tool-icon;
-    icon-size: 16px;
-    colorize-icon: true;
-}
-
-component InlineIconButton inherits Button {
-    in property <image> tool-icon;
-
-    min-width: 30px;
-    min-height: 24px;
-    max-width: 30px;
-    max-height: 24px;
-    text: "";
-    icon: tool-icon;
-    icon-size: 16px;
-    colorize-icon: true;
-}
-
-component PageSwitchButton inherits Rectangle {
-    in property <string> label;
-    in property <bool> selected: false;
-    callback clicked;
-
-    min-width: 112px;
-    height: 28px;
-    border-radius: 14px;
-    background: selected ? #dfeafd : #f4f7fb;
-    border-width: 1px;
-    border-color: selected ? #8eb2ef : #d6e0ea;
-
-    Text {
-        text: label;
-        color: selected ? #1f5fd6 : #51657c;
-        font-size: 11px;
-        font-weight: selected ? 700 : 600;
-        horizontal-alignment: center;
-        vertical-alignment: center;
-    }
-
-    TouchArea {
-        mouse-cursor: pointer;
-        clicked => {
-            root.clicked();
-        }
-    }
-}
-
-component DetailTablePanel inherits Rectangle {
-    in property <string> title;
-    in property <string> summary: "";
-    in property <[DetailRow]> rows: [];
-    in property <string> time-title: "Time";
-    in property <string> level-title: "Level";
-    in property <bool> show-rule: false;
-    in property <string> rule-title: "Rule";
-    in property <string> target-title: "Target";
-    in property <string> content-title: "Content";
-    in property <string> status-title: "Status";
-    in property <bool> show-status: true;
-    in property <bool> show-content: true;
-    in property <bool> show-risk-score: false;
-    in property <bool> semantic-alert-layout: false;
-    in property <length> table-width: 900px;
-    in property <length> body-viewport-height: 252px;
-    in property <bool> show-pagination: false;
-    in property <bool> has-prev-page: false;
-    in property <bool> has-next-page: false;
-    in property <string> pagination-text: "";
-    callback prev-page();
-    callback next-page();
-
-    border-radius: 10px;
-    background: #ffffff;
-    border-width: 1px;
-    border-color: #d6e0ea;
-    min-height: 220px;
-
-    VerticalLayout {
-        padding: 10px;
-        spacing: 6px;
-
-        Text {
-            text: title;
-            color: #203047;
-            font-size: 14px;
-            font-weight: 700;
-            horizontal-alignment: left;
-        }
-
-        if (summary != "") : Text {
-            text: summary;
-            color: #64748b;
-            font-size: 11px;
-            horizontal-alignment: left;
-        }
-
-        if (show-pagination) : HorizontalLayout {
-            spacing: 8px;
-
-            Text {
-                text: pagination-text;
-                color: #51657c;
-                font-size: 11px;
-                vertical-alignment: center;
-            }
-
-            Rectangle { background: transparent; }
-
-            Button {
-                text: "Prev";
-                enabled: has-prev-page;
-                clicked => {
-                    root.prev-page();
-                }
-            }
-
-            Button {
-                text: "Next";
-                enabled: has-next-page;
-                clicked => {
-                    root.next-page();
-                }
-            }
-        }
-
-        Rectangle {
-            width: table-width;
-            height: 34px;
-            border-radius: 8px;
-            background: #dde8f3;
-            border-width: 1px;
-            border-color: #d8e3ee;
-
-            if (!semantic-alert-layout) : HorizontalLayout {
-                padding-left: 10px;
-                padding-right: 10px;
-                spacing: 8px;
-
-                Text { text: "#"; min-width: 44px; color: #24384d; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
-                Text { text: time-title; min-width: 150px; color: #24384d; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
-                Text { text: level-title; min-width: 74px; color: #24384d; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
-                if (show-risk-score) : Text { text: "RiskScore"; min-width: 76px; color: #24384d; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
-                if (show-rule) : Text { text: rule-title; min-width: 128px; color: #24384d; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
-                Text { text: target-title; min-width: 96px; color: #24384d; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
-                Text { text: "Entity"; min-width: 120px; color: #24384d; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
-                Text { text: "Action"; min-width: 88px; color: #24384d; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
-                if (show-status) : Text { text: status-title; min-width: 76px; color: #24384d; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
-                if (show-content) : Text {
-                    text: content-title;
-                    min-width: 180px;
-                    horizontal-stretch: 1;
-                    color: #24384d;
-                    font-size: 12px;
-                    font-weight: 700;
-                    horizontal-alignment: center;
-                    vertical-alignment: center;
-                }
-            }
-
-            if (semantic-alert-layout) : HorizontalLayout {
-                padding-left: 10px;
-                padding-right: 10px;
-                spacing: 8px;
-
-                Text { text: "#"; min-width: 44px; color: #1f5fd6; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
-                Text { text: time-title; min-width: 150px; color: #1f5fd6; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
-                Text { text: level-title; min-width: 74px; color: #1f5fd6; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
-                if (show-risk-score) : Text { text: "RiskScore"; min-width: 76px; color: #1f5fd6; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
-                if (show-rule) : Text { text: rule-title; min-width: 128px; color: #1f5fd6; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
-                Text { text: "Entity"; min-width: 120px; color: #1f5fd6; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
-                Text { text: target-title; min-width: 96px; color: #23734f; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
-                Text { text: "Action"; min-width: 88px; color: #9b5f00; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
-                if (show-status) : Text { text: status-title; min-width: 76px; color: #b54752; font-size: 12px; font-weight: 700; horizontal-alignment: center; vertical-alignment: center; }
-                if (show-content) : Text {
-                    text: content-title;
-                    min-width: 180px;
-                    horizontal-stretch: 1;
-                    color: #35506e;
-                    font-size: 12px;
-                    font-weight: 700;
-                    horizontal-alignment: center;
-                    vertical-alignment: center;
-                }
-            }
-        }
-
-        body-scroll := ScrollView {
-            vertical-stretch: 1;
-            vertical-scrollbar-policy: ScrollBarPolicy.as-needed;
-            horizontal-scrollbar-policy: ScrollBarPolicy.as-needed;
-
-            Rectangle {
-                width: table-width;
-                height: max(max(body-viewport-height, body-scroll.height), rows.length * 34px + 2px);
-                border-radius: 8px;
-                background: #f6f9fc;
-                border-width: 1px;
-                border-color: #d8e3ee;
-
-                for row[i] in rows: Rectangle {
-                    x: 0px;
-                    y: 2px + i * 34px;
-                    width: parent.width;
-                    height: 34px;
-                    background: Math.mod(i, 2) == 0 ? #f8fbfe : #f2f7fb;
-
-                    if (!semantic-alert-layout) : HorizontalLayout {
-                        padding-left: 10px;
-                        padding-right: 10px;
-                        spacing: 8px;
-
-                        Text { text: row.row_no; min-width: 44px; color: #334155; font-size: 12px; vertical-alignment: center; horizontal-alignment: center; }
-                        Text { text: row.time; min-width: 150px; color: #334155; font-size: 12px; vertical-alignment: center; }
-                        Text { text: row.level; min-width: 74px; color: #334155; font-size: 12px; vertical-alignment: center; }
-                        if (show-risk-score) : Text { text: row.risk_score; min-width: 76px; color: #334155; font-size: 12px; vertical-alignment: center; horizontal-alignment: center; }
-                        if (show-rule) : Text { text: row.rule; min-width: 128px; color: #334155; font-size: 12px; vertical-alignment: center; }
-                        Text { text: row.target; min-width: 96px; color: #334155; font-size: 12px; vertical-alignment: center; }
-                        Text { text: row.entity; min-width: 120px; color: #334155; font-size: 12px; vertical-alignment: center; }
-                        Text { text: row.action; min-width: 88px; color: #334155; font-size: 12px; vertical-alignment: center; }
-                        if (show-status) : Text { text: row.status; min-width: 76px; color: #334155; font-size: 12px; vertical-alignment: center; }
-                        if (show-content) : Text {
-                            text: row.content;
-                            min-width: 180px;
-                            horizontal-stretch: 1;
-                            color: #334155;
-                            font-size: 12px;
-                            vertical-alignment: center;
-                            overflow: elide;
-                        }
-                    }
-
-                    if (semantic-alert-layout) : HorizontalLayout {
-                        padding-left: 10px;
-                        padding-right: 10px;
-                        spacing: 8px;
-
-                        Text { text: row.row_no; min-width: 44px; color: #294b75; font-size: 12px; vertical-alignment: center; horizontal-alignment: center; }
-                        Text { text: row.time; min-width: 150px; color: #294b75; font-size: 12px; vertical-alignment: center; }
-                        Text { text: row.level; min-width: 74px; color: #294b75; font-size: 12px; vertical-alignment: center; }
-                        if (show-risk-score) : Text { text: row.risk_score; min-width: 76px; color: #294b75; font-size: 12px; vertical-alignment: center; horizontal-alignment: center; }
-                        if (show-rule) : Text { text: row.rule; min-width: 128px; color: #294b75; font-size: 12px; vertical-alignment: center; }
-                        Text { text: row.entity; min-width: 120px; color: #294b75; font-size: 12px; vertical-alignment: center; }
-                        Text { text: row.target; min-width: 96px; color: #2e6b53; font-size: 12px; vertical-alignment: center; }
-                        Text { text: row.action; min-width: 88px; color: #8a5a12; font-size: 12px; vertical-alignment: center; }
-                        if (show-status) : Text { text: row.status; min-width: 76px; color: #a23a44; font-size: 12px; vertical-alignment: center; }
-                        if (show-content) : Text {
-                            text: row.content;
-                            min-width: 180px;
-                            horizontal-stretch: 1;
-                            color: #425f7d;
-                            font-size: 12px;
-                            vertical-alignment: center;
-                            overflow: elide;
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
+import {
+    DetailRow,
+    LaneLabel,
+    TimeTick,
+    TimelinePoint
+} from "base_components.slint";
+import { AppShell } from "app_shell.slint";
+import { AlertDataPage, LogDataPage, OverviewPage } from "pages.slint";
 
 export component AppWindow inherits Window {
+    out property <length> logical_window_height: self.height;
     in-out property <string> status_text: "Ready";
     in-out property <int> total_events: 0;
     in-out property <int> risk_low_events: 0;
     in-out property <int> risk_mid_events: 0;
     in-out property <int> risk_high_events: 0;
 
-    in-out property <string> recent_events_text: "No data loaded";
     in-out property <string> top_targets_text: "No data loaded";
-    in-out property <string> top_entities_text: "No data loaded";
     in-out property <string> source_text: "No data loaded";
 
-    in-out property <string> stage_detail_text: "No stage selected";
     in-out property <string> point_detail_summary: "Click any point to inspect input logs.";
     in-out property <[DetailRow]> point_detail_rows: [];
     in-out property <string> lane_legend_text: "No lane";
     in-out property <string> hover_detail_text: "Hover a point to preview.";
+    in-out property <int> hovered_timeline_point_index: -1;
+    in-out property <int> selected_timeline_point_index: -1;
 
-    in-out property <[StageBand]> stage_bands: [];
     in-out property <[TimelinePoint]> timeline_points: [];
     in-out property <[TimeTick]> time_ticks: [];
     in-out property <int> timeline_content_px: 1400;
@@ -624,23 +36,24 @@ export component AppWindow inherits Window {
     in-out property <bool> has_level_filter: false;
     in-out property <bool> has_risk_filter: false;
     in-out property <bool> has_source_filter: false;
-    in-out property <bool> has_stage_filter: false;
     in-out property <string> active_level_filter_text: "All levels";
     in-out property <string> active_risk_filter_text: "All risks";
     in-out property <string> active_source_filter_text: "All sources";
-    in-out property <string> active_stage_filter_text: "All stages";
     in-out property <[LaneLabel]> lane_labels: [];
-    in-out property <[StageCard]> stage_cards: [];
     in-out property <string> filtered_log_summary: "No log data loaded.";
     in-out property <[DetailRow]> filtered_log_rows: [];
     in-out property <string> log_page_text: "Page 1/1 · 0 rows";
     in-out property <bool> has_prev_log_page: false;
     in-out property <bool> has_next_log_page: false;
+    in-out property <length> log_table_body_viewport_height: 0px;
+    in-out property <int> log_table_reset_token: 0;
     in-out property <string> filtered_alert_summary: "No alert data loaded.";
     in-out property <[DetailRow]> filtered_alert_rows: [];
     in-out property <string> alert_page_text: "Page 1/1 · 0 rows";
     in-out property <bool> has_prev_alert_page: false;
     in-out property <bool> has_next_alert_page: false;
+    in-out property <length> alert_table_body_viewport_height: 0px;
+    in-out property <int> alert_table_reset_token: 0;
     in-out property <int> active_page: 0;
 
     callback reload_data();
@@ -652,18 +65,14 @@ export component AppWindow inherits Window {
     callback clear_risk_filter();
     callback clear_source_filter();
     callback clear_all_filters();
-    callback stage_clicked(int);
     callback point_clicked(int);
     callback point_hovered(int);
     callback point_unhovered();
-    callback clear_stage_filter();
-    callback clear_point_selection();
     callback log_prev_page();
     callback log_next_page();
     callback alert_prev_page();
     callback alert_next_page();
     callback window_resized();
-
     title: "Warp Diagnose";
     no-frame: false;
     background: #eef3f8;
@@ -673,793 +82,113 @@ export component AppWindow inherits Window {
     changed height => {
         root.window_resized();
     }
+    changed log_table_body_viewport_height => {
+        if (root.active_page == 1) {
+            root.window_resized();
+        }
+    }
+    changed alert_table_body_viewport_height => {
+        if (root.active_page == 2) {
+            root.window_resized();
+        }
+    }
 
     VerticalLayout {
         spacing: 10px;
         padding: 12px;
 
-        Rectangle {
-            height: 56px;
-            border-radius: 10px;
-            background: #ffffff;
-            border-width: 1px;
-            border-color: #d6e0ea;
-
-            HorizontalLayout {
-                padding: 8px;
-                spacing: 12px;
-
-                AppLogo {
-                    width: 40px;
-                    height: 40px;
-                }
-
-                VerticalLayout {
-                    spacing: 0px;
-                    alignment: start;
-
-                    Text {
-                        text: "Warp Diagnose";
-                        color: #203047;
-                        font-size: 20px;
-                        font-weight: 700;
-                        horizontal-alignment: left;
-                    }
-
-                    Text {
-                        text: "TimeLine Diagnostics";
-                        color: #64748b;
-                        font-size: 11px;
-                        horizontal-alignment: left;
-                    }
-                }
-
-                Rectangle {
-                    background: transparent;
-                }
-
-                TimelineToolButton {
-                    tool-icon: @image-url("icons/reload.svg");
-                    clicked => {
-                        root.reload_data();
-                    }
-                }
-            }
+        AppShell {
+            total-events: root.total_events;
+            risk-low-events: root.risk_low_events;
+            risk-mid-events: root.risk_mid_events;
+            risk-high-events: root.risk_high_events;
+            active-level-filter: root.active_level_filter;
+            active-risk-filter: root.active_risk_filter;
+            active-source-filter: root.active_source_filter;
+            has-level-filter: root.has_level_filter;
+            has-risk-filter: root.has_risk_filter;
+            has-source-filter: root.has_source_filter;
+            active-level-filter-text: root.active_level_filter_text;
+            active-risk-filter-text: root.active_risk_filter_text;
+            active-source-filter-text: root.active_source_filter_text;
+            active-page: root.active_page;
+            reload-data => { root.reload_data(); }
+            page-changed(idx) => { root.page_changed(idx); }
+            level-filter-clicked(idx) => { root.level_filter_clicked(idx); }
+            risk-filter-clicked(idx) => { root.risk_filter_clicked(idx); }
+            source-filter-clicked(idx) => { root.source_filter_clicked(idx); }
+            clear-level-filter => { root.clear_level_filter(); }
+            clear-risk-filter => { root.clear_risk_filter(); }
+            clear-source-filter => { root.clear_source_filter(); }
+            clear-all-filters => { root.clear_all_filters(); }
         }
 
-        HorizontalLayout {
-            spacing: 10px;
-            MetricCard {
-                label: "ALL EVENTS";
-                value: total_events;
-                tone: #dce8f8;
-            }
-            MetricCard {
-                label: "RISK < 0.60";
-                value: risk_low_events;
-                tone: #dcefe5;
-            }
-            MetricCard {
-                label: "0.60-0.84";
-                value: risk_mid_events;
-                tone: #f8ead1;
-            }
-            MetricCard {
-                label: "RISK >= 0.85";
-                value: risk_high_events;
-                tone: #f8dfe2;
-            }
-        }
-
-        Rectangle {
-            height: 72px;
-            border-radius: 10px;
-            background: #ffffff;
-            border-width: 1px;
-            border-color: #d6e0ea;
-
-            VerticalLayout {
-                padding: 9px;
-                spacing: 6px;
-
-                HorizontalLayout {
-                    spacing: 6px;
-
-                    Text {
-                        text: "Filter";
-                        color: #203047;
-                        font-size: 11px;
-                        font-weight: 700;
-                        vertical-alignment: center;
-                    }
-
-                    Text {
-                        text: "Level";
-                        color: #64748b;
-                        font-size: 10px;
-                        vertical-alignment: center;
-                    }
-
-                    FilterPill {
-                        label: "All";
-                        idle-background: #f2f6fd;
-                        idle-border: #d6e3f5;
-                        idle-text: #4d6480;
-                        selected-background: #dfeafd;
-                        selected-border: #8eb2ef;
-                        selected-text: #1f5fd6;
-                        selected: root.active_level_filter == 0;
-                        clicked => {
-                            root.level_filter_clicked(0);
-                        }
-                    }
-
-                    FilterPill {
-                        label: "Info";
-                        idle-background: #f2f6fd;
-                        idle-border: #d6e3f5;
-                        idle-text: #4d6480;
-                        selected-background: #dfeafd;
-                        selected-border: #8eb2ef;
-                        selected-text: #1f5fd6;
-                        selected: root.active_level_filter == 1;
-                        clicked => {
-                            root.level_filter_clicked(1);
-                        }
-                    }
-
-                    FilterPill {
-                        label: "Warn";
-                        idle-background: #f2f6fd;
-                        idle-border: #d6e3f5;
-                        idle-text: #4d6480;
-                        selected-background: #dfeafd;
-                        selected-border: #8eb2ef;
-                        selected-text: #1f5fd6;
-                        selected: root.active_level_filter == 2;
-                        clicked => {
-                            root.level_filter_clicked(2);
-                        }
-                    }
-
-                    FilterPill {
-                        label: "Error";
-                        idle-background: #f2f6fd;
-                        idle-border: #d6e3f5;
-                        idle-text: #4d6480;
-                        selected-background: #dfeafd;
-                        selected-border: #8eb2ef;
-                        selected-text: #1f5fd6;
-                        selected: root.active_level_filter == 3;
-                        clicked => {
-                            root.level_filter_clicked(3);
-                        }
-                    }
-
-                    Text {
-                        text: "Risk";
-                        color: #64748b;
-                        font-size: 10px;
-                        vertical-alignment: center;
-                    }
-
-                    FilterPill {
-                        label: "All";
-                        idle-background: #fff6e8;
-                        idle-border: #f0d8a9;
-                        idle-text: #8a5a12;
-                        selected-background: #ffe7bf;
-                        selected-border: #e3ae4e;
-                        selected-text: #9b5f00;
-                        selected: root.active_risk_filter == 0;
-                        clicked => {
-                            root.risk_filter_clicked(0);
-                        }
-                    }
-
-                    FilterPill {
-                        label: "Low";
-                        idle-background: #fff6e8;
-                        idle-border: #f0d8a9;
-                        idle-text: #8a5a12;
-                        selected-background: #ffe7bf;
-                        selected-border: #e3ae4e;
-                        selected-text: #9b5f00;
-                        selected: root.active_risk_filter == 1;
-                        clicked => {
-                            root.risk_filter_clicked(1);
-                        }
-                    }
-
-                    FilterPill {
-                        label: "Mid";
-                        idle-background: #fff6e8;
-                        idle-border: #f0d8a9;
-                        idle-text: #8a5a12;
-                        selected-background: #ffe7bf;
-                        selected-border: #e3ae4e;
-                        selected-text: #9b5f00;
-                        selected: root.active_risk_filter == 2;
-                        clicked => {
-                            root.risk_filter_clicked(2);
-                        }
-                    }
-
-                    FilterPill {
-                        label: "High";
-                        idle-background: #fff6e8;
-                        idle-border: #f0d8a9;
-                        idle-text: #8a5a12;
-                        selected-background: #ffe7bf;
-                        selected-border: #e3ae4e;
-                        selected-text: #9b5f00;
-                        selected: root.active_risk_filter == 3;
-                        clicked => {
-                            root.risk_filter_clicked(3);
-                        }
-                    }
-
-                    Text {
-                        text: "Source";
-                        color: #64748b;
-                        font-size: 10px;
-                        vertical-alignment: center;
-                    }
-
-                    FilterPill {
-                        label: "All";
-                        idle-background: #eefaf4;
-                        idle-border: #c8e5d6;
-                        idle-text: #39735c;
-                        selected-background: #daf3e5;
-                        selected-border: #79c39e;
-                        selected-text: #23734f;
-                        selected: root.active_source_filter == 0;
-                        clicked => {
-                            root.source_filter_clicked(0);
-                        }
-                    }
-
-                    FilterPill {
-                        label: "Demo";
-                        idle-background: #eefaf4;
-                        idle-border: #c8e5d6;
-                        idle-text: #39735c;
-                        selected-background: #daf3e5;
-                        selected-border: #79c39e;
-                        selected-text: #23734f;
-                        selected: root.active_source_filter == 1;
-                        clicked => {
-                            root.source_filter_clicked(1);
-                        }
-                    }
-
-                    FilterPill {
-                        label: "Wparse";
-                        idle-background: #eefaf4;
-                        idle-border: #c8e5d6;
-                        idle-text: #39735c;
-                        selected-background: #daf3e5;
-                        selected-border: #79c39e;
-                        selected-text: #23734f;
-                        selected: root.active_source_filter == 2;
-                        clicked => {
-                            root.source_filter_clicked(2);
-                        }
-                    }
-
-                    FilterPill {
-                        label: "Wfusion";
-                        idle-background: #eefaf4;
-                        idle-border: #c8e5d6;
-                        idle-text: #39735c;
-                        selected-background: #daf3e5;
-                        selected-border: #79c39e;
-                        selected-text: #23734f;
-                        selected: root.active_source_filter == 3;
-                        clicked => {
-                            root.source_filter_clicked(3);
-                        }
-                    }
-
-                    Rectangle {
-                        background: transparent;
-                    }
-                }
-
-                HorizontalLayout {
-                    spacing: 5px;
-
-                    Text {
-                        text: "Active";
-                        color: #64748b;
-                        font-size: 10px;
-                        vertical-alignment: center;
-                    }
-
-                    if (root.has_level_filter) : ActiveFilterChip {
-                        label: root.active_level_filter_text + " ×";
-                        chip-background-color: #dfeafd;
-                        chip-border-color: #8eb2ef;
-                        chip-text-color: #1f5fd6;
-                        clicked => {
-                            root.clear_level_filter();
-                        }
-                    }
-
-                    if (root.has_risk_filter) : ActiveFilterChip {
-                        label: root.active_risk_filter_text + " ×";
-                        chip-background-color: #ffe7bf;
-                        chip-border-color: #e3ae4e;
-                        chip-text-color: #9b5f00;
-                        clicked => {
-                            root.clear_risk_filter();
-                        }
-                    }
-
-                    if (root.has_source_filter) : ActiveFilterChip {
-                        label: root.active_source_filter_text + " ×";
-                        chip-background-color: #daf3e5;
-                        chip-border-color: #79c39e;
-                        chip-text-color: #23734f;
-                        clicked => {
-                            root.clear_source_filter();
-                        }
-                    }
-
-                    if (!root.has_level_filter && !root.has_risk_filter && !root.has_source_filter) : Text {
-                        text: "No filters applied";
-                        color: #8a99ab;
-                        font-size: 10px;
-                        vertical-alignment: center;
-                    }
-
-                    Rectangle {
-                        background: transparent;
-                    }
-
-                    if (root.has_level_filter || root.has_risk_filter || root.has_source_filter) : InlineIconButton {
-                        tool-icon: @image-url("icons/clear-filters.svg");
-                        clicked => {
-                            root.clear_all_filters();
-                        }
-                    }
-                }
-            }
-        }
-
-        Rectangle {
-            height: 38px;
-            border-radius: 10px;
-            background: #ffffff;
-            border-width: 1px;
-            border-color: #d6e0ea;
-
-            HorizontalLayout {
-                padding-left: 10px;
-                padding-right: 10px;
-                padding-top: 5px;
-                padding-bottom: 5px;
-                spacing: 6px;
-
-                Text {
-                    text: "Page";
-                    color: #64748b;
-                    font-size: 11px;
-                    font-weight: 700;
-                    vertical-alignment: center;
-                }
-
-                PageSwitchButton {
-                    label: "Overview";
-                    selected: root.active_page == 0;
-                    clicked => {
-                        root.page_changed(0);
-                    }
-                }
-
-                PageSwitchButton {
-                    label: "Log Data";
-                    selected: root.active_page == 1;
-                    clicked => {
-                        root.page_changed(1);
-                    }
-                }
-
-                PageSwitchButton {
-                    label: "Alert Data";
-                    selected: root.active_page == 2;
-                    clicked => {
-                        root.page_changed(2);
-                    }
-                }
-
-                Rectangle {
-                    background: transparent;
-                }
-            }
-        }
-
-        if (root.active_page == 0) : VerticalLayout {
+        if (root.active_page == 0) : OverviewPage {
             vertical-stretch: 1;
-            spacing: 10px;
-
-            timeline-panel := Rectangle {
-                property <length> timeline_pan_step: 30px;
-                property <float> timeline_zoom_min: 0.5;
-                property <float> timeline_zoom_max: 6.0;
-                property <float> timeline_zoom_step: 0.25;
-                property <float> timeline_zoom_in_value: min(self.timeline_zoom_max, root.timeline_zoom + self.timeline_zoom_step);
-                property <float> timeline_zoom_out_value: max(self.timeline_zoom_min, root.timeline_zoom - self.timeline_zoom_step);
-                property <length> timeline_min_canvas_x: min(0px, timeline-viewport.width - timeline-content.width);
-                property <length> plot_box_height: max(250px, self.height - 46px);
-                property <length> plot_grid_height: max(220px, self.plot_box_height - 30px);
-                border-radius: 10px;
-                background: #ffffff;
-                vertical-stretch: 3;
-                min-height: 360px;
-                border-width: 1px;
-                border-color: #d6e0ea;
-
-                Text {
-                    text: "TimeLine";
-                    color: #203047;
-                    font-size: 16px;
-                    font-weight: 700;
-                    x: 12px;
-                    y: 8px;
-                }
-
-                Text {
-                    text: "Use the filter bar above for Level. Click a point to open its detail below.";
-                    color: #64748b;
-                    font-size: 11px;
-                    x: 14px;
-                    y: 27px;
-                }
-
-                Rectangle {
-                    x: parent.width - 240px;
-                    y: 7px;
-                    width: 228px;
-                    height: 32px;
-                    background: transparent;
-
-                    HorizontalLayout {
-                        spacing: 4px;
-
-                        TimelineToolButton {
-                            tool-icon: @image-url("icons/timeline-zoom-out.svg");
-                            clicked => {
-                                root.timeline_canvas_x = min(
-                                    0px,
-                                    timeline-viewport.width / 2 - (timeline-viewport.width / 2 - timeline-content.x) * timeline-panel.timeline_zoom_out_value / root.timeline_zoom
-                                );
-                                root.timeline_zoom = timeline-panel.timeline_zoom_out_value;
-                            }
-                        }
-
-                        TimelineToolButton {
-                            tool-icon: @image-url("icons/timeline-zoom-in.svg");
-                            clicked => {
-                                root.timeline_canvas_x = min(
-                                    0px,
-                                    timeline-viewport.width / 2 - (timeline-viewport.width / 2 - timeline-content.x) * timeline-panel.timeline_zoom_in_value / root.timeline_zoom
-                                );
-                                root.timeline_zoom = timeline-panel.timeline_zoom_in_value;
-                            }
-                        }
-
-                        TimelineToolButton {
-                            tool-icon: @image-url("icons/timeline-fit.svg");
-                            clicked => {
-                                root.timeline_canvas_x = min(
-                                    0px,
-                                    timeline-viewport.width / 2 - (timeline-viewport.width / 2 - timeline-content.x) * 1.0 / root.timeline_zoom
-                                );
-                                root.timeline_zoom = 1.0;
-                            }
-                        }
-
-                        TimelineToolButton {
-                            tool-icon: @image-url("icons/timeline-pan-left.svg");
-                            clicked => {
-                                root.timeline_canvas_x = min(0px, timeline-content.x + timeline-panel.timeline_pan_step);
-                            }
-                        }
-
-                        TimelineToolButton {
-                            tool-icon: @image-url("icons/timeline-pan-right.svg");
-                            clicked => {
-                                root.timeline_canvas_x = max(timeline-panel.timeline_min_canvas_x, timeline-content.x - timeline-panel.timeline_pan_step);
-                            }
-                        }
-
-                        TimelineToolButton {
-                            tool-icon: @image-url("icons/timeline-reset.svg");
-                            clicked => {
-                                root.timeline_canvas_x = 0px;
-                                root.timeline_zoom = 1.0;
-                                root.clear_all_filters();
-                            }
-                        }
-                    }
-                }
-
-                Rectangle {
-                    x: 12px;
-                    y: 38px;
-                    width: parent.width - 24px;
-                    height: timeline-panel.plot_box_height;
-                    border-radius: 8px;
-                    background: #edf3f8;
-                    border-width: 1px;
-                    border-color: #d8e3ee;
-
-                    for lane in lane_labels: Text {
-                        text: lane.label;
-                        color: #6b7f95;
-                        x: 8px;
-                        y: 12px + max(0px, timeline-panel.plot_grid_height - 52px) * lane.y_pct;
-                        font-size: 10px;
-                        width: 74px;
-                        horizontal-alignment: left;
-                    }
-
-                    timeline-viewport := Rectangle {
-                        x: 82px;
-                        y: 0px;
-                        width: parent.width - 92px;
-                        height: parent.height;
-                        clip: true;
-                        background: transparent;
-
-                        TouchArea {
-                            property <length> start_canvas_x: 0px;
-                            x: 0px;
-                            y: 0px;
-                            width: parent.width;
-                            height: timeline-panel.plot_grid_height;
-
-                            pointer-event(event) => {
-                                if (event.button == PointerEventButton.left && event.kind == PointerEventKind.down) {
-                                    self.start_canvas_x = timeline-content.x;
-                                }
-                            }
-
-                            moved => {
-                                if (self.enabled && self.pressed) {
-                                    root.timeline_canvas_x = self.start_canvas_x + (self.mouse-x - self.pressed-x);
-                                }
-                            }
-                        }
-
-                        timeline-content := Rectangle {
-                            x: max(min(0px, timeline-viewport.width - self.width), min(0px, root.timeline_canvas_x));
-                            y: 0px;
-                            width: max(parent.width - 6px, root.timeline_content_px * 1px * root.timeline_zoom);
-                            height: parent.height;
-                            background: transparent;
-
-                            Rectangle {
-                                x: 0px;
-                                y: 0px;
-                                width: parent.width;
-                                height: timeline-panel.plot_grid_height;
-                                border-radius: 8px;
-                                background: #f8fbff;
-                                border-width: 1px;
-                                border-color: #dbe5ef;
-
-                                for tick in time_ticks: Rectangle {
-                                    x: (parent.width - 1px) * tick.x_pct;
-                                    y: 0px;
-                                    width: 1px;
-                                    height: parent.height;
-                                    background: #ced9e6;
-                                }
-
-                                for lane in lane_labels: Rectangle {
-                                    x: 0px;
-                                    y: (parent.height - 1px) * lane.y_pct;
-                                    width: parent.width;
-                                    height: 1px;
-                                    background: #dbe5ef;
-                                }
-
-                                for point[i] in timeline_points: Rectangle {
-                                    width: 7px + point.size_norm * 14px;
-                                    height: 7px + point.size_norm * 14px;
-                                    x: (parent.width - 8px) * point.x_pct - self.width / 2 + 4px;
-                                    y: (parent.height - 8px) * point.y_pct - self.height / 2 + 4px;
-                                    border-radius: self.width / 2;
-                                    background: point.risk >= 0.85 ? #e66a73 : (point.risk >= 0.60 ? #d9a23b : #35b883);
-                                    border-width: 0px;
-
-                                    point-hover := TouchArea {
-                                        property <length> start_canvas_x: 0px;
-                                        property <bool> dragged: false;
-
-                                        pointer-event(event) => {
-                                            if (event.button == PointerEventButton.left && event.kind == PointerEventKind.down) {
-                                                self.start_canvas_x = timeline-content.x;
-                                                self.dragged = false;
-                                            }
-                                        }
-
-                                        moved => {
-                                            if (self.enabled && self.pressed) {
-                                                if (self.mouse-x > self.pressed-x + 3px || self.mouse-x < self.pressed-x - 3px) {
-                                                    self.dragged = true;
-                                                }
-                                            }
-                                        }
-
-                                        clicked => {
-                                            if (!self.dragged) {
-                                                root.point_clicked(i);
-                                            }
-                                        }
-
-                                        changed has-hover => {
-                                            if self.has-hover {
-                                                root.point_hovered(i);
-                                            } else {
-                                                root.point_unhovered();
-                                            }
-                                        }
-                                    }
-
-                                    Rectangle {
-                                        visible: point-hover.has-hover;
-                                        x: point.x_pct > 0.74 ? -214px : parent.width + 10px;
-                                        y: point.y_pct < 0.22 ? parent.height + 10px : -88px;
-                                        width: 204px;
-                                        height: 78px;
-                                        border-radius: 8px;
-                                        background: #fffaf0;
-                                        border-width: 1px;
-                                        border-color: #dfc58e;
-
-                                        Text {
-                                            text: hover_detail_text;
-                                            color: #4b5563;
-                                            x: 8px;
-                                            y: 7px;
-                                            width: parent.width - 16px;
-                                            font-size: 10px;
-                                            wrap: word-wrap;
-                                            horizontal-alignment: left;
-                                            vertical-alignment: top;
-                                        }
-                                    }
-                                }
-                            }
-
-                            for tick in time_ticks: Text {
-                                text: tick.label;
-                                color: #6b7f95;
-                                x: parent.width * tick.x_pct - 24px;
-                                y: parent.height - 24px;
-                                width: 52px;
-                                font-size: 10px;
-                                horizontal-alignment: center;
-                            }
-                        }
-                    }
-                }
+            lane-labels: root.lane_labels;
+            timeline-points: root.timeline_points;
+            time-ticks: root.time_ticks;
+            timeline-content-px: root.timeline_content_px;
+            timeline-canvas-x <=> root.timeline_canvas_x;
+            timeline-zoom <=> root.timeline_zoom;
+            hover-detail-text: root.hover_detail_text;
+            hovered-point-index: root.hovered_timeline_point_index;
+            selected-point-index: root.selected_timeline_point_index;
+            point-detail-summary: root.point_detail_summary;
+            point-detail-rows: root.point_detail_rows;
+            lane-legend-text: root.lane_legend_text;
+            top-targets-text: root.top_targets_text;
+            source-text: root.source_text;
+            status-text: root.status_text;
+            clear-all-filters => {
+                root.clear_all_filters();
             }
-
-            HorizontalLayout {
-                vertical-stretch: 2;
-                min-height: 260px;
-                spacing: 10px;
-
-                DetailTablePanel {
-                    min-width: 900px;
-                    vertical-stretch: 1;
-                    title: "Selection Detail";
-                    rows: root.point_detail_rows;
-                    table-width: 900px;
-                    body-viewport-height: 252px;
-                }
-
-                Rectangle {
-                    min-width: 370px;
-                    preferred-width: 470px;
-                    vertical-stretch: 1;
-                    border-radius: 10px;
-                    background: #ffffff;
-                    border-width: 1px;
-                    border-color: #d6e0ea;
-
-                    VerticalLayout {
-                        padding: 10px;
-                        spacing: 8px;
-
-                        ScrollTextPanel {
-                            vertical-stretch: 1;
-                            title: "Entity Lanes";
-                            body: lane_legend_text;
-                            body-size: 10px;
-                            body-viewport-height: 86px;
-                        }
-
-                        ScrollTextPanel {
-                            vertical-stretch: 1;
-                            title: "Top Targets";
-                            body: top_targets_text;
-                            body-size: 11px;
-                            body-viewport-height: 86px;
-                        }
-
-                        ScrollTextPanel {
-                            vertical-stretch: 2;
-                            title: "Source & Status";
-                            body: source_text + "\n\n" + status_text;
-                            body-size: 10px;
-                            body-viewport-height: 176px;
-                        }
-                    }
-                }
+            point-clicked(idx) => {
+                root.point_clicked(idx);
+            }
+            point-hovered(idx) => {
+                root.point_hovered(idx);
+            }
+            point-unhovered => {
+                root.point_unhovered();
             }
         }
 
-        if (root.active_page == 1) : VerticalLayout {
+        if (root.active_page == 1) : LogDataPage {
             vertical-stretch: 1;
-            spacing: 10px;
-
-            DetailTablePanel {
-                vertical-stretch: 1;
-                title: "Filtered Log Data";
-                summary: root.filtered_log_summary;
-                rows: root.filtered_log_rows;
-                table-width: 1280px;
-                body-viewport-height: 652px;
-                show-pagination: true;
-                pagination-text: root.log_page_text;
-                has-prev-page: root.has_prev_log_page;
-                has-next-page: root.has_next_log_page;
-                prev-page => {
-                    root.log_prev_page();
-                }
-                next-page => {
-                    root.log_next_page();
-                }
+            summary: root.filtered_log_summary;
+            rows: root.filtered_log_rows;
+            pagination-text: root.log_page_text;
+            has-prev-page: root.has_prev_log_page;
+            has-next-page: root.has_next_log_page;
+            reset-token: root.log_table_reset_token;
+            changed table-body-visible-height => {
+                root.log_table_body_viewport_height = self.table-body-visible-height;
+            }
+            prev-page => {
+                root.log_prev_page();
+            }
+            next-page => {
+                root.log_next_page();
             }
         }
 
-        if (root.active_page == 2) : VerticalLayout {
+        if (root.active_page == 2) : AlertDataPage {
             vertical-stretch: 1;
-            spacing: 10px;
-
-            DetailTablePanel {
-                vertical-stretch: 1;
-                title: "Filtered Alert Data";
-                summary: root.filtered_alert_summary;
-                rows: root.filtered_alert_rows;
-                time-title: "FiredAt";
-                level-title: "RiskLevel";
-                show-rule: true;
-                rule-title: "Rule";
-                target-title: "Target";
-                show-status: false;
-                show-content: false;
-                content-title: "Message";
-                show-risk-score: true;
-                semantic-alert-layout: true;
-                table-width: 1420px;
-                body-viewport-height: 652px;
-                show-pagination: true;
-                pagination-text: root.alert_page_text;
-                has-prev-page: root.has_prev_alert_page;
-                has-next-page: root.has_next_alert_page;
-                prev-page => {
-                    root.alert_prev_page();
-                }
-                next-page => {
-                    root.alert_next_page();
-                }
+            summary: root.filtered_alert_summary;
+            rows: root.filtered_alert_rows;
+            pagination-text: root.alert_page_text;
+            has-prev-page: root.has_prev_alert_page;
+            has-next-page: root.has_next_alert_page;
+            reset-token: root.alert_table_reset_token;
+            changed table-body-visible-height => {
+                root.alert_table_body_viewport_height = self.table-body-visible-height;
+            }
+            prev-page => {
+                root.alert_prev_page();
+            }
+            next-page => {
+                root.alert_next_page();
             }
         }
     }

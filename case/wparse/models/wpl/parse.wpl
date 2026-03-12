@@ -1,8 +1,7 @@
 package /wpl/wparse {
     rule line {
         (
-            time\.,
-            digit:ns,
+            time,
             chars:level<[,]>,
             chars:target<[,]>,
             chars:content\0

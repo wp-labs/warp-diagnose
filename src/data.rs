@@ -1,6 +1,5 @@
 use std::cmp::Ordering;
 use std::collections::{HashMap, HashSet};
-use std::env;
 use std::fs;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
@@ -16,78 +15,10 @@ use regex::Regex;
 use serde_json::Value;
 
 use crate::arrow_frame::read_arrow_frames;
+use crate::config::runtime_config;
 
-const LOCAL_CASE_LOG_WFU_ARROW: &str = "case/wparse/data/out_dat/log_wfu.arrow";
-const LOCAL_CASE_WP_LOG_ARROW: &str = "case/wparse/data/out_dat/wp-log.arrow";
-const LOCAL_CASE_WF_ALERT_ARROW: &str = "case/wfusion/alerts/wf-alert.arrow";
-const LOCAL_CASE_WF_ALERT_DIR: &str = "case/wfusion/alerts";
-const LOCAL_CASE_DEMO_JSON: &str = "case/wparse/data/out_dat/demo.json";
-const LOCAL_CASE_DEMO_JSON_LEGACY: &str = "case/wparse/data/demo.json";
-const LOCAL_CASE_WPARSE_LOG: &str = "case/target_data/raw_log.dat";
-const LOCAL_CASE_WFUSION_ALERTS: &str = "case/wfusion/alerts/wf-alert.jsonl";
-const LOCAL_CASE_WFUSION_ALERTS_LEGACY: &str = "case/wparse/alerts/all.jsonl";
-
-const ENV_LOG_WFU: &str = "WARP_DIAGNOSE_LOG_WFU";
-const ENV_DEMO_JSON: &str = "WARP_DIAGNOSE_DEMO_JSON";
-const ENV_WPARSE_LOG: &str = "WARP_DIAGNOSE_WPARSE_LOG";
-const ENV_USE_WFUSION: &str = "WARP_DIAGNOSE_USE_WFUSION";
-const ENV_ALERT_WFU_DIR: &str = "WARP_DIAGNOSE_ALERT_WFU_DIR";
-const ENV_WFUSION_ALERTS: &str = "WARP_DIAGNOSE_WFUSION_ALERTS";
-
-const DEFAULT_BUCKETS: usize = 72;
-const MAX_LANES: usize = 9;
-const MIN_TIMELINE_WIDTH_PX: usize = 3600;
-const MAX_TIMELINE_WIDTH_PX: usize = 24_000;
-const TIMELINE_PX_PER_SEC: usize = 14;
 const SECOND_NS: i128 = 1_000_000_000;
-const TIMELINE_VERTICAL_PADDING_PCT: f32 = 0.08;
-
-fn manifest_path(relative: &str) -> String {
-    Path::new(env!("CARGO_MANIFEST_DIR"))
-        .join(relative)
-        .to_string_lossy()
-        .to_string()
-}
-
-fn default_demo_json_path() -> String {
-    let computed = Path::new(env!("CARGO_MANIFEST_DIR")).join(LOCAL_CASE_LOG_WFU_ARROW);
-    if computed.exists() {
-        return computed.to_string_lossy().to_string();
-    }
-    let primary = Path::new(env!("CARGO_MANIFEST_DIR")).join(LOCAL_CASE_WP_LOG_ARROW);
-    if primary.exists() {
-        primary.to_string_lossy().to_string()
-    } else {
-        let fallback = Path::new(env!("CARGO_MANIFEST_DIR")).join(LOCAL_CASE_DEMO_JSON);
-        if fallback.exists() {
-            fallback.to_string_lossy().to_string()
-        } else {
-            manifest_path(LOCAL_CASE_DEMO_JSON_LEGACY)
-        }
-    }
-}
-
-fn default_wparse_log_path() -> String {
-    manifest_path(LOCAL_CASE_WPARSE_LOG)
-}
-
-fn default_wfusion_alerts_path() -> String {
-    let alert_dir = Path::new(env!("CARGO_MANIFEST_DIR")).join(LOCAL_CASE_WF_ALERT_DIR);
-    if alert_dir.exists() {
-        return alert_dir.to_string_lossy().to_string();
-    }
-    let primary = Path::new(env!("CARGO_MANIFEST_DIR")).join(LOCAL_CASE_WF_ALERT_ARROW);
-    if primary.exists() {
-        primary.to_string_lossy().to_string()
-    } else {
-        let fallback = Path::new(env!("CARGO_MANIFEST_DIR")).join(LOCAL_CASE_WFUSION_ALERTS);
-        if fallback.exists() {
-            fallback.to_string_lossy().to_string()
-        } else {
-            manifest_path(LOCAL_CASE_WFUSION_ALERTS_LEGACY)
-        }
-    }
-}
+const MILLISECOND_NS: i128 = 1_000_000;
 
 fn is_arrow_file(path: &Path) -> bool {
     path.extension()
@@ -111,24 +42,15 @@ struct EventRecord {
     content: String,
     entity: String,
     risk: f32,
+    raw_risk_score: f32,
     stage_idx: usize,
     stage_boundary_prob: f32,
 }
 
 #[derive(Debug, Clone)]
 struct StageSegment {
-    idx: usize,
-    label: String,
-    family: String,
-    top_action: String,
     start_ns: i128,
     end_ns: i128,
-    start_ts: String,
-    end_ts: String,
-    duration_ms: i64,
-    event_count: usize,
-    incident_count: usize,
-    confidence: f32,
 }
 
 #[derive(Debug, Default, Clone)]
@@ -154,9 +76,7 @@ pub struct LoadReport {
     pub wfusion_skipped: usize,
     pub wfusion_enabled: bool,
     pub wfusion_used: bool,
-    pub recent_events_text: String,
     pub top_targets_text: String,
-    pub top_entities_text: String,
     pub source_text: String,
     pub errors: Vec<String>,
 }
@@ -164,7 +84,7 @@ pub struct LoadReport {
 impl LoadReport {
     pub fn to_status_text(&self) -> String {
         let mut lines = vec![
-            "Status: stage+entity timeline ready".to_string(),
+            "Status: timeline ready".to_string(),
             format!(
                 "backend={} | wfusion_enabled={} | wfusion_used={}",
                 self.compute_backend, self.wfusion_enabled, self.wfusion_used
@@ -208,15 +128,6 @@ impl LoadReport {
 }
 
 #[derive(Debug, Clone)]
-pub struct StageBandVm {
-    pub label: String,
-    pub summary: String,
-    pub start_pct: f32,
-    pub end_pct: f32,
-    pub selected: bool,
-}
-
-#[derive(Debug, Clone)]
 pub struct TimelinePointVm {
     pub x_pct: f32,
     pub y_pct: f32,
@@ -235,15 +146,6 @@ pub struct AxisTickVm {
 pub struct LaneLabelVm {
     pub y_pct: f32,
     pub label: String,
-}
-
-#[derive(Debug, Clone)]
-pub struct StageCardVm {
-    pub idx: usize,
-    pub label: String,
-    pub action: String,
-    pub summary: String,
-    pub selected: bool,
 }
 
 #[derive(Debug, Clone)]
@@ -284,16 +186,13 @@ pub enum SourceFilter {
 #[derive(Debug, Clone)]
 pub struct DashboardView {
     pub report: LoadReport,
-    pub stage_bands: Vec<StageBandVm>,
     pub timeline_points: Vec<TimelinePointVm>,
     pub time_ticks: Vec<AxisTickVm>,
     pub timeline_content_px: i32,
     pub lane_labels: Vec<LaneLabelVm>,
-    pub stage_cards: Vec<StageCardVm>,
     pub point_detail_summaries: Vec<String>,
     pub point_detail_rows: Vec<Vec<DetailRowVm>>,
     pub point_previews: Vec<String>,
-    pub stage_detail_text: String,
     pub point_hint_text: String,
     pub lane_legend_text: String,
 }
@@ -312,18 +211,14 @@ pub struct DashboardData {
     report: LoadReport,
     events: Vec<EventRecord>,
     log_events: Vec<EventRecord>,
-    stages: Vec<StageSegment>,
 }
 
 pub fn load_default_sources() -> DashboardData {
-    let demo_path = env::var(ENV_LOG_WFU)
-        .or_else(|_| env::var(ENV_DEMO_JSON))
-        .unwrap_or_else(|_| default_demo_json_path());
-    let wparse_path = env::var(ENV_WPARSE_LOG).unwrap_or_else(|_| default_wparse_log_path());
-    let wfusion_alerts_path = env::var(ENV_ALERT_WFU_DIR)
-        .or_else(|_| env::var(ENV_WFUSION_ALERTS))
-        .unwrap_or_else(|_| default_wfusion_alerts_path());
-    let wfusion_enabled = env_flag(ENV_USE_WFUSION, true);
+    let config = runtime_config();
+    let demo_path = config.data.primary_log_path.clone();
+    let wparse_path = config.data.wparse_log_path.clone();
+    let wfusion_alerts_path = config.data.wfusion_alerts_path.clone();
+    let wfusion_enabled = config.data.wfusion_enabled;
 
     let mut report = LoadReport {
         compute_backend: if wfusion_enabled {
@@ -409,57 +304,25 @@ pub fn load_default_sources() -> DashboardData {
     let stages = derive_stages(&mut events);
     assign_stage_indices(&mut log_events, &stages);
 
-    enrich_report(&mut report, &events, &stages);
+    enrich_report(&mut report, &events, stages.len());
 
     DashboardData {
         report,
         events,
         log_events,
-        stages,
     }
 }
 
 impl DashboardData {
-    pub fn stage_label(&self, idx: usize) -> Option<&str> {
-        self.stages.get(idx).map(|s| s.label.as_str())
-    }
-
     pub fn build_view(
         &self,
-        selected_stage: Option<usize>,
         level_filter: Option<LevelFilter>,
         risk_filter: Option<RiskFilter>,
         source_filter: Option<SourceFilter>,
     ) -> DashboardView {
         let mut report = self.report.clone();
 
-        let (global_min_ns, global_max_ns) = timeline_axis_bounds_from_events(&self.events);
-        let ns_span = (global_max_ns - global_min_ns).max(1) as f64;
-
-        let mut stage_bands = Vec::new();
-        for stage in &self.stages {
-            let mut start_pct = ((stage.start_ns - global_min_ns) as f64 / ns_span) as f32;
-            let mut end_pct = ((stage.end_ns - global_min_ns) as f64 / ns_span) as f32;
-            start_pct = start_pct.clamp(0.0, 1.0);
-            end_pct = end_pct.clamp(0.0, 1.0);
-            if end_pct <= start_pct {
-                end_pct = (start_pct + 0.02).min(1.0);
-            }
-
-            stage_bands.push(StageBandVm {
-                label: stage.label.clone(),
-                summary: format!(
-                    "{} | action={} | incidents={} | {}ms",
-                    stage.family, stage.top_action, stage.incident_count, stage.duration_ms
-                ),
-                start_pct,
-                end_pct,
-                selected: selected_stage == Some(stage.idx),
-            });
-        }
-
-        let stage_filtered_events =
-            filter_event_records(&self.events, selected_stage, None, None, None);
+        let stage_filtered_events = filter_event_records(&self.events, None, None, None);
 
         report.total_rows = stage_filtered_events.len();
         let (risk_low_rows, risk_mid_rows, risk_high_rows) =
@@ -470,7 +333,6 @@ impl DashboardData {
 
         let filtered_events = filter_event_records(
             &self.events,
-            selected_stage,
             level_filter,
             risk_filter,
             source_filter,
@@ -482,12 +344,9 @@ impl DashboardData {
             point_previews,
             lane_legend_text,
             lane_labels,
-        ) = build_timeline_points(&filtered_events, &self.log_events, &self.stages);
+        ) = build_timeline_points(&filtered_events, &self.log_events);
         let time_ticks = build_time_ticks(&filtered_events);
         let timeline_content_px = build_timeline_content_width_px(&filtered_events);
-        let stage_cards = build_stage_cards(&self.stages, selected_stage);
-
-        let stage_detail_text = build_stage_detail(&self.stages, selected_stage);
         let point_hint_text = if timeline_points.is_empty() {
             "No points in current selection.".to_string()
         } else {
@@ -496,16 +355,13 @@ impl DashboardData {
 
         DashboardView {
             report,
-            stage_bands,
             timeline_points,
             time_ticks,
             timeline_content_px,
             lane_labels,
-            stage_cards,
             point_detail_summaries,
             point_detail_rows,
             point_previews,
-            stage_detail_text,
             point_hint_text,
             lane_legend_text,
         }
@@ -513,7 +369,6 @@ impl DashboardData {
 
     pub fn build_log_page(
         &self,
-        selected_stage: Option<usize>,
         level_filter: Option<LevelFilter>,
         risk_filter: Option<RiskFilter>,
         source_filter: Option<SourceFilter>,
@@ -522,7 +377,6 @@ impl DashboardData {
     ) -> TablePageView {
         let filtered_logs = filter_event_records(
             &self.log_events,
-            selected_stage,
             level_filter,
             risk_filter,
             source_filter,
@@ -532,7 +386,6 @@ impl DashboardData {
 
     pub fn build_alert_page(
         &self,
-        selected_stage: Option<usize>,
         level_filter: Option<LevelFilter>,
         risk_filter: Option<RiskFilter>,
         source_filter: Option<SourceFilter>,
@@ -541,7 +394,6 @@ impl DashboardData {
     ) -> TablePageView {
         let filtered_alerts = filter_event_records(
             &self.events,
-            selected_stage,
             level_filter,
             risk_filter,
             source_filter,
@@ -556,14 +408,13 @@ impl DashboardData {
     }
 }
 
-fn enrich_report(report: &mut LoadReport, events: &[EventRecord], stages: &[StageSegment]) {
+fn enrich_report(report: &mut LoadReport, events: &[EventRecord], stage_count: usize) {
     report.total_rows = events.len();
-    report.stage_count = stages.len();
+    report.stage_count = stage_count;
 
     let mut target_set = HashSet::new();
     let mut entity_set = HashSet::new();
     let mut target_counts: HashMap<String, usize> = HashMap::new();
-    let mut entity_counts: HashMap<String, usize> = HashMap::new();
 
     for event in events {
         match risk_bucket(event.risk) {
@@ -579,7 +430,6 @@ fn enrich_report(report: &mut LoadReport, events: &[EventRecord], stages: &[Stag
 
         if !event.entity.is_empty() {
             entity_set.insert(event.entity.clone());
-            *entity_counts.entry(event.entity.clone()).or_insert(0) += 1;
         }
     }
 
@@ -587,8 +437,6 @@ fn enrich_report(report: &mut LoadReport, events: &[EventRecord], stages: &[Stag
     report.unique_entities = entity_set.len();
 
     report.top_targets_text = format_top_counts(&target_counts, 12, "No target data");
-    report.top_entities_text = format_top_counts(&entity_counts, 12, "No entity data");
-    report.recent_events_text = format_recent_events(events, stages, 26);
     report.source_text = format_source_text(report);
 
     if let Some(first) = events.first() {
@@ -632,7 +480,6 @@ fn count_risk_buckets(events: &[&EventRecord]) -> (usize, usize, usize) {
 
 fn filter_event_records<'a>(
     records: &'a [EventRecord],
-    selected_stage: Option<usize>,
     level_filter: Option<LevelFilter>,
     risk_filter: Option<RiskFilter>,
     source_filter: Option<SourceFilter>,
@@ -640,8 +487,7 @@ fn filter_event_records<'a>(
     records
         .iter()
         .filter(|event| {
-            selected_stage.is_none_or(|idx| event.stage_idx == idx)
-                && level_filter.is_none_or(|filter| match filter {
+            level_filter.is_none_or(|filter| match filter {
                     LevelFilter::Info => event.level == "INFO",
                     LevelFilter::Warn => event.level == "WARN",
                     LevelFilter::Error => event.level == "ERROR" || event.level == "FATAL",
@@ -665,7 +511,7 @@ fn detail_row_from_event(event: &EventRecord) -> DetailRowVm {
         row_no: String::new(),
         time: event.time_text.clone(),
         level: safe_text(&event.level).to_string(),
-        risk_score: format!("{:.2}", event.risk),
+        risk_score: format_risk_score(event.raw_risk_score),
         rule: safe_text(&event.rule).to_string(),
         target: safe_text(&event.target).to_string(),
         entity: safe_text(&event.entity).to_string(),
@@ -831,6 +677,9 @@ fn parse_log_arrow_row(
         .filter(|s| !s.is_empty())
         .unwrap_or_else(|| first_non_empty(&subject, &target, "unknown").to_string());
     let risk = computed_risk.unwrap_or_else(|| score_risk(&level, &status, &content));
+    let raw_risk_score = raw_score
+        .map(|score| score as f32)
+        .unwrap_or_else(|| risk * 100.0);
     let rule = batch_string_any(batch, row, &["rule_name", "__wfu_rule_name"])
         .map(|s| clean_text(&s))
         .unwrap_or_default();
@@ -849,6 +698,7 @@ fn parse_log_arrow_row(
         content,
         entity,
         risk,
+        raw_risk_score,
         stage_idx: 0,
         stage_boundary_prob: 0.0,
     })
@@ -931,6 +781,7 @@ fn parse_demo_value(value: &Value, seq: usize) -> Option<EventRecord> {
 
     let entity = first_non_empty(&subject, &target, "unknown").to_string();
     let risk = score_risk(&level, &status, &content);
+    let raw_risk_score = risk * 100.0;
 
     Some(EventRecord {
         seq,
@@ -946,6 +797,7 @@ fn parse_demo_value(value: &Value, seq: usize) -> Option<EventRecord> {
         content,
         entity,
         risk,
+        raw_risk_score,
         stage_idx: 0,
         stage_boundary_prob: 0.0,
     })
@@ -1036,6 +888,7 @@ fn parse_wparse_entry(
     let status = guess_status_from_content(&content_norm);
     let entity = first_non_empty("", &target_norm, "unknown").to_string();
     let risk = score_risk(&level_norm, &status, &content_norm);
+    let raw_risk_score = risk * 100.0;
 
     Some(EventRecord {
         seq,
@@ -1051,6 +904,7 @@ fn parse_wparse_entry(
         content: content_norm,
         entity,
         risk,
+        raw_risk_score,
         stage_idx: 0,
         stage_boundary_prob: 0.0,
     })
@@ -1327,6 +1181,7 @@ fn parse_wfusion_alert_value(value: &Value, seq: usize) -> Option<EventRecord> {
         content,
         entity,
         risk,
+        raw_risk_score: score as f32,
         stage_idx: 0,
         stage_boundary_prob: 0.0,
     })
@@ -1395,6 +1250,7 @@ fn parse_wfusion_alert_arrow_row(
         content,
         entity,
         risk,
+        raw_risk_score: score as f32,
         stage_idx: 0,
         stage_boundary_prob: 0.0,
     })
@@ -1624,7 +1480,6 @@ fn build_stage_segments(events: &[EventRecord]) -> Vec<StageSegment> {
             .unwrap_or_else(|| "unknown".to_string());
 
         let family = map_action_family(&top_action).to_string();
-        let label = format!("{:02}-{}", sid + 1, family);
 
         let top_action_ratio = action_counts
             .get(&top_action)
@@ -1641,25 +1496,10 @@ fn build_stage_segments(events: &[EventRecord]) -> Vec<StageSegment> {
         let confidence =
             (0.50 * top_action_ratio + 0.30 * start_prob + 0.20 * next_start_prob).clamp(0.0, 1.0);
 
+        let _ = (sid, family, top_action, duration_ms, incident_count, confidence);
         segments.push(StageSegment {
-            idx: sid,
-            label,
-            family,
-            top_action,
             start_ns,
             end_ns,
-            start_ts: slice
-                .first()
-                .map(|e| e.time_text.clone())
-                .unwrap_or_default(),
-            end_ts: slice
-                .last()
-                .map(|e| e.time_text.clone())
-                .unwrap_or_default(),
-            duration_ms,
-            event_count: slice.len(),
-            incident_count,
-            confidence,
         });
 
         i = end + 1;
@@ -1671,7 +1511,6 @@ fn build_stage_segments(events: &[EventRecord]) -> Vec<StageSegment> {
 fn build_timeline_points(
     filtered_events: &[&EventRecord],
     log_events: &[EventRecord],
-    stages: &[StageSegment],
 ) -> (
     Vec<TimelinePointVm>,
     Vec<String>,
@@ -1686,7 +1525,7 @@ fn build_timeline_points(
             Vec::new(),
             Vec::new(),
             Vec::new(),
-            "No entity lanes in current selection.".to_string(),
+            "No canonical subject lanes in current selection.".to_string(),
             Vec::new(),
         );
     }
@@ -1698,7 +1537,7 @@ fn build_timeline_points(
 
     let mut ranked_entities: Vec<(String, usize)> = entity_counts.into_iter().collect();
     ranked_entities.sort_by(|(an, ac), (bn, bc)| bc.cmp(ac).then_with(|| an.cmp(bn)));
-    ranked_entities.truncate(MAX_LANES);
+    ranked_entities.truncate(runtime_config().timeline.max_lanes);
 
     if ranked_entities.is_empty() {
         return (
@@ -1706,7 +1545,7 @@ fn build_timeline_points(
             Vec::new(),
             Vec::new(),
             Vec::new(),
-            "No entity lanes in current selection.".to_string(),
+            "No canonical subject lanes in current selection.".to_string(),
             Vec::new(),
         );
     }
@@ -1719,16 +1558,14 @@ fn build_timeline_points(
 
     let (min_ns, max_ns) = timeline_axis_bounds_from_refs(filtered_events);
     let span = (max_ns - min_ns).max(1);
-    let span_seconds = ((span as f64) / 1_000_000_000.0).ceil().max(1.0) as usize;
-    let second_buckets = span_seconds.clamp(DEFAULT_BUCKETS, 7_200);
-    let density_buckets = (filtered_events.len() / 6).clamp(24, 1_200);
-    let buckets = second_buckets.max(density_buckets);
-    let bucket_span = (span / buckets as i128).max(1);
+    let bucket_span = timeline_bucket_span_ns();
+    let buckets = ((span + bucket_span - 1) / bucket_span).max(1) as usize;
 
     #[derive(Default, Clone)]
     struct BucketAgg {
         count: usize,
         risk_max: f32,
+        raw_risk_score: f32,
         sample_idx: usize,
     }
 
@@ -1744,6 +1581,7 @@ fn build_timeline_points(
         entry.count += 1;
         if event.risk >= entry.risk_max {
             entry.risk_max = event.risk;
+            entry.raw_risk_score = event.raw_risk_score;
             entry.sample_idx = idx;
         }
     }
@@ -1785,11 +1623,6 @@ fn build_timeline_points(
             entity: point_entity.clone(),
         });
 
-        let stage_label = stages
-            .get(event.stage_idx)
-            .map(|s| s.label.as_str())
-            .unwrap_or("unknown-stage");
-
         let bucket_start_ns = min_ns + bucket as i128 * bucket_span;
         let bucket_end_ns = if bucket + 1 >= buckets {
             max_ns
@@ -1801,20 +1634,18 @@ fn build_timeline_points(
             log_events,
             event,
             &point_entity,
-            stage_label,
             bucket_start_ns,
             bucket_end_ns,
             a.count,
-            a.risk_max,
+            a.raw_risk_score,
         );
         detail_summaries.push(detail_summary);
         detail_rows.push(detail_row_items);
 
         previews.push(format!(
-            "entity={} | stage={} | risk={:.2} | cnt={}\n{}",
+            "canonical_subject={} | bucket_score={} | cnt={}\n{}",
             event.entity,
-            stage_label,
-            a.risk_max,
+            format_risk_score(a.raw_risk_score),
             a.count,
             truncate_text(&event.content.replace('\n', " | "), 110)
         ));
@@ -1853,49 +1684,14 @@ fn build_timeline_points(
     )
 }
 
-fn build_stage_detail(stages: &[StageSegment], selected_stage: Option<usize>) -> String {
-    if stages.is_empty() {
-        return "No stage data.".to_string();
-    }
-
-    match selected_stage {
-        Some(idx) if idx < stages.len() => {
-            let s = &stages[idx];
-            format!(
-                "Selected Stage\n{}\n\nfamily={}\ntop_action={}\nevents={}\nincidents={}\nduration={}ms\nconfidence={:.2}\n\n{} -> {}",
-                s.label,
-                s.family,
-                s.top_action,
-                s.event_count,
-                s.incident_count,
-                s.duration_ms,
-                s.confidence,
-                s.start_ts,
-                s.end_ts
-            )
-        }
-        _ => {
-            let mut lines = vec!["Stage Overview (click stage to filter)".to_string()];
-            for s in stages.iter().take(12) {
-                lines.push(format!(
-                    "{} | {} | action={} | incident={} | {}ms | conf={:.2}",
-                    s.label, s.family, s.top_action, s.incident_count, s.duration_ms, s.confidence
-                ));
-            }
-            lines.join("\n")
-        }
-    }
-}
-
 fn build_point_log_detail(
     log_events: &[EventRecord],
     event: &EventRecord,
     point_entity: &str,
-    stage_label: &str,
     bucket_start_ns: i128,
     bucket_end_ns: i128,
     bucket_count: usize,
-    risk_max: f32,
+    bucket_score: f32,
 ) -> (String, Vec<DetailRowVm>) {
     let related_logs = collect_related_logs(
         log_events,
@@ -1906,12 +1702,11 @@ fn build_point_log_detail(
     );
 
     let summary = format!(
-        "stage={} | entity={} | bucket_count={} | matched_logs={} | risk_max={:.2}",
-        stage_label,
+        "canonical_subject={} | bucket_count={} | matched_logs={} | bucket_score={}",
         point_entity,
         bucket_count,
         related_logs.len(),
-        risk_max
+        format_risk_score(bucket_score)
     );
 
     if related_logs.is_empty() {
@@ -1921,7 +1716,7 @@ fn build_point_log_detail(
                 row_no: "1".to_string(),
                 time: event.time_text.clone(),
                 level: safe_text(&event.level).to_string(),
-                risk_score: format!("{:.2}", event.risk),
+                risk_score: format_risk_score(event.raw_risk_score),
                 rule: safe_text(&event.rule).to_string(),
                 target: safe_text(&event.target).to_string(),
                 entity: point_entity.to_string(),
@@ -1939,7 +1734,7 @@ fn build_point_log_detail(
             row_no: (idx + 1).to_string(),
             time: log.time_text.clone(),
             level: safe_text(&log.level).to_string(),
-            risk_score: format!("{:.2}", log.risk),
+            risk_score: format_risk_score(log.raw_risk_score),
             rule: safe_text(&log.rule).to_string(),
             target: safe_text(&log.target).to_string(),
             entity: safe_text(&log.entity).to_string(),
@@ -1962,16 +1757,49 @@ fn collect_related_logs<'a>(
     if event.source == "wfusion" {
         let bucket_ns = event
             .window_bucket_ns
-            .unwrap_or_else(|| floor_second_bucket_ns(event.epoch_ns));
+            .filter(|bucket| is_reasonable_alert_bucket(*bucket, event.epoch_ns))
+            .unwrap_or_else(|| floor_timeline_bucket_ns(event.epoch_ns));
         let mut exact = log_events
             .iter()
-            .filter(|log| log.entity == point_entity && floor_second_bucket_ns(log.epoch_ns) == bucket_ns)
+            .filter(|log| log.entity == point_entity && floor_timeline_bucket_ns(log.epoch_ns) == bucket_ns)
             .collect::<Vec<_>>();
         exact.sort_by(|a, b| a.epoch_ns.cmp(&b.epoch_ns).then_with(|| a.seq.cmp(&b.seq)));
         if !exact.is_empty() {
             exact.truncate(12);
             return exact;
         }
+
+        let mut same_entity_in_bucket = log_events
+            .iter()
+            .filter(|log| {
+                log.entity == point_entity
+                    && log.epoch_ns >= bucket_start_ns
+                    && log.epoch_ns <= bucket_end_ns
+            })
+            .collect::<Vec<_>>();
+        same_entity_in_bucket
+            .sort_by(|a, b| a.epoch_ns.cmp(&b.epoch_ns).then_with(|| a.seq.cmp(&b.seq)));
+        if !same_entity_in_bucket.is_empty() {
+            same_entity_in_bucket.truncate(12);
+            return same_entity_in_bucket;
+        }
+
+        let pad = ((bucket_end_ns - bucket_start_ns).max(1) * 2).max(3_000_000_000);
+        let mut same_entity_nearby = log_events
+            .iter()
+            .filter(|log| log.entity == point_entity && (log.epoch_ns - event.epoch_ns).abs() <= pad)
+            .collect::<Vec<_>>();
+        same_entity_nearby.sort_by(|a, b| {
+            let ad = (a.epoch_ns - event.epoch_ns).abs();
+            let bd = (b.epoch_ns - event.epoch_ns).abs();
+            ad.cmp(&bd).then_with(|| a.seq.cmp(&b.seq))
+        });
+        if !same_entity_nearby.is_empty() {
+            same_entity_nearby.truncate(12);
+            return same_entity_nearby;
+        }
+
+        return Vec::new();
     }
 
     let mut matched = log_events
@@ -2001,8 +1829,14 @@ fn collect_related_logs<'a>(
     matched
 }
 
-fn floor_second_bucket_ns(epoch_ns: i128) -> i128 {
-    (epoch_ns / SECOND_NS) * SECOND_NS
+fn is_reasonable_alert_bucket(bucket_ns: i128, event_ns: i128) -> bool {
+    let bucket_span = timeline_bucket_span_ns().max(1);
+    (bucket_ns - event_ns).abs() <= bucket_span * 2
+}
+
+fn floor_timeline_bucket_ns(epoch_ns: i128) -> i128 {
+    let bucket_span = timeline_bucket_span_ns();
+    (epoch_ns / bucket_span) * bucket_span
 }
 
 fn log_match_score(log: &EventRecord, event: &EventRecord, point_entity: &str) -> i32 {
@@ -2039,35 +1873,32 @@ fn build_time_ticks(filtered_events: &[&EventRecord]) -> Vec<AxisTickVm> {
 
     let (min_ns, max_ns) = timeline_axis_bounds_from_refs(filtered_events);
     let span_ns = (max_ns - min_ns).max(1);
-
-    let span_seconds = ((span_ns as f64) / 1_000_000_000.0).max(1.0);
-    let step_sec = choose_tick_step_seconds(span_seconds / 8.0);
-
-    let min_sec = floor_div(min_ns, SECOND_NS);
-    let max_sec = floor_div(max_ns, SECOND_NS);
-    let first_tick_sec = round_up_to_step(min_sec, step_sec as i128);
+    let span_ms = ((span_ns as f64) / MILLISECOND_NS as f64).max(1.0);
+    let base_unit_ms = timeline_unit_ms() as i64;
+    let step_ms = choose_tick_step_milliseconds((span_ms / 8.0).max(base_unit_ms as f64));
+    let step_ns = i128::from(step_ms) * MILLISECOND_NS;
+    let first_tick_ns = round_up_to_step(min_ns, step_ns);
 
     let mut ticks = Vec::new();
-    let mut sec = first_tick_sec;
-    while sec <= max_sec {
-        let tick_ns = sec * SECOND_NS;
+    let mut tick_ns = first_tick_ns;
+    while tick_ns <= max_ns {
         let pct = ((tick_ns - min_ns) as f64 / span_ns as f64).clamp(0.0, 1.0) as f32;
         ticks.push(AxisTickVm {
             x_pct: pct,
-            label: format_second_label(sec),
+            label: format_timeline_label(tick_ns, step_ms),
         });
-        sec += step_sec as i128;
+        tick_ns += step_ns;
     }
 
     if ticks.len() < 2 {
         ticks.clear();
         ticks.push(AxisTickVm {
             x_pct: 0.0,
-            label: format_second_label(min_sec),
+            label: format_timeline_label(min_ns, step_ms),
         });
         ticks.push(AxisTickVm {
             x_pct: 1.0,
-            label: format_second_label(max_sec),
+            label: format_timeline_label(max_ns, step_ms),
         });
     }
 
@@ -2076,22 +1907,23 @@ fn build_time_ticks(filtered_events: &[&EventRecord]) -> Vec<AxisTickVm> {
 
 fn build_timeline_content_width_px(filtered_events: &[&EventRecord]) -> i32 {
     if filtered_events.is_empty() {
-        return MIN_TIMELINE_WIDTH_PX as i32;
+        return runtime_config().timeline.min_width_px as i32;
     }
 
     let (min_ns, max_ns) = timeline_axis_bounds_from_refs(filtered_events);
     let span_ns = (max_ns - min_ns).max(1);
 
-    let span_seconds = ((span_ns as f64) / SECOND_NS as f64).ceil().max(1.0) as usize;
-    let width = span_seconds
-        .saturating_mul(TIMELINE_PX_PER_SEC)
-        .clamp(MIN_TIMELINE_WIDTH_PX, MAX_TIMELINE_WIDTH_PX);
+    let span_millis = ((span_ns as f64) / MILLISECOND_NS as f64).ceil().max(1.0) as usize;
+    let timeline = &runtime_config().timeline;
+    let width = (span_millis.saturating_mul(timeline.px_per_unit) / timeline.unit_ms)
+        .clamp(timeline.min_width_px, timeline.max_width_px);
     width as i32
 }
 
 fn timeline_axis_bounds_from_refs(events: &[&EventRecord]) -> (i128, i128) {
     if events.is_empty() {
-        return (0, SECOND_NS);
+        let bucket_span = timeline_bucket_span_ns();
+        return (0, bucket_span);
     }
 
     let min_ns = events.iter().map(|e| e.epoch_ns).min().unwrap_or(0);
@@ -2099,36 +1931,23 @@ fn timeline_axis_bounds_from_refs(events: &[&EventRecord]) -> (i128, i128) {
     align_timeline_axis_bounds(min_ns, max_ns)
 }
 
-fn timeline_axis_bounds_from_events(events: &[EventRecord]) -> (i128, i128) {
-    let (min_ns, max_ns) = ns_bounds(events);
-    align_timeline_axis_bounds(min_ns, max_ns)
-}
-
 fn align_timeline_axis_bounds(min_ns: i128, max_ns: i128) -> (i128, i128) {
+    let bucket_span_ns = timeline_bucket_span_ns();
     let raw_span_ns = (max_ns - min_ns).max(1);
-    let raw_span_sec = ((raw_span_ns as f64) / SECOND_NS as f64).ceil().max(1.0) as usize;
-    let axis_step_sec = choose_axis_alignment_seconds(raw_span_sec) as i128;
-    let axis_step_ns = axis_step_sec * SECOND_NS;
+    let visual_pad_ns = (bucket_span_ns * 2)
+        .max(raw_span_ns / 12)
+        .max(SECOND_NS)
+        .min(SECOND_NS * 2);
+    let bucket_start_ns = floor_div(min_ns - visual_pad_ns, bucket_span_ns) * bucket_span_ns;
+    let second_start_ns = floor_div(min_ns, SECOND_NS) * SECOND_NS;
+    let start_ns = bucket_start_ns.min(second_start_ns);
 
-    let natural_start_ns = floor_div(min_ns, axis_step_ns) * axis_step_ns;
-    let natural_end_ns = round_up_to_step(max_ns + 1, axis_step_ns);
-    let natural_left_pad_ns = (min_ns - natural_start_ns).max(0);
-    let natural_right_pad_ns = (natural_end_ns - max_ns).max(0);
-    let max_natural_pad_ns = (raw_span_ns / 3).max(5 * SECOND_NS).min(30 * SECOND_NS);
-
-    let (start_ns, mut end_ns) = if natural_left_pad_ns <= max_natural_pad_ns
-        && natural_right_pad_ns <= max_natural_pad_ns
-    {
-        (natural_start_ns, natural_end_ns)
-    } else {
-        let visual_pad_ns = (raw_span_ns / 6).max(3 * SECOND_NS).min(12 * SECOND_NS);
-        let padded_start_ns = floor_div(min_ns - visual_pad_ns, SECOND_NS) * SECOND_NS;
-        let padded_end_ns = round_up_to_step(max_ns + visual_pad_ns + 1, SECOND_NS);
-        (padded_start_ns, padded_end_ns)
-    };
+    let bucket_end_ns = round_up_to_step(max_ns + visual_pad_ns + 1, bucket_span_ns);
+    let second_end_ns = round_up_to_step(max_ns + 1, SECOND_NS);
+    let mut end_ns = bucket_end_ns.max(second_end_ns);
 
     if end_ns <= start_ns {
-        end_ns = start_ns + axis_step_ns;
+        end_ns = start_ns + bucket_span_ns;
     }
     (start_ns, end_ns)
 }
@@ -2139,37 +1958,11 @@ fn timeline_lane_y_pct(idx: usize, lane_count: usize, lane_denom: f32) -> f32 {
     }
 
     let inner = (idx as f32 / lane_denom).clamp(0.0, 1.0);
-    let pad = TIMELINE_VERTICAL_PADDING_PCT.clamp(0.0, 0.45);
+    let pad = runtime_config()
+        .timeline
+        .vertical_padding_pct
+        .clamp(0.0, 0.45);
     pad + inner * (1.0 - pad * 2.0)
-}
-
-fn choose_axis_alignment_seconds(raw_span_sec: usize) -> usize {
-    match raw_span_sec {
-        0..=300 => 60,
-        301..=1800 => 300,
-        1801..=7200 => 900,
-        _ => usize::try_from(choose_tick_step_seconds(raw_span_sec as f64 / 8.0))
-            .unwrap_or(1800)
-            .max(1800),
-    }
-}
-
-fn build_stage_cards(stages: &[StageSegment], selected_stage: Option<usize>) -> Vec<StageCardVm> {
-    let max_cards = 8usize;
-    stages
-        .iter()
-        .take(max_cards)
-        .map(|s| StageCardVm {
-            idx: s.idx,
-            label: s.label.clone(),
-            action: truncate_text(&s.top_action, 18),
-            summary: format!(
-                "incident={} | dur={}ms | conf={:.2}",
-                s.incident_count, s.duration_ms, s.confidence
-            ),
-            selected: selected_stage == Some(s.idx),
-        })
-        .collect()
 }
 
 fn collect_gaps(events: &[EventRecord]) -> Vec<i128> {
@@ -2187,20 +1980,6 @@ fn collect_gaps(events: &[EventRecord]) -> Vec<i128> {
 
 fn compare_event_time(a: &EventRecord, b: &EventRecord) -> Ordering {
     a.epoch_ns.cmp(&b.epoch_ns).then_with(|| a.seq.cmp(&b.seq))
-}
-
-fn ns_bounds(events: &[EventRecord]) -> (i128, i128) {
-    if events.is_empty() {
-        return (0, 1);
-    }
-
-    let min_ns = events.iter().map(|e| e.epoch_ns).min().unwrap_or(0);
-    let max_ns = events
-        .iter()
-        .map(|e| e.epoch_ns)
-        .max()
-        .unwrap_or(min_ns + 1);
-    (min_ns, max_ns.max(min_ns + 1))
 }
 
 fn parse_epoch_ns(time_str: &str, ns: Option<i64>) -> Option<i128> {
@@ -2223,15 +2002,12 @@ fn parse_epoch_ns(time_str: &str, ns: Option<i64>) -> Option<i128> {
     None
 }
 
-fn env_flag(name: &str, default: bool) -> bool {
-    match env::var(name) {
-        Ok(raw) => match raw.trim().to_ascii_lowercase().as_str() {
-            "1" | "true" | "yes" | "on" => true,
-            "0" | "false" | "no" | "off" => false,
-            _ => default,
-        },
-        Err(_) => default,
-    }
+fn timeline_unit_ms() -> usize {
+    runtime_config().timeline.unit_ms
+}
+
+fn timeline_bucket_span_ns() -> i128 {
+    timeline_unit_ms() as i128 * MILLISECOND_NS
 }
 
 fn normalize_level(level: &str) -> String {
@@ -2396,6 +2172,17 @@ fn score_risk(level: &str, status: &str, content: &str) -> f32 {
     score.clamp(0.0, 1.0)
 }
 
+fn format_risk_score(score: f32) -> String {
+    let mut text = format!("{score:.2}");
+    while text.contains('.') && text.ends_with('0') {
+        text.pop();
+    }
+    if text.ends_with('.') {
+        text.pop();
+    }
+    text
+}
+
 fn contains_any(text: &str, words: &[&str]) -> bool {
     words.iter().any(|w| text.contains(w))
 }
@@ -2438,34 +2225,6 @@ fn format_top_counts(counts: &HashMap<String, usize>, limit: usize, empty: &str)
         .join("\n")
 }
 
-fn format_recent_events(events: &[EventRecord], stages: &[StageSegment], limit: usize) -> String {
-    if events.is_empty() {
-        return "No event data loaded.".to_string();
-    }
-
-    let start = events.len().saturating_sub(limit);
-    events[start..]
-        .iter()
-        .map(|event| {
-            let stage_label = stages
-                .get(event.stage_idx)
-                .map(|s| s.label.as_str())
-                .unwrap_or("-");
-            let text = truncate_text(&event.content.replace('\n', " | "), 78);
-            format!(
-                "{} | {:<5} | {:<6} | {:<10} | {:<10} | {}",
-                event.time_text,
-                event.level,
-                event.source,
-                truncate_text(&event.target, 10),
-                stage_label,
-                text
-            )
-        })
-        .collect::<Vec<_>>()
-        .join("\n")
-}
-
 fn format_source_text(report: &LoadReport) -> String {
     let mut lines = vec![
         "Compute Backend".to_string(),
@@ -2499,16 +2258,17 @@ fn format_source_text(report: &LoadReport) -> String {
     lines.join("\n")
 }
 
-fn choose_tick_step_seconds(raw_step: f64) -> i64 {
-    const STEPS: [i64; 16] = [
-        1, 2, 5, 10, 15, 30, 60, 120, 300, 600, 900, 1_800, 3_600, 7_200, 14_400, 21_600,
+fn choose_tick_step_milliseconds(raw_step: f64) -> i64 {
+    const STEPS: [i64; 17] = [
+        100, 200, 500, 1_000, 2_000, 5_000, 10_000, 15_000, 30_000, 60_000, 120_000, 300_000,
+        600_000, 900_000, 1_800_000, 3_600_000, 7_200_000,
     ];
     for step in STEPS {
         if raw_step <= step as f64 {
             return step;
         }
     }
-    43_200
+    21_600_000
 }
 
 fn round_up_to_step(value: i128, step: i128) -> i128 {
@@ -2535,14 +2295,20 @@ fn floor_div(value: i128, divisor: i128) -> i128 {
     }
 }
 
-fn format_second_label(epoch_sec: i128) -> String {
+fn format_timeline_label(epoch_ns: i128, step_ms: i64) -> String {
+    let epoch_sec = floor_div(epoch_ns, SECOND_NS);
+    let nanos = (epoch_ns - epoch_sec * SECOND_NS).max(0) as u32;
     let Ok(sec_i64) = i64::try_from(epoch_sec) else {
         return "-".to_string();
     };
-    let Some(dt) = Utc.timestamp_opt(sec_i64, 0).single() else {
+    let Some(dt) = Utc.timestamp_opt(sec_i64, nanos).single() else {
         return "-".to_string();
     };
-    dt.format("%H:%M:%S").to_string()
+    if step_ms >= 1_000 {
+        dt.format("%H:%M:%S").to_string()
+    } else {
+        dt.format("%H:%M:%S%.3f").to_string()
+    }
 }
 
 fn truncate_text(input: &str, max_chars: usize) -> String {

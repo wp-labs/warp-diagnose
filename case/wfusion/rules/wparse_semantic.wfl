@@ -1,69 +1,43 @@
 use "wparse_semantic.wfs"
 
-rule event_semantic_project {
-  events {
-    e : wparse_events
-      && subject != ""
-  }
-
-  on each e -> score(
-    if lower(e.status) in ("error", "failed", "failure", "timeout", "fatal", "panic", "abort")
-    then 90.0 else if lower(e.status) in ("miss", "disabled", "retry", "partial", "degraded")
-    then 80.0 else if lower(e.status) in ("warn", "warning")
-    then 70.0 else if lower(e.status) in ("success", "suc", "ok", "end", "enabled", "done", "pass")
-    then 20.0 else 40.0
-  )
-
-  entity(service, e.subject)
-
-  yield semantic_events (
-    event_time = e.event_time,
-    level = e.level,
-    target = e.target,
-    subject = e.subject,
-    action = e.action,
-    status = e.status,
-    risk_score = @score,
-    content = e.content,
-    source = e.source
-  )
-}
-
 rule window_risk {
   events {
-    x : semantic_events
-    hi : semantic_events && risk_score >= 85
-    elevated : semantic_events && risk_score >= 70
+    x : wparse_events && subject != ""
+    hi : wparse_events && subject != "" && risk_score >= 85
+    elevated : wparse_events && subject != "" && risk_score >= 70
   }
 
-  match<subject:1s:fixed> {
+  match<subject:100ms:fixed> {
     on event {
       x | count >= 1;
     }
     and close {
       x | count >= 1;
     }
-  } -> score(coalesce(avg(x.__wfu_score), 0.0))
+  } -> score(coalesce(avg(x.risk_score), 0.0))
 
   entity(service, x.subject)
 
   yield risk_alerts (
-    window_bucket_time = time_bucket(first(x.event_time), 1),
+    window_bucket_time = time_bucket(first(x.event_time), 100),
     target = coalesce(first(x.target), ""),
     subject = x.subject,
     action = coalesce(first(x.action), ""),
-    status = if coalesce(count(hi), 0) >= 1 && coalesce(count(elevated), 0) >= 2 then "high"
-      else if coalesce(count(elevated), 0) >= 1 then "medium"
+    status = if @score >= 85 then "high"
+      else if @score >= 70 then "medium"
       else "low",
-    risk_score = coalesce(avg(x.risk_score), 0.0),
+    risk_level = if @score >= 85 then "high"
+      else if @score >= 70 then "medium"
+      else "low",
+    risk_score = @score,
     event_count = coalesce(count(x), 0),
     message = fmt(
       "subject={} level={} avg_score={} high_cnt={} elevated_cnt={} total={}",
       x.subject,
-      if coalesce(count(hi), 0) >= 1 && coalesce(count(elevated), 0) >= 2 then "high"
-      else if coalesce(count(elevated), 0) >= 1 then "medium"
+      if @score >= 85 then "high"
+      else if @score >= 70 then "medium"
       else "low",
-      coalesce(avg(x.risk_score), 0.0),
+      @score,
       coalesce(count(hi), 0),
       coalesce(count(elevated), 0),
       coalesce(count(x), 0)
@@ -73,9 +47,9 @@ rule window_risk {
 
 rule window_entity_stats {
   events {
-    x : semantic_events
-    hi : semantic_events && risk_score >= 85
-    elevated : semantic_events && risk_score >= 70
+    x : wparse_events && subject != ""
+    hi : wparse_events && subject != "" && risk_score >= 85
+    elevated : wparse_events && subject != "" && risk_score >= 70
   }
 
   match<subject:1m:fixed> {
@@ -85,7 +59,7 @@ rule window_entity_stats {
     and close {
       x | count >= 1;
     }
-  } -> score(coalesce(avg(x.__wfu_score), 0.0))
+  } -> score(coalesce(avg(x.risk_score), 0.0))
 
   entity(service, x.subject)
 

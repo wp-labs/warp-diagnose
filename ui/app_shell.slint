@@ -1,0 +1,378 @@
+import {
+    ActiveFilterChip,
+    AppLogo,
+    FilterPill,
+    InlineIconButton,
+    PageSwitchButton,
+    TimelineToolButton
+} from "base_components.slint";
+
+export component AppShell inherits Rectangle {
+    in property <int> total-events: 0;
+    in property <int> risk-low-events: 0;
+    in property <int> risk-mid-events: 0;
+    in property <int> risk-high-events: 0;
+    in property <int> active-level-filter: 0;
+    in property <int> active-risk-filter: 0;
+    in property <int> active-source-filter: 0;
+    in property <bool> has-level-filter: false;
+    in property <bool> has-risk-filter: false;
+    in property <bool> has-source-filter: false;
+    in property <string> active-level-filter-text: "All levels";
+    in property <string> active-risk-filter-text: "All risks";
+    in property <string> active-source-filter-text: "All sources";
+    in property <int> active-page: 0;
+    callback reload-data();
+    callback page-changed(int);
+    callback level-filter-clicked(int);
+    callback risk-filter-clicked(int);
+    callback source-filter-clicked(int);
+    callback clear-level-filter();
+    callback clear-risk-filter();
+    callback clear-source-filter();
+    callback clear-all-filters();
+
+    VerticalLayout {
+        spacing: 10px;
+
+        Rectangle {
+            height: 56px;
+            border-radius: 10px;
+            background: #ffffff;
+            border-width: 1px;
+            border-color: #d6e0ea;
+
+            HorizontalLayout {
+                padding: 8px;
+                spacing: 12px;
+
+                AppLogo {
+                    width: 40px;
+                    height: 40px;
+                }
+
+                VerticalLayout {
+                    spacing: 0px;
+                    alignment: start;
+
+                    Text {
+                        text: "Warp Diagnose";
+                        color: #203047;
+                        font-size: 20px;
+                        font-weight: 700;
+                        horizontal-alignment: left;
+                    }
+
+                    Text {
+                        text: "TimeLine Diagnostics";
+                        color: #64748b;
+                        font-size: 11px;
+                        horizontal-alignment: left;
+                    }
+                }
+
+                Rectangle {
+                    background: transparent;
+                }
+
+                TimelineToolButton {
+                    tool-icon: @image-url("icons/reload.svg");
+                    clicked => {
+                        root.reload-data();
+                    }
+                }
+            }
+        }
+
+        Rectangle {
+            height: 72px;
+            border-radius: 10px;
+            background: #ffffff;
+            border-width: 1px;
+            border-color: #d6e0ea;
+
+            VerticalLayout {
+                padding: 9px;
+                spacing: 6px;
+
+                HorizontalLayout {
+                    spacing: 6px;
+
+                    Text {
+                        text: "Filter";
+                        color: #203047;
+                        font-size: 11px;
+                        font-weight: 700;
+                        vertical-alignment: center;
+                    }
+
+                    Text {
+                        text: "Level";
+                        color: #64748b;
+                        font-size: 10px;
+                        vertical-alignment: center;
+                    }
+
+                    FilterPill {
+                        label: "All";
+                        idle-background: #f2f6fd;
+                        idle-border: #d6e3f5;
+                        idle-text: #4d6480;
+                        selected-background: #dfeafd;
+                        selected-border: #8eb2ef;
+                        selected-text: #1f5fd6;
+                        selected: root.active-level-filter == 0;
+                        clicked => { root.level-filter-clicked(0); }
+                    }
+
+                    FilterPill {
+                        label: "Info";
+                        idle-background: #f2f6fd;
+                        idle-border: #d6e3f5;
+                        idle-text: #4d6480;
+                        selected-background: #dfeafd;
+                        selected-border: #8eb2ef;
+                        selected-text: #1f5fd6;
+                        selected: root.active-level-filter == 1;
+                        clicked => { root.level-filter-clicked(1); }
+                    }
+
+                    FilterPill {
+                        label: "Warn";
+                        idle-background: #f2f6fd;
+                        idle-border: #d6e3f5;
+                        idle-text: #4d6480;
+                        selected-background: #dfeafd;
+                        selected-border: #8eb2ef;
+                        selected-text: #1f5fd6;
+                        selected: root.active-level-filter == 2;
+                        clicked => { root.level-filter-clicked(2); }
+                    }
+
+                    FilterPill {
+                        label: "Error";
+                        idle-background: #f2f6fd;
+                        idle-border: #d6e3f5;
+                        idle-text: #4d6480;
+                        selected-background: #dfeafd;
+                        selected-border: #8eb2ef;
+                        selected-text: #1f5fd6;
+                        selected: root.active-level-filter == 3;
+                        clicked => { root.level-filter-clicked(3); }
+                    }
+
+                    Text {
+                        text: "Risk";
+                        color: #64748b;
+                        font-size: 10px;
+                        vertical-alignment: center;
+                    }
+
+                    FilterPill {
+                        label: "All";
+                        idle-background: #fff6e8;
+                        idle-border: #f0d8a9;
+                        idle-text: #8a5a12;
+                        selected-background: #ffe7bf;
+                        selected-border: #e3ae4e;
+                        selected-text: #9b5f00;
+                        selected: root.active-risk-filter == 0;
+                        clicked => { root.risk-filter-clicked(0); }
+                    }
+
+                    FilterPill {
+                        label: "Low";
+                        idle-background: #fff6e8;
+                        idle-border: #f0d8a9;
+                        idle-text: #8a5a12;
+                        selected-background: #ffe7bf;
+                        selected-border: #e3ae4e;
+                        selected-text: #9b5f00;
+                        selected: root.active-risk-filter == 1;
+                        clicked => { root.risk-filter-clicked(1); }
+                    }
+
+                    FilterPill {
+                        label: "Mid";
+                        idle-background: #fff6e8;
+                        idle-border: #f0d8a9;
+                        idle-text: #8a5a12;
+                        selected-background: #ffe7bf;
+                        selected-border: #e3ae4e;
+                        selected-text: #9b5f00;
+                        selected: root.active-risk-filter == 2;
+                        clicked => { root.risk-filter-clicked(2); }
+                    }
+
+                    FilterPill {
+                        label: "High";
+                        idle-background: #fff6e8;
+                        idle-border: #f0d8a9;
+                        idle-text: #8a5a12;
+                        selected-background: #ffe7bf;
+                        selected-border: #e3ae4e;
+                        selected-text: #9b5f00;
+                        selected: root.active-risk-filter == 3;
+                        clicked => { root.risk-filter-clicked(3); }
+                    }
+
+                    Text {
+                        text: "Source";
+                        color: #64748b;
+                        font-size: 10px;
+                        vertical-alignment: center;
+                    }
+
+                    FilterPill {
+                        label: "All";
+                        idle-background: #eefaf4;
+                        idle-border: #c8e5d6;
+                        idle-text: #39735c;
+                        selected-background: #daf3e5;
+                        selected-border: #79c39e;
+                        selected-text: #23734f;
+                        selected: root.active-source-filter == 0;
+                        clicked => { root.source-filter-clicked(0); }
+                    }
+
+                    FilterPill {
+                        label: "Demo";
+                        idle-background: #eefaf4;
+                        idle-border: #c8e5d6;
+                        idle-text: #39735c;
+                        selected-background: #daf3e5;
+                        selected-border: #79c39e;
+                        selected-text: #23734f;
+                        selected: root.active-source-filter == 1;
+                        clicked => { root.source-filter-clicked(1); }
+                    }
+
+                    FilterPill {
+                        label: "Wparse";
+                        idle-background: #eefaf4;
+                        idle-border: #c8e5d6;
+                        idle-text: #39735c;
+                        selected-background: #daf3e5;
+                        selected-border: #79c39e;
+                        selected-text: #23734f;
+                        selected: root.active-source-filter == 2;
+                        clicked => { root.source-filter-clicked(2); }
+                    }
+
+                    FilterPill {
+                        label: "Wfusion";
+                        idle-background: #eefaf4;
+                        idle-border: #c8e5d6;
+                        idle-text: #39735c;
+                        selected-background: #daf3e5;
+                        selected-border: #79c39e;
+                        selected-text: #23734f;
+                        selected: root.active-source-filter == 3;
+                        clicked => { root.source-filter-clicked(3); }
+                    }
+
+                    Rectangle {
+                        background: transparent;
+                    }
+                }
+
+                HorizontalLayout {
+                    spacing: 5px;
+
+                    Text {
+                        text: "Active";
+                        color: #64748b;
+                        font-size: 10px;
+                        vertical-alignment: center;
+                    }
+
+                    if (root.has-level-filter) : ActiveFilterChip {
+                        label: root.active-level-filter-text + " ×";
+                        chip-background-color: #dfeafd;
+                        chip-border-color: #8eb2ef;
+                        chip-text-color: #1f5fd6;
+                        clicked => { root.clear-level-filter(); }
+                    }
+
+                    if (root.has-risk-filter) : ActiveFilterChip {
+                        label: root.active-risk-filter-text + " ×";
+                        chip-background-color: #ffe7bf;
+                        chip-border-color: #e3ae4e;
+                        chip-text-color: #9b5f00;
+                        clicked => { root.clear-risk-filter(); }
+                    }
+
+                    if (root.has-source-filter) : ActiveFilterChip {
+                        label: root.active-source-filter-text + " ×";
+                        chip-background-color: #daf3e5;
+                        chip-border-color: #79c39e;
+                        chip-text-color: #23734f;
+                        clicked => { root.clear-source-filter(); }
+                    }
+
+                    if (!root.has-level-filter && !root.has-risk-filter && !root.has-source-filter) : Text {
+                        text: "No filters applied";
+                        color: #8a99ab;
+                        font-size: 10px;
+                        vertical-alignment: center;
+                    }
+
+                    Rectangle {
+                        background: transparent;
+                    }
+
+                    if (root.has-level-filter || root.has-risk-filter || root.has-source-filter) : InlineIconButton {
+                        tool-icon: @image-url("icons/clear-filters.svg");
+                        clicked => { root.clear-all-filters(); }
+                    }
+                }
+            }
+        }
+
+        Rectangle {
+            height: 38px;
+            border-radius: 10px;
+            background: #ffffff;
+            border-width: 1px;
+            border-color: #d6e0ea;
+
+            HorizontalLayout {
+                padding-left: 10px;
+                padding-right: 10px;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                spacing: 6px;
+
+                Text {
+                    text: "Page";
+                    color: #64748b;
+                    font-size: 11px;
+                    font-weight: 700;
+                    vertical-alignment: center;
+                }
+
+                PageSwitchButton {
+                    label: "Overview";
+                    selected: root.active-page == 0;
+                    clicked => { root.page-changed(0); }
+                }
+
+                PageSwitchButton {
+                    label: "Log Data";
+                    selected: root.active-page == 1;
+                    clicked => { root.page-changed(1); }
+                }
+
+                PageSwitchButton {
+                    label: "Alert Data";
+                    selected: root.active-page == 2;
+                    clicked => { root.page-changed(2); }
+                }
+
+                Rectangle {
+                    background: transparent;
+                }
+            }
+        }
+    }
+}

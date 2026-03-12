@@ -16,7 +16,7 @@
 
 ## 2. 系统架构
 1. Ingest: 读取日志文件或标准输入。
-2. Enrich: 生成 meta_entity/event_type/incident/risk/stage 字段。
+2. Enrich: 生成 canonical subject、raw subject、object、incident、risk、stage 字段。
 3. Aggregate: 时间桶聚合与阶段摘要。
 4. Serve: 输出标准化数据对象给 Slint UI。
 5. Render: Slint 绘制时间轴、点图、详情面板与故事卡。
@@ -54,12 +54,15 @@
 3. target: string
 4. content: string
 5. meta_subject/action/object/status: string
-6. meta_entity: string
-7. status_risk_score: f32 [0,1]
-8. stage_boundary_prob: f32 [0,1]
-9. stage_id: u32
-10. derived_stage: string
-11. stage_confidence: f32 [0,1]
+6. entity: string
+   - 语义: canonical subject
+7. raw_subject: string
+8. object: string
+9. status_risk_score: f32 [0,1]
+10. stage_boundary_prob: f32 [0,1]
+11. stage_id: u32
+12. derived_stage: string
+13. stage_confidence: f32 [0,1]
 
 ### 4.2 聚合级 (bucket)
 1. bucket_ts: i64
@@ -67,6 +70,7 @@
 3. risk_max: f32
 4. incident_cnt: u32
 5. entity: string
+   - 语义: canonical subject
 6. stage_id / derived_stage
 
 ## 5. 关键计算逻辑
@@ -98,38 +102,38 @@
    - 程序 LOGO
    - 标题与副标题
    - Reload 图标按钮
-2. 顶部 Stage Track:
-   - 绘制阶段带与可点击阶段节点
-   - 触发过滤命令
-3. 中部 Unified Timeline:
-   - 依据时间轴绘制 entity 点
+2. 中部 Unified Timeline:
+   - 依据时间轴绘制 canonical subject 事件点
+   - 每条泳道代表一个 canonical subject
    - 点大小取 log1p(count) 映射
    - 点颜色取 risk 色带映射
-4. 顶部 KPI Summary Row:
+3. 顶部 KPI Summary Row:
    - `ALL EVENTS / risk<0.60 / 0.60-0.84 / risk>=0.85`
    - 仅承担统计展示
-5. 单行 Filter Bar:
-   - `Level / Risk / Source / Stage`
+4. 单行 Filter Bar:
+   - `Level / Risk / Source`
    - 支持多条件组合过滤
-6. Page Switch Row:
-   - `Overview / Log Data`
+5. Page Switch Row:
+   - `Overview / Log Data / Alert Data`
    - 默认停留在 `Overview`
-7. Active Filters Row:
+6. Active Filters Row:
    - 展示已生效过滤条件
    - 末尾提供图标化 `Clear All`
-8. 下部 Selection Detail:
+7. 下部 Selection Detail:
    - 展示点选 bucket 对应日志明细
-   - 显示关联 stage、risk、action、status、content
-9. Log Data Page:
+   - 显示关联 risk、action、status、content
+8. Log Data Page:
    - 复用当前过滤条件
    - 直接展示结构化输入日志表
+9. Alert Data Page:
+   - 复用当前过滤条件
+   - 直接展示结构化告警结果表
 10. Hover Preview:
    - 跟随点位邻近显示
    - 不占固定布局列
 
 ## 6.1 当前交互状态机
 1. 过滤状态:
-   - `selected_stage: Option<usize>`
    - `selected_level: Option<LevelFilter>`
    - `selected_risk: Option<RiskFilter>`
    - `selected_source: Option<SourceFilter>`
@@ -143,27 +147,27 @@
    - `active_page: int`
 
 组合逻辑:
-1. 先按 `selected_stage` 过滤事件集合。
-2. 再按 `selected_level` 过滤。
-3. 再按 `selected_risk` 过滤。
-4. 再按 `selected_source` 过滤。
-5. 点选后将 bucket 详情写入 `Selection Detail`。
-6. Hover 仅更新短预览文本，不改变主选择。
-7. `Log Data` 页复用同一组过滤条件，但数据源切换为输入日志行集合。
+1. 先按 `selected_level` 过滤。
+2. 再按 `selected_risk` 过滤。
+3. 再按 `selected_source` 过滤。
+4. 点选后将 bucket 详情写入 `Selection Detail`。
+5. Hover 仅更新短预览文本，不改变主选择。
+6. `Log Data` 页复用同一组过滤条件，但数据源切换为输入日志行集合。
+7. `Alert Data` 页复用同一组过滤条件，但数据源切换为告警结果集合。
 
 ## 6.2 当前布局基线
 1. 上层:
    - Header + LOGO
    - KPI Summary Row
    - 单行 Filter Bar
-   - `Overview / Log Data` 分页条
+   - `Overview / Log Data / Alert Data` 分页条
    - Active Filters Row
    - 全宽 Timeline 面板
    - 内含图标化缩放、平移与重置
 2. 下层左侧:
    - `Selection Detail` 主展示区
 3. 下层右侧:
-   - `Entity Lanes`
+   - `Canonical Subjects`
    - `Top Targets`
    - `Source & Status`
 4. 已移除:
@@ -186,7 +190,6 @@
    - hover 只更新短预览，不改动当前选中详情
 4. 过滤条:
    - `Level / Risk / Source` 使用 pill 选择器
-   - `Stage` 通过时间线选择后映射为过滤标签
    - `Active` 行展示所有生效维度，并在尾部提供统一清空图标
    - 各维度使用独立色系，降低多维过滤时的识别成本
 5. 窗口行为:
@@ -196,6 +199,46 @@
 6. 双分页策略:
    - 第一页保持当前时间线总览，不回退既有阅读路径
    - 第二页提供更适合筛选后逐行阅读的日志表布局
+
+## 6.4 表格实现硬约束
+2026-03-12 的布局修正后，`DataGridFrame` 的正确实现方式明确如下:
+
+1. 只保留一层横向 `ScrollView`。
+2. 表头与表体必须位于同一个横向内容节点内。
+3. 表头固定显示，不能跟随纵向滚动。
+4. 表体不再使用纵向 `ScrollView`。
+5. 表体纵向展示由 `page_size + clip` 共同决定。
+6. `page_size` 必须基于真实 `body viewport` 高度推导，不允许再用窗口总高度近似估算。
+
+推荐结构:
+1. `DataGridFrame`
+   - title row
+   - pagination row
+   - `table-shell`
+   - `table-scroll (horizontal only)`
+   - `header rectangle`
+   - `body rectangle (clip: true)`
+2. `LogTableView`
+   - 仅定义日志列顺序和标题
+3. `AlertTableView`
+   - 仅定义告警列顺序、标题和语义颜色
+
+明确不要这样实现:
+1. 一个外层 `ScrollView` 再包一个内层 `ScrollView`
+2. 表头和表体分开各自滚动，再人工同步 `viewport-x`
+3. 用 `viewport-y` 修补首行被吞的问题
+
+原因:
+1. 容易形成残留滚动状态。
+2. resize 后头体容易错位。
+3. 页签切换、数据重载后首行不稳定。
+
+## 6.5 泳道语义约束
+1. `TimeLine` 服务于 2~3 秒内的短时事件序列阅读，不是长时监控趋势图。
+2. 每条泳道只表示一个 `canonical subject activity lane`。
+3. `raw_subject` 和 `object` 不参与主泳道分组。
+4. `raw_subject / object / target / action / status` 进入 hover 与 detail。
+5. 只有在数据具备明确开始/结束时间时，才允许绘制持续时间段；纯点事件不允许伪造 duration 尾巴。
 
 ## 7. 性能策略
 1. 预聚合: 200ms bucket

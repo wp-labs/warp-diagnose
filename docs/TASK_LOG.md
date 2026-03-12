@@ -155,10 +155,10 @@
 3. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/src/main.rs
 4. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/src/data.rs
 5. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/ui/appwindow.slint
-6. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/PRODUCT_DESIGN.md
-7. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/TECHNICAL_SOLUTION.md
-8. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/TASK_LOG.md
-9. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/WFUSION_EXECUTION_PLAN.md
+6. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/docs/PRODUCT_DESIGN.md
+7. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/docs/TECHNICAL_SOLUTION.md
+8. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/docs/TASK_LOG.md
+9. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/docs/WFUSION_EXECUTION_PLAN.md
 10. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/README.md
 11. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/scripts/run_wp_wf_case.sh
 12. /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wparse/README.md

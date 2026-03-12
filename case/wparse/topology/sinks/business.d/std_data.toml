@@ -20,6 +20,12 @@ fields = [
   { name = "subject", type = "chars" },
   { name = "action", type = "chars" },
   { name = "status", type = "chars" },
+  { name = "action_class", type = "chars" },
+  { name = "status_class", type = "chars" },
+  { name = "impl_importance", type = "digit" },
+  { name = "action_weight", type = "digit" },
+  { name = "status_weight", type = "digit" },
+  { name = "risk_score", type = "float" },
   { name = "content", type = "chars" },
   { name = "source", type = "chars" },
 ]

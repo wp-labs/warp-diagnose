@@ -8,7 +8,7 @@
 面向日志分析场景，提供一套“看一眼就知道发生了什么”的可视化诊断界面。
 
 核心目标:
-1. 让用户在统一时间轴上同时理解 stage 和 entity。
+1. 让用户在统一时间轴上同时理解短时事件顺序和 canonical subject。
 2. 支持从宏观流程到单点证据的快速下钻。
 3. 对异常风险提供可解释的量化表达。
 
@@ -20,7 +20,7 @@
 
 ## 3. 范围定义
 ### 3.1 In Scope
-1. 单图融合: stage 时间段 + entity 事件点。
+1. 单图融合: 短时事件时间轴 + canonical subject 事件点。
 2. 风险表达: 点颜色映射风险值。
 3. 数量表达: 点大小映射 log1p(bucket_count)。
 4. 交互联动: 点击 stage 过滤、点击点展示下方证据。
@@ -32,17 +32,19 @@
 3. 在线规则编辑器。
 
 ## 4. 术语与数据语义
-1. entity: 事件主体，优先来自 meta.subject。
-2. stage: 时间流程段，由时间序列和行为变化推断得到。
-3. risk: 状态风险值，范围 [0,1]。
-4. stage_boundary_prob: 单事件作为阶段边界的概率。
-5. stage_confidence: 阶段命名可信度。
+1. entity: 收敛后的主体标识，即 canonical subject，用于泳道分组与主图展示。
+2. raw_subject: 原始主体字段，优先来自 meta.subject，保留在 hover/detail 中。
+3. object: 相关客体字段，不参与主泳道分组，保留在 hover/detail 中。
+4. stage: 时间流程段，由时间序列和行为变化推断得到。
+5. risk: 状态风险值，范围 [0,1]。
+6. stage_boundary_prob: 单事件作为阶段边界的概率。
+7. stage_confidence: 阶段命名可信度。
 
 ## 5. 核心体验
 ### 5.1 主视图 (TimeLine)
 1. X 轴: 时间，从左到右。
-2. 背景: stage 时间带。
-3. 前景: entity 事件点。
+2. Y 轴: canonical subject 泳道。
+3. 前景: canonical subject 事件点。
 4. 点大小: log1p(bucket_count) 归一化映射。
 5. 点颜色: risk。
 
@@ -69,7 +71,7 @@
 6. 支持因果链窗口: Before / Incident / After。
 
 ## 7. 验收标准
-1. 一张图同时展示 stage 与 entity，时间方向明确。
+1. 一张图展示短时事件顺序与 canonical subject 泳道，时间方向明确。
 2. 点击 stage 可联动过滤全页。
 3. 点击点可展示相关数据明细。
 4. 风险颜色与 status_risk_score 一致。
@@ -91,7 +93,7 @@
    - 过滤栏下: `Overview / Log Data` 双分页切换
    - 上层主区: 全宽 `TimeLine`
    - 下层左侧: `Selection Detail`
-   - 下层右侧: `Entity Lanes / Top Targets / Source & Status`
+   - 下层右侧: `Canonical Subjects / Top Targets / Source & Status`
 2. 右侧固定 `Inspector` 已移除，不再占据主视线。
 3. `Recent Event Stream` 已从主路径移除，不再作为核心阅读区域。
 
@@ -129,7 +131,7 @@
 5. Hover 预览采用浅暖色浮层，与白色主面板区分层级。
 
 ### 9.4 数据与实现现状
-1. 主图采用 Stage + Entity 单图，时间从左到右。
+1. 主图采用 canonical subject swimlane，时间从左到右。
 2. 点大小使用 log1p(bucket_count) 映射。
 3. 点颜色使用风险值 risk 映射。
 4. 顶部看板已改为风险区间统计:
@@ -180,5 +182,5 @@
    - 规则版本切换
 3. 交互升级:
    - 鼠标滚轮缩放
-   - 多条件联动过滤（stage + entity + risk）
+   - 多条件联动过滤（canonical subject + risk + source）
    - 结构化详情卡片替代纯文本证据块

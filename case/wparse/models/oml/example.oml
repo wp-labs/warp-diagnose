@@ -1,16 +1,66 @@
 name : /oml/wparse
 rule : /wpl/wparse/*
 ---
+static {
+    impl_importance_map = object {
+        warp = digit(100);
+        wpl = digit(100);
+        source = digit(100);
+        sink = digit(100);
+        monitor = digit(90);
+        actor = digit(90);
+        res = digit(90);
+        rule = digit(90);
+        service = digit(90);
+    };
+
+    action_weight_map = object {
+        critical = digit(100);
+        lifecycle = digit(90);
+        other = digit(70);
+    };
+
+    status_weight_map = object {
+        failed = digit(95);
+        degraded = digit(80);
+        warning = digit(65);
+        running = digit(35);
+        success = digit(15);
+        other = digit(40);
+    };
+}
+
 __meta : auto = pipe read(content) | extract_subject_object ;
-event_time : time = read(time) ;
+event_time : time = read(time)  ;
 level : chars = read(level) ;
 target : chars = read(target) ;
 subject_raw : chars = pipe read(__meta) | get(subject) ;
 subject : chars = match read(subject_raw) {
-    iequals('wpl') | iequals('wpls') => chars(wpl) ;
+    iequals_any('wpl', 'wpls','engine') => chars(wpl) ;
+    iequals_any('routine', 'amt','infra'，'maintainer') => chars(ctrol) ;
+    iequals_any('file_1', 'tcp_1') => chars(source) ;
+    iequals_any('sink', 'work-sink') => chars(sink) ;
     _ => read(subject_raw) ;
 } ;
 action : chars = pipe read(__meta) | get(action) ;
 status : chars = pipe read(__meta) | get(status) ;
+action_class : chars = match read(action) {
+    iequals_any('delete', 'drop', 'abort', 'panic', 'parse', 'load', 'save', 'alloc', 'create', 'open', 'connect') => chars(critical) ;
+    iequals_any('start', 'spawn', 'run', 'init', 'update', 'write') => chars(lifecycle) ;
+    _ => chars(other) ;
+} ;
+status_class : chars = match read(status) {
+    iequals_any('error', 'fail', 'failed', 'failure', 'timeout', 'fatal', 'panic', 'abort') => chars(failed) ;
+    iequals_any('miss', 'disabled', 'retry', 'partial', 'degraded') => chars(degraded) ;
+    iequals_any('warn', 'warning', 'pending') => chars(warning) ;
+    iequals_any('start', 'started', 'running') => chars(running) ;
+    iequals_any('success', 'suc', 'ok', 'enabled', 'done', 'pass')
+      | iequals_any('end', 'ended', 'skip', 'skipped', '跳过', '结束') => chars(success) ;
+    _ => chars(other) ;
+} ;
+impl_importance : digit = lookup_nocase(impl_importance_map, read(subject), 75) ;
+action_weight : digit = lookup_nocase(action_weight_map, read(action_class), 70) ;
+status_weight : digit = lookup_nocase(status_weight_map, read(status_class), 40) ;
+risk_score : float = calc((read(impl_importance) * read(action_weight) * read(status_weight)) / 10000) ;
 content : chars = read(content) ;
 source : chars = chars(wparse) ;

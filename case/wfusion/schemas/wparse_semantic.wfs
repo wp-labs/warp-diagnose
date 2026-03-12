@@ -10,6 +10,12 @@ window wparse_events {
     subject: chars
     action: chars
     status: chars
+    action_class: chars
+    status_class: chars
+    impl_importance: digit
+    action_weight: digit
+    status_weight: digit
+    risk_score: float
     content: chars
     source: chars
   }
@@ -26,6 +32,11 @@ window semantic_events {
         subject: chars
         action: chars
         status: chars
+        action_class: chars
+        status_class: chars
+        impl_importance: digit
+        action_weight: digit
+        status_weight: digit
         risk_score: float
         content: chars
         source: chars
@@ -41,6 +52,7 @@ window risk_alerts {
         subject: chars
         action: chars
         status: chars
+        risk_level: chars
         risk_score: float
         event_count: digit
         message: chars

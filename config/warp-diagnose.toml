@@ -1,0 +1,35 @@
+# Warp Diagnose runtime configuration
+# Environment variables still override these values when present.
+
+[data]
+# Primary input for log data. Can be Arrow or JSON/NDJSON.
+primary_log_path = "case/wparse/data/out_dat/wp-log.arrow"
+
+# Raw source log path used by diagnose for fallback/context.
+wparse_log_path = "case/target_data/raw_log.dat"
+
+# Wfusion alert source. Can point to an Arrow file or an alerts directory.
+wfusion_alerts_path = "case/wfusion/alerts"
+wfusion_enabled = true
+
+[timeline]
+# Base timeline aggregation/display unit.
+unit_ms = 100
+
+# Visual lane and width limits.
+max_lanes = 9
+min_width_px = 3600
+max_width_px = 24000
+
+# Pixels per timeline unit. With unit_ms=100, this means 14px per 100ms.
+px_per_unit = 14
+vertical_padding_pct = 0.08
+
+[table]
+window_chrome_px = 308
+row_height_px = 34
+min_page_size = 1
+
+[window]
+width = 1420
+height = 960
