@@ -23,20 +23,41 @@ rule window_risk {
     target = coalesce(first(x.target), ""),
     subject = x.subject,
     action = coalesce(first(x.action), ""),
-    status = if @score >= 85 then "high"
-      else if @score >= 70 then "medium"
-      else "low",
-    risk_level = if @score >= 85 then "high"
-      else if @score >= 70 then "medium"
-      else "low",
+    status = if @score >= 90 then "L10"
+      else if @score >= 80 then "L9"
+      else if @score >= 70 then "L8"
+      else if @score >= 60 then "L7"
+      else if @score >= 50 then "L6"
+      else if @score >= 40 then "L5"
+      else if @score >= 30 then "L4"
+      else if @score >= 20 then "L3"
+      else if @score >= 10 then "L2"
+      else "L1",
+    risk_level = if @score >= 90 then "L10"
+      else if @score >= 80 then "L9"
+      else if @score >= 70 then "L8"
+      else if @score >= 60 then "L7"
+      else if @score >= 50 then "L6"
+      else if @score >= 40 then "L5"
+      else if @score >= 30 then "L4"
+      else if @score >= 20 then "L3"
+      else if @score >= 10 then "L2"
+      else "L1",
     risk_score = @score,
     event_count = coalesce(count(x), 0),
     message = fmt(
-      "subject={} level={} avg_score={} high_cnt={} elevated_cnt={} total={}",
+      "subject={} risk_level={} avg_score={} high_cnt={} elevated_cnt={} total={}",
       x.subject,
-      if @score >= 85 then "high"
-      else if @score >= 70 then "medium"
-      else "low",
+      if @score >= 90 then "L10"
+      else if @score >= 80 then "L9"
+      else if @score >= 70 then "L8"
+      else if @score >= 60 then "L7"
+      else if @score >= 50 then "L6"
+      else if @score >= 40 then "L5"
+      else if @score >= 30 then "L4"
+      else if @score >= 20 then "L3"
+      else if @score >= 10 then "L2"
+      else "L1",
       @score,
       coalesce(count(hi), 0),
       coalesce(count(elevated), 0),
@@ -65,9 +86,16 @@ rule window_entity_stats {
 
   yield entity_stats (
     subject = x.subject,
-    risk_level = if coalesce(count(hi), 0) >= 1 && coalesce(count(elevated), 0) >= 2 then "high"
-      else if coalesce(count(elevated), 0) >= 1 then "medium"
-      else "low",
+    risk_level = if @score >= 90 then "L10"
+      else if @score >= 80 then "L9"
+      else if @score >= 70 then "L8"
+      else if @score >= 60 then "L7"
+      else if @score >= 50 then "L6"
+      else if @score >= 40 then "L5"
+      else if @score >= 30 then "L4"
+      else if @score >= 20 then "L3"
+      else if @score >= 10 then "L2"
+      else "L1",
     avg_risk_score = coalesce(avg(x.risk_score), 0.0),
     event_count = coalesce(count(x), 0),
     high_event_count = coalesce(count(hi), 0),

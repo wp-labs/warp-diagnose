@@ -39,10 +39,13 @@ struct EventRecord {
     target: String,
     action: String,
     status: String,
+    risk_level: String,
+    risk_tier: u8,
     content: String,
     entity: String,
     risk: f32,
     raw_risk_score: f32,
+    event_count: usize,
     stage_idx: usize,
     stage_boundary_prob: f32,
 }
@@ -132,6 +135,7 @@ pub struct TimelinePointVm {
     pub x_pct: f32,
     pub y_pct: f32,
     pub risk: f32,
+    pub risk_tier: i32,
     pub size_norm: f32,
     pub entity: String,
 }
@@ -153,6 +157,8 @@ pub struct DetailRowVm {
     pub row_no: String,
     pub time: String,
     pub level: String,
+    pub risk_tier: i32,
+    pub event_count: String,
     pub risk_score: String,
     pub rule: String,
     pub target: String,
@@ -171,9 +177,16 @@ pub enum LevelFilter {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum RiskFilter {
-    Low,
-    Mid,
-    High,
+    L1,
+    L2,
+    L3,
+    L4,
+    L5,
+    L6,
+    L7,
+    L8,
+    L9,
+    L10,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -188,6 +201,8 @@ pub struct DashboardView {
     pub report: LoadReport,
     pub timeline_points: Vec<TimelinePointVm>,
     pub time_ticks: Vec<AxisTickVm>,
+    pub first_event_x_pct: f32,
+    pub last_event_x_pct: f32,
     pub timeline_content_px: i32,
     pub lane_labels: Vec<LaneLabelVm>,
     pub point_detail_summaries: Vec<String>,
@@ -346,6 +361,7 @@ impl DashboardData {
             lane_labels,
         ) = build_timeline_points(&filtered_events, &self.log_events);
         let time_ticks = build_time_ticks(&filtered_events);
+        let (first_event_x_pct, last_event_x_pct) = build_event_edge_pcts(&filtered_events);
         let timeline_content_px = build_timeline_content_width_px(&filtered_events);
         let point_hint_text = if timeline_points.is_empty() {
             "No points in current selection.".to_string()
@@ -357,6 +373,8 @@ impl DashboardData {
             report,
             timeline_points,
             time_ticks,
+            first_event_x_pct,
+            last_event_x_pct,
             timeline_content_px,
             lane_labels,
             point_detail_summaries,
@@ -493,9 +511,16 @@ fn filter_event_records<'a>(
                     LevelFilter::Error => event.level == "ERROR" || event.level == "FATAL",
                 })
                 && risk_filter.is_none_or(|filter| match filter {
-                    RiskFilter::Low => matches!(risk_bucket(event.risk), RiskBucket::Low),
-                    RiskFilter::Mid => matches!(risk_bucket(event.risk), RiskBucket::Mid),
-                    RiskFilter::High => matches!(risk_bucket(event.risk), RiskBucket::High),
+                    RiskFilter::L1 => event.risk_tier == 0,
+                    RiskFilter::L2 => event.risk_tier == 1,
+                    RiskFilter::L3 => event.risk_tier == 2,
+                    RiskFilter::L4 => event.risk_tier == 3,
+                    RiskFilter::L5 => event.risk_tier == 4,
+                    RiskFilter::L6 => event.risk_tier == 5,
+                    RiskFilter::L7 => event.risk_tier == 6,
+                    RiskFilter::L8 => event.risk_tier == 7,
+                    RiskFilter::L9 => event.risk_tier == 8,
+                    RiskFilter::L10 => event.risk_tier == 9,
                 })
                 && source_filter.is_none_or(|filter| match filter {
                     SourceFilter::Demo => event.source == "demo",
@@ -510,7 +535,13 @@ fn detail_row_from_event(event: &EventRecord) -> DetailRowVm {
     DetailRowVm {
         row_no: String::new(),
         time: event.time_text.clone(),
-        level: safe_text(&event.level).to_string(),
+        level: if event.source == "wfusion" {
+            event.risk_level.clone()
+        } else {
+            safe_text(&event.level).to_string()
+        },
+        risk_tier: i32::from(event.risk_tier),
+        event_count: event.event_count.to_string(),
         risk_score: format_risk_score(event.raw_risk_score),
         rule: safe_text(&event.rule).to_string(),
         target: safe_text(&event.target).to_string(),
@@ -695,10 +726,13 @@ fn parse_log_arrow_row(
         target,
         action,
         status,
+        risk_level: risk_level_label_from_risk(risk),
+        risk_tier: risk_tier_index_from_risk(risk) as u8,
         content,
         entity,
         risk,
         raw_risk_score,
+        event_count: 1,
         stage_idx: 0,
         stage_boundary_prob: 0.0,
     })
@@ -794,10 +828,13 @@ fn parse_demo_value(value: &Value, seq: usize) -> Option<EventRecord> {
         target,
         action,
         status,
+        risk_level: risk_level_label_from_risk(risk),
+        risk_tier: risk_tier_index_from_risk(risk) as u8,
         content,
         entity,
         risk,
         raw_risk_score,
+        event_count: 1,
         stage_idx: 0,
         stage_boundary_prob: 0.0,
     })
@@ -901,10 +938,13 @@ fn parse_wparse_entry(
         target: target_norm,
         action,
         status,
+        risk_level: risk_level_label_from_risk(risk),
+        risk_tier: risk_tier_index_from_risk(risk) as u8,
         content: content_norm,
         entity,
         risk,
         raw_risk_score,
+        event_count: 1,
         stage_idx: 0,
         stage_boundary_prob: 0.0,
     })
@@ -1136,6 +1176,11 @@ fn parse_wfusion_alert_value(value: &Value, seq: usize) -> Option<EventRecord> {
     risk = risk.clamp(0.0, 1.0);
 
     let level = infer_level_from_risk(risk);
+    let risk_level = json_string_any(value, &["risk_level"])
+        .map(|s| clean_text(&s))
+        .filter(|s| !s.is_empty())
+        .unwrap_or_else(|| risk_level_label_from_risk(risk));
+    let risk_tier = risk_tier_index_from_label_or_risk(&risk_level, risk) as u8;
     let rule = json_string_any(value, &["__wfu_rule_name", "rule_name"])
         .map(|s| clean_text(&s))
         .unwrap_or_else(|| "wfusion_rule".to_string());
@@ -1166,6 +1211,9 @@ fn parse_wfusion_alert_value(value: &Value, seq: usize) -> Option<EventRecord> {
         .map(|s| clean_text(&s))
         .unwrap_or_default();
     let content = summary;
+    let event_count = json_u64_any(value, &["event_count"])
+        .map(|v| v as usize)
+        .unwrap_or(1);
 
     Some(EventRecord {
         seq,
@@ -1178,10 +1226,13 @@ fn parse_wfusion_alert_value(value: &Value, seq: usize) -> Option<EventRecord> {
         target,
         action,
         status,
+        risk_level,
+        risk_tier,
         content,
         entity,
         risk,
         raw_risk_score: score as f32,
+        event_count,
         stage_idx: 0,
         stage_boundary_prob: 0.0,
     })
@@ -1205,6 +1256,11 @@ fn parse_wfusion_alert_arrow_row(
     risk = risk.clamp(0.0, 1.0);
 
     let level = infer_level_from_risk(risk);
+    let risk_level = batch_string_any(batch, row, &["risk_level"])
+        .map(|s| clean_text(&s))
+        .filter(|s| !s.is_empty())
+        .unwrap_or_else(|| risk_level_label_from_risk(risk));
+    let risk_tier = risk_tier_index_from_label_or_risk(&risk_level, risk) as u8;
     let rule = batch_string_any(batch, row, &["__wfu_rule_name", "rule_name"])
         .map(|s| clean_text(&s))
         .unwrap_or_else(|| "wfusion_rule".to_string());
@@ -1235,6 +1291,9 @@ fn parse_wfusion_alert_arrow_row(
         .map(|s| clean_text(&s))
         .unwrap_or_default();
     let content = summary;
+    let event_count = batch_u64_any(batch, row, &["event_count"])
+        .map(|v| v as usize)
+        .unwrap_or(1);
 
     Some(EventRecord {
         seq,
@@ -1247,10 +1306,13 @@ fn parse_wfusion_alert_arrow_row(
         target,
         action,
         status,
+        risk_level,
+        risk_tier,
         content,
         entity,
         risk,
         raw_risk_score: score as f32,
+        event_count,
         stage_idx: 0,
         stage_boundary_prob: 0.0,
     })
@@ -1292,6 +1354,10 @@ fn json_string_any(value: &Value, fields: &[&str]) -> Option<String> {
 
 fn json_f64_any(value: &Value, fields: &[&str]) -> Option<f64> {
     fields.iter().find_map(|field| value.get(*field).and_then(Value::as_f64))
+}
+
+fn json_u64_any(value: &Value, fields: &[&str]) -> Option<u64> {
+    fields.iter().find_map(|field| value.get(*field).and_then(Value::as_u64))
 }
 
 fn json_time_ns_any(value: &Value, fields: &[&str]) -> Option<i128> {
@@ -1357,6 +1423,10 @@ fn batch_f64(batch: &RecordBatch, row: usize, field: &str) -> Option<f64> {
     }
 
     None
+}
+
+fn batch_u64_any(batch: &RecordBatch, row: usize, fields: &[&str]) -> Option<u64> {
+    fields.iter().find_map(|field| batch_i64(batch, row, field).and_then(|v| u64::try_from(v).ok()))
 }
 
 fn derive_stages(events: &mut [EventRecord]) -> Vec<StageSegment> {
@@ -1564,6 +1634,7 @@ fn build_timeline_points(
     #[derive(Default, Clone)]
     struct BucketAgg {
         count: usize,
+        visual_weight: usize,
         risk_max: f32,
         raw_risk_score: f32,
         sample_idx: usize,
@@ -1579,6 +1650,7 @@ fn build_timeline_points(
         let b = ((event.epoch_ns - min_ns) / bucket_span).clamp(0, buckets as i128 - 1) as usize;
         let entry = agg.entry((lane, b)).or_default();
         entry.count += 1;
+        entry.visual_weight += event.event_count.max(1);
         if event.risk >= entry.risk_max {
             entry.risk_max = event.risk;
             entry.raw_risk_score = event.raw_risk_score;
@@ -1589,8 +1661,9 @@ fn build_timeline_points(
     let mut agg_rows: Vec<((usize, usize), BucketAgg)> = agg.into_iter().collect();
     agg_rows.sort_by(|((la, ba), _), ((lb, bb), _)| ba.cmp(bb).then_with(|| la.cmp(lb)));
 
-    let counts: Vec<usize> = agg_rows.iter().map(|(_, a)| a.count).collect();
-    let p95_cnt = percentile_usize(&counts, 95).max(1) as f32;
+    let counts: Vec<usize> = agg_rows.iter().map(|(_, a)| a.visual_weight).collect();
+    let p50_cnt = percentile_usize(&counts, 50).max(1);
+    let p95_cnt = percentile_usize(&counts, 95).max(p50_cnt + 1);
 
     let mut points = Vec::new();
     let mut detail_summaries = Vec::new();
@@ -1608,7 +1681,7 @@ fn build_timeline_points(
         let x_pct = (bucket as f32 + 0.5) / buckets as f32;
         let y_pct = timeline_lane_y_pct(lane, ranked_entities.len(), lane_denom);
 
-        let size_norm = ((a.count as f32 + 1.0).ln() / (p95_cnt + 1.0).ln()).clamp(0.18, 1.0);
+        let size_norm = size_norm_from_event_count(a.visual_weight, p50_cnt, p95_cnt);
 
         let point_entity = ranked_entities
             .get(lane)
@@ -1619,6 +1692,7 @@ fn build_timeline_points(
             x_pct,
             y_pct,
             risk: a.risk_max,
+            risk_tier: risk_tier_index_from_risk(a.risk_max) as i32,
             size_norm,
             entity: point_entity.clone(),
         });
@@ -1716,6 +1790,8 @@ fn build_point_log_detail(
                 row_no: "1".to_string(),
                 time: event.time_text.clone(),
                 level: safe_text(&event.level).to_string(),
+                risk_tier: i32::from(event.risk_tier),
+                event_count: event.event_count.to_string(),
                 risk_score: format_risk_score(event.raw_risk_score),
                 rule: safe_text(&event.rule).to_string(),
                 target: safe_text(&event.target).to_string(),
@@ -1734,6 +1810,8 @@ fn build_point_log_detail(
             row_no: (idx + 1).to_string(),
             time: log.time_text.clone(),
             level: safe_text(&log.level).to_string(),
+            risk_tier: i32::from(log.risk_tier),
+            event_count: log.event_count.to_string(),
             risk_score: format_risk_score(log.raw_risk_score),
             rule: safe_text(&log.rule).to_string(),
             target: safe_text(&log.target).to_string(),
@@ -1905,6 +1983,32 @@ fn build_time_ticks(filtered_events: &[&EventRecord]) -> Vec<AxisTickVm> {
     ticks
 }
 
+fn build_event_edge_pcts(filtered_events: &[&EventRecord]) -> (f32, f32) {
+    if filtered_events.is_empty() {
+        return (0.0, 1.0);
+    }
+
+    let (axis_start_ns, axis_end_ns) = timeline_axis_bounds_from_refs(filtered_events);
+    let span_ns = (axis_end_ns - axis_start_ns).max(1);
+    let bucket_span = timeline_bucket_span_ns();
+    let buckets = ((span_ns + bucket_span - 1) / bucket_span).max(1) as usize;
+
+    let first_bucket = filtered_events
+        .iter()
+        .map(|e| ((e.epoch_ns - axis_start_ns) / bucket_span).clamp(0, buckets as i128 - 1) as usize)
+        .min()
+        .unwrap_or(0);
+    let last_bucket = filtered_events
+        .iter()
+        .map(|e| ((e.epoch_ns - axis_start_ns) / bucket_span).clamp(0, buckets as i128 - 1) as usize)
+        .max()
+        .unwrap_or(buckets.saturating_sub(1));
+
+    let first_pct = (first_bucket as f32 / buckets as f32).clamp(0.0, 1.0);
+    let last_pct = ((last_bucket + 1) as f32 / buckets as f32).clamp(0.0, 1.0);
+    (first_pct, last_pct)
+}
+
 fn build_timeline_content_width_px(filtered_events: &[&EventRecord]) -> i32 {
     if filtered_events.is_empty() {
         return runtime_config().timeline.min_width_px as i32;
@@ -2022,6 +2126,30 @@ fn infer_level_from_risk(risk: f32) -> String {
     } else {
         "INFO".to_string()
     }
+}
+
+fn risk_tier_index_from_risk(risk: f32) -> usize {
+    let clamped = risk.clamp(0.0, 1.0);
+    ((clamped * 10.0).floor() as usize).min(9)
+}
+
+fn risk_level_label_from_tier(tier: usize) -> String {
+    format!("L{}", tier + 1)
+}
+
+fn risk_level_label_from_risk(risk: f32) -> String {
+    risk_level_label_from_tier(risk_tier_index_from_risk(risk))
+}
+
+fn risk_tier_index_from_label_or_risk(label: &str, risk: f32) -> usize {
+    let normalized = label.trim().to_ascii_uppercase();
+    if let Some(rest) = normalized.strip_prefix('L')
+        && let Ok(value) = rest.parse::<usize>()
+        && (1..=10).contains(&value)
+    {
+        return value - 1;
+    }
+    risk_tier_index_from_risk(risk)
 }
 
 fn clean_text(s: &str) -> String {
@@ -2205,6 +2333,20 @@ fn percentile_usize(values: &[usize], p: usize) -> usize {
     sorted.sort_unstable();
     let idx = ((p as f64 / 100.0) * (sorted.len().saturating_sub(1) as f64)).round() as usize;
     sorted[idx]
+}
+
+fn size_norm_from_event_count(weight: usize, p50_cnt: usize, p95_cnt: usize) -> f32 {
+    let weight = weight.max(1) as f32;
+    let p50 = p50_cnt.max(1) as f32;
+    let p95 = p95_cnt.max(p50_cnt + 1) as f32;
+
+    if weight <= p50 {
+        let low = (weight / p50).sqrt();
+        return (0.24 + low * 0.36).clamp(0.24, 0.60);
+    }
+
+    let high = ((weight - p50) / (p95 - p50)).clamp(0.0, 1.0).sqrt();
+    (0.60 + high * 0.40).clamp(0.60, 1.0)
 }
 
 fn format_top_counts(counts: &HashMap<String, usize>, limit: usize, empty: &str) -> String {

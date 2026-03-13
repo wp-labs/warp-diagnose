@@ -3,13 +3,13 @@
 
 [data]
 # Primary input for log data. Can be Arrow or JSON/NDJSON.
-primary_log_path = "case/wparse/data/out_dat/wp-log.arrow"
+primary_log_path = "case/wp-tools/data/out_dat/wp-log.arrow"
 
 # Raw source log path used by diagnose for fallback/context.
 wparse_log_path = "case/target_data/raw_log.dat"
 
 # Wfusion alert source. Can point to an Arrow file or an alerts directory.
-wfusion_alerts_path = "case/wfusion/alerts"
+wfusion_alerts_path = "case/wp-tools/alerts"
 wfusion_enabled = true
 
 [timeline]
@@ -31,5 +31,5 @@ row_height_px = 34
 min_page_size = 1
 
 [window]
-width = 1420
-height = 960
+width = 1680
+height = 980

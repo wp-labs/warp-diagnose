@@ -3,15 +3,13 @@ rule : /wpl/wparse/*
 ---
 static {
     impl_importance_map = object {
-        warp = digit(100);
-        wpl = digit(100);
-        source = digit(100);
-        sink = digit(100);
-        monitor = digit(90);
-        actor = digit(90);
-        res = digit(90);
-        rule = digit(90);
-        service = digit(90);
+        ctrl= digit(100);
+        wpl = digit(80);
+        source = digit(50);
+        sink = digit(80);
+        oml= digit(80);
+        monitor= digit(30);
+        picker= digit(50);
     };
 
     action_weight_map = object {
@@ -22,11 +20,12 @@ static {
 
     status_weight_map = object {
         failed = digit(95);
-        degraded = digit(80);
-        warning = digit(65);
-        running = digit(35);
-        success = digit(15);
-        other = digit(40);
+        degraded = digit(78);
+        warning = digit(58);
+        running = digit(22);
+        success = digit(8);
+        ended = digit(32);
+        other = digit(24);
     };
 }
 
@@ -36,9 +35,9 @@ level : chars = read(level) ;
 target : chars = read(target) ;
 subject_raw : chars = pipe read(__meta) | get(subject) ;
 subject : chars = match read(subject_raw) {
-    iequals_any('wpl', 'wpls','engine') => chars(wpl) ;
+    iequals_any('wpl', 'wpls','engine','wparse-parse') => chars(wpl) ;
     iequals_any('routine', 'amt','infra'，'maintainer') => chars(ctrol) ;
-    iequals_any('file_1', 'tcp_1') => chars(source) ;
+    iequals_any('file_1', 'tcp_1','file_1-picker') => chars(source) ;
     iequals_any('sink', 'work-sink') => chars(sink) ;
     _ => read(subject_raw) ;
 } ;
@@ -54,13 +53,18 @@ status_class : chars = match read(status) {
     iequals_any('miss', 'disabled', 'retry', 'partial', 'degraded') => chars(degraded) ;
     iequals_any('warn', 'warning', 'pending') => chars(warning) ;
     iequals_any('start', 'started', 'running') => chars(running) ;
-    iequals_any('success', 'suc', 'ok', 'enabled', 'done', 'pass')
-      | iequals_any('end', 'ended', 'skip', 'skipped', '跳过', '结束') => chars(success) ;
+    iequals_any('success', 'suc', 'ok', 'enabled', 'done', 'pass') => chars(success);
+    iequals_any('end', 'ended', '结束') => chars(ended) ;
+    iequals_any('skip', 'skipped', '跳过') => chars(other) ;
     _ => chars(other) ;
 } ;
 impl_importance : digit = lookup_nocase(impl_importance_map, read(subject), 75) ;
 action_weight : digit = lookup_nocase(action_weight_map, read(action_class), 70) ;
 status_weight : digit = lookup_nocase(status_weight_map, read(status_class), 40) ;
-risk_score : float = calc((read(impl_importance) * read(action_weight) * read(status_weight)) / 10000) ;
+risk_score : float = calc(
+    read(status_weight) * 0.7
+    + read(impl_importance) * 0.2
+    + read(action_weight) * 0.1
+) ;
 content : chars = read(content) ;
 source : chars = chars(wparse) ;

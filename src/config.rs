@@ -14,15 +14,15 @@ const ENV_ALERT_WFU_DIR: &str = "WARP_DIAGNOSE_ALERT_WFU_DIR";
 const ENV_WFUSION_ALERTS: &str = "WARP_DIAGNOSE_WFUSION_ALERTS";
 const ENV_TIMELINE_UNIT_MS: &str = "WARP_DIAGNOSE_TIMELINE_UNIT_MS";
 
-const LOCAL_CASE_LOG_WFU_ARROW: &str = "case/wparse/data/out_dat/log_wfu.arrow";
-const LOCAL_CASE_WP_LOG_ARROW: &str = "case/wparse/data/out_dat/wp-log.arrow";
-const LOCAL_CASE_WF_ALERT_ARROW: &str = "case/wfusion/alerts/wf-alert.arrow";
-const LOCAL_CASE_WF_ALERT_DIR: &str = "case/wfusion/alerts";
-const LOCAL_CASE_DEMO_JSON: &str = "case/wparse/data/out_dat/demo.json";
-const LOCAL_CASE_DEMO_JSON_LEGACY: &str = "case/wparse/data/demo.json";
+const LOCAL_CASE_LOG_WFU_ARROW: &str = "case/wp-tools/data/out_dat/log_wfu.arrow";
+const LOCAL_CASE_WP_LOG_ARROW: &str = "case/wp-tools/data/out_dat/wp-log.arrow";
+const LOCAL_CASE_WF_ALERT_ARROW: &str = "case/wp-tools/alerts/wf-alert.arrow";
+const LOCAL_CASE_WF_ALERT_DIR: &str = "case/wp-tools/alerts";
+const LOCAL_CASE_DEMO_JSON: &str = "case/wp-tools/data/out_dat/demo.json";
+const LOCAL_CASE_DEMO_JSON_LEGACY: &str = "case/wp-tools/data/demo.json";
 const LOCAL_CASE_WPARSE_LOG: &str = "case/target_data/raw_log.dat";
-const LOCAL_CASE_WFUSION_ALERTS: &str = "case/wfusion/alerts/wf-alert.jsonl";
-const LOCAL_CASE_WFUSION_ALERTS_LEGACY: &str = "case/wparse/alerts/all.jsonl";
+const LOCAL_CASE_WFUSION_ALERTS: &str = "case/wp-tools/alerts/wf-alert.jsonl";
+const LOCAL_CASE_WFUSION_ALERTS_LEGACY: &str = "case/wp-tools/alerts/all.jsonl";
 const DEFAULT_CONFIG_PATH: &str = "config/warp-diagnose.toml";
 
 static RUNTIME_CONFIG: OnceLock<AppConfig> = OnceLock::new();
@@ -119,8 +119,8 @@ impl Default for TableConfig {
 impl Default for WindowConfig {
     fn default() -> Self {
         Self {
-            width: 1420.0,
-            height: 960.0,
+            width: 1680.0,
+            height: 980.0,
         }
     }
 }
@@ -199,8 +199,8 @@ fn normalize_config(config: &mut AppConfig) {
     config.table.window_chrome_px = config.table.window_chrome_px.max(1);
     config.table.row_height_px = config.table.row_height_px.max(1);
     config.table.min_page_size = config.table.min_page_size.max(1);
-    config.window.width = config.window.width.max(640.0);
-    config.window.height = config.window.height.max(480.0);
+    config.window.width = config.window.width.max(1500.0);
+    config.window.height = config.window.height.max(920.0);
 }
 
 fn parse_bool(raw: &str, default: bool) -> bool {

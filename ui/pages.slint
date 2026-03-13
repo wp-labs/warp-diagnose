@@ -4,6 +4,8 @@ export component OverviewPage inherits Rectangle {
     in property <[LaneLabel]> lane-labels: [];
     in property <[TimelinePoint]> timeline-points: [];
     in property <[TimeTick]> time-ticks: [];
+    in property <float> first-event-x-pct: 0.0;
+    in property <float> last-event-x-pct: 1.0;
     in property <int> hovered-point-index: -1;
     in property <int> selected-point-index: -1;
     in property <int> timeline-content-px: 1400;
@@ -42,7 +44,7 @@ export component OverviewPage inherits Rectangle {
             property <length> plot_right_inset: 30px;
             property <length> plot_top_inset: 24px;
             property <length> plot_bottom_inset: 48px;
-            property <length> lane_rail_width: 88px;
+            property <length> lane_rail_width: 74px;
             property <length> lane_band_height: max(30px, (self.plot_box_height - self.plot_top_inset - self.plot_bottom_inset) / max(1, lane-labels.length) - 6px);
             border-radius: 10px;
             background: #ffffff;
@@ -52,22 +54,22 @@ export component OverviewPage inherits Rectangle {
 
             Text {
                 text: "TimeLine";
-                color: #203047;
-                font-size: 16px;
-                font-weight: 700;
+                color: #31445d;
+                font-size: 14px;
+                font-weight: 600;
                 x: 12px;
-                y: 8px;
+                y: 10px;
             }
 
             Rectangle {
                 x: parent.width - self.width - 12px;
-                y: 6px;
-                width: 208px;
-                height: 34px;
-                border-radius: 10px;
-                background: #f4f7fb;
+                y: 8px;
+                width: 172px;
+                height: 28px;
+                border-radius: 8px;
+                background: #f8fafc;
                 border-width: 1px;
-                border-color: #dce5ef;
+                border-color: #e2e8f0;
 
                 HorizontalLayout {
                     padding-left: 4px;
@@ -138,9 +140,9 @@ export component OverviewPage inherits Rectangle {
                 width: parent.width - 24px;
                 height: timeline-panel.plot_box_height;
                 border-radius: 14px;
-                background: #f7fbff;
+                background: #f8fafc;
                 border-width: 1px;
-                border-color: #dbe6f0;
+                border-color: #e2e8f0;
 
                 Rectangle {
                     x: 0px;
@@ -148,17 +150,17 @@ export component OverviewPage inherits Rectangle {
                     width: timeline-panel.lane_rail_width;
                     height: parent.height;
                     border-radius: 14px;
-                    background: #edf4fb;
+                    background: #f8fafc;
                     border-width: 0px;
 
                     Text {
                         text: "Entities";
                         x: 12px;
-                        y: 10px;
+                        y: 12px;
                         width: parent.width - 24px;
-                        color: #71859a;
-                        font-size: 10px;
-                        font-weight: 700;
+                        color: #8a99ab;
+                        font-size: 9px;
+                        font-weight: 600;
                         horizontal-alignment: left;
                     }
 
@@ -177,7 +179,7 @@ export component OverviewPage inherits Rectangle {
                             width: 6px;
                             height: 6px;
                             border-radius: 3px;
-                            background: #7f9fbe;
+                            background: #a2afbf;
                         }
 
                         Text {
@@ -186,9 +188,9 @@ export component OverviewPage inherits Rectangle {
                             y: 0px;
                             width: parent.width - 30px;
                             height: parent.height;
-                            color: #47617c;
-                            font-size: 9px;
-                            font-weight: 700;
+                            color: #57708e;
+                            font-size: 8px;
+                            font-weight: 500;
                             vertical-alignment: center;
                             horizontal-alignment: left;
                         }
@@ -236,9 +238,9 @@ export component OverviewPage inherits Rectangle {
                             width: parent.width;
                             height: timeline-panel.plot_grid_height;
                             border-radius: 12px;
-                            background: #fcfdff;
+                            background: #f8fafc;
                             border-width: 1px;
-                            border-color: #e3ebf4;
+                            border-color: #e2e8f0;
 
                             for lane[i] in lane-labels: Rectangle {
                                 x: timeline-panel.plot_left_inset;
@@ -246,9 +248,8 @@ export component OverviewPage inherits Rectangle {
                                 width: parent.width - timeline-panel.plot_left_inset - timeline-panel.plot_right_inset;
                                 height: timeline-panel.lane_band_height;
                                 border-radius: timeline-panel.lane_band_height / 2;
-                                background: Math.mod(i, 2) == 0 ? #f9fbfd : #f4f8fb;
-                                border-width: 1px;
-                                border-color: Math.mod(i, 2) == 0 ? #eef3f8 : #e7edf5;
+                                background: transparent;
+                                border-width: 0px;
                             }
 
                             for tick in time-ticks: Rectangle {
@@ -256,66 +257,64 @@ export component OverviewPage inherits Rectangle {
                                 y: timeline-panel.plot_top_inset - 8px;
                                 width: 1px;
                                 height: max(24px, parent.height - timeline-panel.plot_top_inset - timeline-panel.plot_bottom_inset + 16px);
-                                background: #e8eef5;
+                                background: #e8edf3;
+                            }
+
+                            Rectangle {
+                                x: timeline-panel.plot_left_inset + max(0px, parent.width - timeline-panel.plot_left_inset - timeline-panel.plot_right_inset) * root.first-event-x-pct;
+                                y: timeline-panel.plot_top_inset - 8px;
+                                width: 2px;
+                                height: max(24px, parent.height - timeline-panel.plot_top_inset - timeline-panel.plot_bottom_inset + 16px);
+                                background: #9fb0c5;
+                            }
+
+                            Rectangle {
+                                x: timeline-panel.plot_left_inset + max(0px, parent.width - timeline-panel.plot_left_inset - timeline-panel.plot_right_inset) * root.last-event-x-pct - 2px;
+                                y: timeline-panel.plot_top_inset - 8px;
+                                width: 2px;
+                                height: max(24px, parent.height - timeline-panel.plot_top_inset - timeline-panel.plot_bottom_inset + 16px);
+                                background: #9fb0c5;
                             }
 
                             for lane in lane-labels: Rectangle {
                                 x: timeline-panel.plot_left_inset + 6px;
                                 y: timeline-panel.plot_top_inset + max(0px, parent.height - timeline-panel.plot_top_inset - timeline-panel.plot_bottom_inset) * lane.y_pct;
                                 width: parent.width - timeline-panel.plot_left_inset - timeline-panel.plot_right_inset - 12px;
-                                height: 3px;
-                                border-radius: 2px;
-                                background: #d1ddea;
+                                height: 2px;
+                                border-radius: 1px;
+                                background: #e3e8ef;
                             }
 
                             for point[i] in timeline-points: Rectangle {
-                                width: 14px + point.size_norm * 14px;
-                                height: 14px + point.size_norm * 14px;
+                                private property <color> tone-core: point.risk_tier >= 9 ? #991b1b
+                                    : (point.risk_tier == 8 ? #dc2626
+                                    : (point.risk_tier == 7 ? #c2410c
+                                    : (point.risk_tier == 6 ? #d97706
+                                    : (point.risk_tier == 5 ? #c99700
+                                    : (point.risk_tier == 4 ? #a3a300
+                                    : (point.risk_tier == 3 ? #6f9a2b
+                                    : (point.risk_tier == 2 ? #5f8f57
+                                    : (point.risk_tier == 1 ? #6d8f84 : #7f9b91))))))));
+                                private property <color> tone-selected: #475569;
+                                width: 11px + point.size_norm * 12px;
+                                height: 11px + point.size_norm * 12px;
                                 x: timeline-panel.plot_left_inset + max(0px, parent.width - timeline-panel.plot_left_inset - timeline-panel.plot_right_inset) * point.x_pct - self.width / 2;
                                 y: timeline-panel.plot_top_inset + max(0px, parent.height - timeline-panel.plot_top_inset - timeline-panel.plot_bottom_inset) * point.y_pct - self.height / 2;
                                 border-radius: self.width / 2;
-                                background: point.risk >= 0.85 ? #fff0f2 : (point.risk >= 0.60 ? #fff6df : #f0fcf6);
-                                border-width: 2px;
-                                border-color: point.risk >= 0.85 ? #e66a73 : (point.risk >= 0.60 ? #d9a23b : #35b883);
-                                drop-shadow-blur: i == root.selected-point-index ? 16px : (point.risk >= 0.85 ? 12px : 8px);
-                                drop-shadow-color: i == root.selected-point-index
-                                    ? (point.risk >= 0.85 ? #e66a7350 : (point.risk >= 0.60 ? #d9a23b44 : #35b88344))
-                                    : (point.risk >= 0.85 ? #e66a7338 : (point.risk >= 0.60 ? #d9a23b26 : #35b88324));
-                                drop-shadow-offset-y: i == root.selected-point-index ? 2px : 1px;
+                                background: self.tone-core;
+                                border-width: 0px;
+                                border-color: transparent;
 
                                 Rectangle {
                                     visible: i == root.selected-point-index;
-                                    x: -7px;
-                                    y: -7px;
-                                    width: parent.width + 14px;
-                                    height: parent.height + 14px;
-                                    border-radius: self.width / 2;
-                                    background: transparent;
-                                    border-width: 2px;
-                                    border-color: point.risk >= 0.85 ? #f08e98 : (point.risk >= 0.60 ? #e4ba62 : #67cda6);
-                                }
-
-                                Rectangle {
-                                    x: 4px;
-                                    y: 4px;
-                                    width: parent.width - 8px;
-                                    height: parent.height - 8px;
-                                    border-radius: self.width / 2;
-                                    background: point.risk >= 0.85 ? #e66a73 : (point.risk >= 0.60 ? #d9a23b : #14b87a);
-                                    border-width: 2px;
-                                    border-color: #ffffff;
-                                }
-
-                                Rectangle {
-                                    visible: point.risk >= 0.85;
-                                    x: 1px;
-                                    y: 1px;
-                                    width: parent.width - 2px;
-                                    height: parent.height - 2px;
+                                    x: -4px;
+                                    y: -4px;
+                                    width: parent.width + 8px;
+                                    height: parent.height + 8px;
                                     border-radius: self.width / 2;
                                     background: transparent;
                                     border-width: 1px;
-                                    border-color: #ffd7dc;
+                                    border-color: parent.tone-selected;
                                 }
 
                                 point-hover := TouchArea {
@@ -429,7 +428,7 @@ export component OverviewPage inherits Rectangle {
                                 y: parent.height - timeline-panel.plot_bottom_inset;
                                 width: parent.width;
                                 height: timeline-panel.plot_bottom_inset;
-                                background: #fbfdff;
+                                background: transparent;
                                 border-width: 0px;
                             }
                         }
@@ -438,9 +437,9 @@ export component OverviewPage inherits Rectangle {
                             x: 0px;
                             y: timeline-panel.plot_grid_height - timeline-panel.plot_bottom_inset + 10px;
                             width: parent.width;
-                            height: 3px;
-                            border-radius: 2px;
-                            background: #b7cae0;
+                            height: 1px;
+                            border-radius: 0px;
+                            background: #d7dee7;
                         }
 
                         for tick in time-ticks: Rectangle {
@@ -448,17 +447,55 @@ export component OverviewPage inherits Rectangle {
                             y: parent.height - 24px;
                             width: 56px;
                             height: 18px;
-                            border-radius: 9px;
-                            background: #eef4fa;
-                            border-width: 1px;
-                            border-color: #d7e2ee;
+                            border-radius: 0px;
+                            background: transparent;
+                            border-width: 0px;
+                            border-color: transparent;
 
                             Text {
                                 text: tick.label;
-                                color: #647a92;
+                                color: #8e9bae;
                                 width: parent.width;
                                 height: parent.height;
-                                font-size: 10px;
+                                font-size: 9px;
+                                font-weight: 500;
+                                horizontal-alignment: center;
+                                vertical-alignment: center;
+                            }
+                        }
+
+                        Rectangle {
+                            x: timeline-panel.plot_left_inset + max(0px, parent.width - timeline-panel.plot_left_inset - timeline-panel.plot_right_inset) * root.first-event-x-pct - 24px;
+                            y: parent.height - 42px;
+                            width: 48px;
+                            height: 16px;
+                            background: transparent;
+
+                            Text {
+                                text: "Start";
+                                color: #6d7f95;
+                                width: parent.width;
+                                height: parent.height;
+                                font-size: 9px;
+                                font-weight: 700;
+                                horizontal-alignment: center;
+                                vertical-alignment: center;
+                            }
+                        }
+
+                        Rectangle {
+                            x: timeline-panel.plot_left_inset + max(0px, parent.width - timeline-panel.plot_left_inset - timeline-panel.plot_right_inset) * root.last-event-x-pct - 24px;
+                            y: parent.height - 42px;
+                            width: 48px;
+                            height: 16px;
+                            background: transparent;
+
+                            Text {
+                                text: "End";
+                                color: #6d7f95;
+                                width: parent.width;
+                                height: parent.height;
+                                font-size: 9px;
                                 font-weight: 700;
                                 horizontal-alignment: center;
                                 vertical-alignment: center;
@@ -471,14 +508,15 @@ export component OverviewPage inherits Rectangle {
 
         LogTableView {
             vertical-stretch: 2;
-            min-height: 260px;
+            min-height: root.point-detail-rows.length > 0 ? 260px : 116px;
             title: "Selection Detail";
             show-pagination: false;
             summary: root.point-detail-summary;
             show-summary: false;
             rows: root.point-detail-rows;
+            compact-when-empty: true;
             table-width: 1280px;
-            body-viewport-height: 252px;
+            body-viewport-height: root.point-detail-rows.length > 0 ? 252px : 56px;
         }
     }
 }

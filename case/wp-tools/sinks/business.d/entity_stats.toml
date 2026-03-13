@@ -3,7 +3,7 @@ name = "entity_stats_output"
 windows = ["entity_*"]
 
 [[sink_group.sinks]]
-connect = "arrow_file"
+connect = "arrow_file_sink"
 name = "entity_stats_arrow"
 
 [sink_group.sinks.params]
@@ -22,7 +22,7 @@ fields = [
 ]
 
 [[sink_group.sinks]]
-connect = "file_json"
+connect = "file_json_sink"
 name = "entity_stats_json"
 fields = ["__wfu_entity_id", "subject", "event_count" ]
 

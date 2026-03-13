@@ -59,17 +59,31 @@ fn level_filter_label(filter: Option<data::LevelFilter>) -> String {
 fn risk_filter_to_ui_idx(filter: Option<data::RiskFilter>) -> i32 {
     match filter {
         None => 0,
-        Some(data::RiskFilter::Low) => 1,
-        Some(data::RiskFilter::Mid) => 2,
-        Some(data::RiskFilter::High) => 3,
+        Some(data::RiskFilter::L1) => 1,
+        Some(data::RiskFilter::L2) => 2,
+        Some(data::RiskFilter::L3) => 3,
+        Some(data::RiskFilter::L4) => 4,
+        Some(data::RiskFilter::L5) => 5,
+        Some(data::RiskFilter::L6) => 6,
+        Some(data::RiskFilter::L7) => 7,
+        Some(data::RiskFilter::L8) => 8,
+        Some(data::RiskFilter::L9) => 9,
+        Some(data::RiskFilter::L10) => 10,
     }
 }
 
 fn risk_filter_from_ui_idx(idx: i32) -> Option<data::RiskFilter> {
     match idx {
-        1 => Some(data::RiskFilter::Low),
-        2 => Some(data::RiskFilter::Mid),
-        3 => Some(data::RiskFilter::High),
+        1 => Some(data::RiskFilter::L1),
+        2 => Some(data::RiskFilter::L2),
+        3 => Some(data::RiskFilter::L3),
+        4 => Some(data::RiskFilter::L4),
+        5 => Some(data::RiskFilter::L5),
+        6 => Some(data::RiskFilter::L6),
+        7 => Some(data::RiskFilter::L7),
+        8 => Some(data::RiskFilter::L8),
+        9 => Some(data::RiskFilter::L9),
+        10 => Some(data::RiskFilter::L10),
         _ => None,
     }
 }
@@ -77,9 +91,16 @@ fn risk_filter_from_ui_idx(idx: i32) -> Option<data::RiskFilter> {
 fn risk_filter_label(filter: Option<data::RiskFilter>) -> String {
     match filter {
         None => "All risks".to_string(),
-        Some(data::RiskFilter::Low) => "Risk: < 0.60".to_string(),
-        Some(data::RiskFilter::Mid) => "Risk: 0.60-0.84".to_string(),
-        Some(data::RiskFilter::High) => "Risk: >= 0.85".to_string(),
+        Some(data::RiskFilter::L1) => "Risk: L1 (0-9)".to_string(),
+        Some(data::RiskFilter::L2) => "Risk: L2 (10-19)".to_string(),
+        Some(data::RiskFilter::L3) => "Risk: L3 (20-29)".to_string(),
+        Some(data::RiskFilter::L4) => "Risk: L4 (30-39)".to_string(),
+        Some(data::RiskFilter::L5) => "Risk: L5 (40-49)".to_string(),
+        Some(data::RiskFilter::L6) => "Risk: L6 (50-59)".to_string(),
+        Some(data::RiskFilter::L7) => "Risk: L7 (60-69)".to_string(),
+        Some(data::RiskFilter::L8) => "Risk: L8 (70-79)".to_string(),
+        Some(data::RiskFilter::L9) => "Risk: L9 (80-89)".to_string(),
+        Some(data::RiskFilter::L10) => "Risk: L10 (90-100)".to_string(),
     }
 }
 
@@ -171,6 +192,8 @@ fn map_detail_row(row: &data::DetailRowVm) -> DetailRow {
         row_no: row.row_no.clone().into(),
         time: row.time.clone().into(),
         level: row.level.clone().into(),
+        risk_tier: row.risk_tier,
+        event_count: row.event_count.clone().into(),
         risk_score: row.risk_score.clone().into(),
         rule: row.rule.clone().into(),
         target: row.target.clone().into(),
@@ -227,6 +250,7 @@ fn apply_overview_page(app: &AppWindow, state: &mut UiState, view: data::Dashboa
             x_pct: p.x_pct,
             y_pct: p.y_pct,
             risk: p.risk,
+            risk_tier: p.risk_tier,
             size_norm: p.size_norm,
             entity: p.entity.clone().into(),
         })
@@ -253,6 +277,8 @@ fn apply_overview_page(app: &AppWindow, state: &mut UiState, view: data::Dashboa
     app.set_lane_legend_text(view.lane_legend_text.into());
     app.set_timeline_points(Rc::new(VecModel::from(point_rows)).into());
     app.set_time_ticks(Rc::new(VecModel::from(tick_rows)).into());
+    app.set_first_event_x_pct(view.first_event_x_pct);
+    app.set_last_event_x_pct(view.last_event_x_pct);
     app.set_timeline_content_px(view.timeline_content_px);
     app.set_lane_labels(Rc::new(VecModel::from(lane_rows)).into());
     app.set_hovered_timeline_point_index(-1);

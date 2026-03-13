@@ -4,6 +4,7 @@ export struct TimelinePoint {
     x_pct: float,
     y_pct: float,
     risk: float,
+    risk_tier: int,
     size_norm: float,
     entity: string,
 }
@@ -22,6 +23,8 @@ export struct DetailRow {
     row_no: string,
     time: string,
     level: string,
+    risk_tier: int,
+    event_count: string,
     risk_score: string,
     rule: string,
     target: string,
@@ -184,6 +187,8 @@ export component MetricCard inherits Rectangle {
 export component FilterPill inherits Rectangle {
     in property <string> label;
     in property <bool> selected: false;
+    in property <length> min-chip-width: 56px;
+    in property <float> width-scale: 1.4;
     in property <color> idle-background: #f6f8fb;
     in property <color> idle-border: #d7e0ea;
     in property <color> idle-text: #4f6279;
@@ -192,13 +197,13 @@ export component FilterPill inherits Rectangle {
     in property <color> selected-text: #1f5fd6;
     callback clicked;
 
-    private property <length> chip-width: max(45px, (label-text.min-width + 12px) * 1.5);
+    private property <length> chip-width: max(min-chip-width, (label-text.min-width + 16px) * width-scale);
     min-width: chip-width;
     preferred-width: chip-width;
     max-width: chip-width;
     horizontal-stretch: 0;
-    height: 22px;
-    border-radius: 11px;
+    height: 24px;
+    border-radius: 12px;
     background: selected ? selected-background : idle-background;
     border-width: 1px;
     border-color: selected ? selected-border : idle-border;
@@ -206,12 +211,12 @@ export component FilterPill inherits Rectangle {
     label-text := Text {
         text: label;
         color: selected ? selected-text : idle-text;
-        font-size: 10px;
+        font-size: 11px;
         font-weight: selected ? 700 : 600;
         horizontal-alignment: center;
         vertical-alignment: center;
-        x: 6px;
-        width: parent.width - 12px;
+        x: 8px;
+        width: parent.width - 16px;
     }
 
     TouchArea {
@@ -229,13 +234,13 @@ export component ActiveFilterChip inherits Rectangle {
     in property <color> chip-text-color: #51657c;
     callback clicked;
 
-    private property <length> chip-width: max(54px, chip-text.min-width + 20px);
+    private property <length> chip-width: max(66px, chip-text.min-width + 24px);
     min-width: chip-width;
     preferred-width: chip-width;
     max-width: chip-width;
     horizontal-stretch: 0;
-    height: 22px;
-    border-radius: 11px;
+    height: 24px;
+    border-radius: 12px;
     background: chip-background-color;
     border-width: 1px;
     border-color: chip-border-color;
@@ -243,10 +248,10 @@ export component ActiveFilterChip inherits Rectangle {
     chip-text := Text {
         text: label;
         color: chip-text-color;
-        font-size: 10px;
+        font-size: 11px;
         font-weight: 600;
-        x: 10px;
-        width: parent.width - 20px;
+        x: 12px;
+        width: parent.width - 24px;
         vertical-alignment: center;
     }
 
@@ -312,13 +317,13 @@ export component ScrollTextPanel inherits Rectangle {
 export component TimelineToolButton inherits Button {
     in property <image> tool-icon;
 
-    min-width: 34px;
-    min-height: 30px;
-    max-width: 34px;
-    max-height: 30px;
+    min-width: 28px;
+    min-height: 28px;
+    max-width: 28px;
+    max-height: 28px;
     text: "";
     icon: tool-icon;
-    icon-size: 16px;
+    icon-size: 14px;
     colorize-icon: true;
 }
 
@@ -340,18 +345,47 @@ export component PageSwitchButton inherits Rectangle {
     in property <bool> selected: false;
     callback clicked;
 
-    min-width: 112px;
+    min-width: 96px;
     height: 28px;
     border-radius: 14px;
-    background: selected ? #dfeafd : #f4f7fb;
+    background: selected ? #dfeafd : #f7f9fc;
     border-width: 1px;
-    border-color: selected ? #8eb2ef : #d6e0ea;
+    border-color: selected ? #9ab7ef : #d9e2ec;
 
     Text {
         text: label;
         color: selected ? #1f5fd6 : #51657c;
         font-size: 11px;
         font-weight: selected ? 700 : 600;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+    }
+
+    TouchArea {
+        mouse-cursor: pointer;
+        clicked => {
+            root.clicked();
+        }
+    }
+}
+
+export component ViewSegmentButton inherits Rectangle {
+    in property <string> label;
+    in property <bool> selected: false;
+    callback clicked;
+
+    min-width: 132px;
+    height: 36px;
+    border-radius: 18px;
+    background: selected ? #ffffff : transparent;
+    border-width: selected ? 1px : 0px;
+    border-color: selected ? #8db2ea : transparent;
+
+    Text {
+        text: label;
+        color: selected ? #0f56c9 : #49627f;
+        font-size: 12px;
+        font-weight: selected ? 700 : 650;
         horizontal-alignment: center;
         vertical-alignment: center;
     }
@@ -455,6 +489,8 @@ export component DataGridFrame inherits Rectangle {
     in property <[DetailRow]> rows: [];
     in property <string> time-title: "Time";
     in property <string> level-title: "Level";
+    in property <bool> show-event-count: false;
+    in property <string> event-count-title: "EventCount";
     in property <bool> show-rule: false;
     in property <string> rule-title: "Rule";
     in property <string> target-title: "Target";
@@ -464,6 +500,7 @@ export component DataGridFrame inherits Rectangle {
     in property <bool> show-content: true;
     in property <bool> show-risk-score: false;
     in property <bool> semantic-alert-layout: false;
+    in property <bool> compact-when-empty: false;
     in property <length> table-width: 900px;
     in property <length> body-viewport-height: 252px;
     in property <bool> show-pagination: false;
@@ -473,14 +510,16 @@ export component DataGridFrame inherits Rectangle {
     in property <int> reset-token: 0;
     callback prev-page();
     callback next-page();
-    out property <length> body-visible-height: max(120px, table-shell.height - root.header-height - 6px);
-    private property <length> header-height: 34px;
-    private property <length> row-height: 34px;
+    out property <length> body-visible-height:
+        max(compact-when-empty && rows.length == 0 ? 56px : 120px, table-shell.height - root.header-height - 6px);
+    private property <length> header-height: 30px;
+    private property <length> row-height: 30px;
     private property <length> body-height: max(root.body-visible-height, rows.length * root.row-height);
     private property <length> col-gap: 8px;
     private property <length> col-row-no-width: 44px;
     private property <length> col-time-width: 150px;
     private property <length> col-level-width: 74px;
+    private property <length> col-event-count-width: 86px;
     private property <length> col-risk-width: 76px;
     private property <length> col-rule-width: 128px;
     private property <length> col-target-width: 96px;
@@ -493,6 +532,7 @@ export component DataGridFrame inherits Rectangle {
         + col-row-no-width
         + col-gap + col-time-width
         + col-gap + col-level-width
+        + (show-event-count ? col-gap + col-event-count-width : 0px)
         + (show-risk-score ? col-gap + col-risk-width : 0px)
         + (show-rule ? col-gap + col-rule-width : 0px)
         + col-gap + col-target-width
@@ -504,8 +544,8 @@ export component DataGridFrame inherits Rectangle {
     border-radius: 10px;
     background: #ffffff;
     border-width: 1px;
-    border-color: #d6e0ea;
-    min-height: 220px;
+    border-color: #dde5ee;
+    min-height: compact-when-empty && rows.length == 0 ? 110px : 220px;
     changed rows => {
         table-scroll.viewport-x = 0px;
     }
@@ -519,9 +559,9 @@ export component DataGridFrame inherits Rectangle {
 
         Text {
             text: title;
-            color: #203047;
-            font-size: 14px;
-            font-weight: 700;
+            color: #31445d;
+            font-size: 13px;
+            font-weight: 600;
             horizontal-alignment: left;
         }
 
@@ -583,9 +623,9 @@ export component DataGridFrame inherits Rectangle {
                         width: parent.width;
                         height: root.header-height;
                         border-radius: 8px;
-                        background: #dde8f3;
+                        background: #e9eff6;
                         border-width: 1px;
-                        border-color: #d8e3ee;
+                        border-color: #dfe7f0;
 
                         if (!semantic-alert-layout) : HorizontalLayout {
                             padding-left: 10px;
@@ -595,6 +635,7 @@ export component DataGridFrame inherits Rectangle {
                             TableHeaderCell { text: "#"; col-width <=> root.col-row-no-width; min-col-width: 36px; }
                             TableHeaderCell { text: time-title; col-width <=> root.col-time-width; min-col-width: 120px; }
                             TableHeaderCell { text: level-title; col-width <=> root.col-level-width; min-col-width: 64px; }
+                            if (show-event-count) : TableHeaderCell { text: event-count-title; col-width <=> root.col-event-count-width; min-col-width: 72px; }
                             if (show-risk-score) : TableHeaderCell { text: "RiskScore"; col-width <=> root.col-risk-width; min-col-width: 68px; }
                             if (show-rule) : TableHeaderCell { text: rule-title; col-width <=> root.col-rule-width; min-col-width: 96px; }
                             TableHeaderCell { text: target-title; col-width <=> root.col-target-width; min-col-width: 80px; }
@@ -612,6 +653,7 @@ export component DataGridFrame inherits Rectangle {
                             TableHeaderCell { text: "#"; col-width <=> root.col-row-no-width; min-col-width: 36px; text-color: #1f5fd6; }
                             TableHeaderCell { text: time-title; col-width <=> root.col-time-width; min-col-width: 120px; text-color: #1f5fd6; }
                             TableHeaderCell { text: level-title; col-width <=> root.col-level-width; min-col-width: 64px; text-color: #1f5fd6; }
+                            if (show-event-count) : TableHeaderCell { text: event-count-title; col-width <=> root.col-event-count-width; min-col-width: 72px; text-color: #1f5fd6; }
                             if (show-risk-score) : TableHeaderCell { text: "RiskScore"; col-width <=> root.col-risk-width; min-col-width: 68px; text-color: #1f5fd6; }
                             if (show-rule) : TableHeaderCell { text: rule-title; col-width <=> root.col-rule-width; min-col-width: 96px; text-color: #1f5fd6; }
                             TableHeaderCell { text: "Entity"; col-width <=> root.col-entity-width; min-col-width: 88px; text-color: #1f5fd6; }
@@ -628,17 +670,26 @@ export component DataGridFrame inherits Rectangle {
                         width: parent.width;
                         height: max(0px, parent.height - root.header-height - 6px);
                         border-radius: 8px;
-                        background: #f6f9fc;
+                        background: #f8fafc;
                         border-width: 1px;
-                        border-color: #d8e3ee;
+                        border-color: #e3eaf2;
                         clip: true;
 
                         for row[i] in rows: Rectangle {
+                            private property <color> risk-tier-color: row.risk_tier >= 9 ? #991b1b
+                                : (row.risk_tier == 8 ? #dc2626
+                                : (row.risk_tier == 7 ? #c2410c
+                                : (row.risk_tier == 6 ? #d97706
+                                : (row.risk_tier == 5 ? #c99700
+                                : (row.risk_tier == 4 ? #a3a300
+                                : (row.risk_tier == 3 ? #6f9a2b
+                                : (row.risk_tier == 2 ? #5f8f57
+                                : (row.risk_tier == 1 ? #6d8f84 : #7f9b91))))))));
                             x: 0px;
                             y: i * root.row-height;
                             width: parent.width;
                             height: root.row-height;
-                            background: Math.mod(i, 2) == 0 ? #f8fbfe : #f2f7fb;
+                            background: Math.mod(i, 2) == 0 ? #fafcff : #f6f9fc;
 
                             if (!semantic-alert-layout) : HorizontalLayout {
                                 padding-left: 10px;
@@ -647,8 +698,35 @@ export component DataGridFrame inherits Rectangle {
 
                                 TableBodyCell { text: row.row_no; col-width: root.col-row-no-width; text-color: #334155; align: center; }
                                 TableBodyCell { text: row.time; col-width: root.col-time-width; text-color: #334155; align: left; }
-                                TableBodyCell { text: row.level; col-width: root.col-level-width; text-color: #334155; align: left; }
-                                if (show-risk-score) : TableBodyCell { text: row.risk_score; col-width: root.col-risk-width; text-color: #334155; align: center; }
+                                TableBodyCell {
+                                    text: row.level;
+                                    col-width: root.col-level-width;
+                                    text-color: row.risk_tier >= 9 ? #991b1b
+                                        : (row.risk_tier == 8 ? #dc2626
+                                        : (row.risk_tier == 7 ? #c2410c
+                                        : (row.risk_tier == 6 ? #d97706
+                                        : (row.risk_tier == 5 ? #c99700
+                                        : (row.risk_tier == 4 ? #a3a300
+                                        : (row.risk_tier == 3 ? #6f9a2b
+                                        : (row.risk_tier == 2 ? #5f8f57
+                                        : (row.risk_tier == 1 ? #6d8f84 : #7f9b91))))))));
+                                    align: left;
+                                }
+                                if (show-event-count) : TableBodyCell { text: row.event_count; col-width: root.col-event-count-width; text-color: #334155; align: center; }
+                                if (show-risk-score) : TableBodyCell {
+                                    text: row.risk_score;
+                                    col-width: root.col-risk-width;
+                                    text-color: row.risk_tier >= 9 ? #991b1b
+                                        : (row.risk_tier == 8 ? #dc2626
+                                        : (row.risk_tier == 7 ? #c2410c
+                                        : (row.risk_tier == 6 ? #d97706
+                                        : (row.risk_tier == 5 ? #c99700
+                                        : (row.risk_tier == 4 ? #a3a300
+                                        : (row.risk_tier == 3 ? #6f9a2b
+                                        : (row.risk_tier == 2 ? #5f8f57
+                                        : (row.risk_tier == 1 ? #6d8f84 : #7f9b91))))))));
+                                    align: center;
+                                }
                                 if (show-rule) : TableBodyCell { text: row.rule; col-width: root.col-rule-width; text-color: #334155; align: left; }
                                 TableBodyCell { text: row.target; col-width: root.col-target-width; text-color: #334155; align: left; }
                                 TableBodyCell { text: row.entity; col-width: root.col-entity-width; text-color: #334155; align: left; }
@@ -664,8 +742,35 @@ export component DataGridFrame inherits Rectangle {
 
                                 TableBodyCell { text: row.row_no; col-width: root.col-row-no-width; text-color: #294b75; align: center; }
                                 TableBodyCell { text: row.time; col-width: root.col-time-width; text-color: #294b75; align: left; }
-                                TableBodyCell { text: row.level; col-width: root.col-level-width; text-color: #294b75; align: left; }
-                                if (show-risk-score) : TableBodyCell { text: row.risk_score; col-width: root.col-risk-width; text-color: #294b75; align: center; }
+                                TableBodyCell {
+                                    text: row.level;
+                                    col-width: root.col-level-width;
+                                    text-color: row.risk_tier >= 9 ? #991b1b
+                                        : (row.risk_tier == 8 ? #dc2626
+                                        : (row.risk_tier == 7 ? #c2410c
+                                        : (row.risk_tier == 6 ? #d97706
+                                        : (row.risk_tier == 5 ? #c99700
+                                        : (row.risk_tier == 4 ? #a3a300
+                                        : (row.risk_tier == 3 ? #6f9a2b
+                                        : (row.risk_tier == 2 ? #5f8f57
+                                        : (row.risk_tier == 1 ? #6d8f84 : #7f9b91))))))));
+                                    align: left;
+                                }
+                                if (show-event-count) : TableBodyCell { text: row.event_count; col-width: root.col-event-count-width; text-color: #294b75; align: center; }
+                                if (show-risk-score) : TableBodyCell {
+                                    text: row.risk_score;
+                                    col-width: root.col-risk-width;
+                                    text-color: row.risk_tier >= 9 ? #b91c1c
+                                        : (row.risk_tier == 8 ? #d9480f
+                                        : (row.risk_tier == 7 ? #ea580c
+                                        : (row.risk_tier == 6 ? #ca8a04
+                                        : (row.risk_tier == 5 ? #65a30d
+                                        : (row.risk_tier == 4 ? #16a34a
+                                        : (row.risk_tier == 3 ? #0f766e
+                                        : (row.risk_tier == 2 ? #0891b2
+                                        : (row.risk_tier == 1 ? #2563eb : #4f46e5))))))));
+                                    align: center;
+                                }
                                 if (show-rule) : TableBodyCell { text: row.rule; col-width: root.col-rule-width; text-color: #294b75; align: left; }
                                 TableBodyCell { text: row.entity; col-width: root.col-entity-width; text-color: #294b75; align: left; }
                                 TableBodyCell { text: row.target; col-width: root.col-target-width; text-color: #2e6b53; align: left; }
@@ -697,6 +802,7 @@ export component AlertTableView inherits DataGridFrame {
     show-summary: false;
     time-title: "FiredAt";
     level-title: "RiskLevel";
+    show-event-count: true;
     show-rule: true;
     rule-title: "Rule";
     target-title: "Target";

@@ -9,6 +9,8 @@ import { AlertDataPage, LogDataPage, OverviewPage } from "pages.slint";
 
 export component AppWindow inherits Window {
     out property <length> logical_window_height: self.height;
+    min-width: 1500px;
+    min-height: 920px;
     in-out property <string> status_text: "Ready";
     in-out property <int> total_events: 0;
     in-out property <int> risk_low_events: 0;
@@ -27,6 +29,8 @@ export component AppWindow inherits Window {
 
     in-out property <[TimelinePoint]> timeline_points: [];
     in-out property <[TimeTick]> time_ticks: [];
+    in-out property <float> first_event_x_pct: 0.0;
+    in-out property <float> last_event_x_pct: 1.0;
     in-out property <int> timeline_content_px: 1400;
     in-out property <length> timeline_canvas_x: -600px;
     in-out property <float> timeline_zoom: 1.0;
@@ -128,6 +132,8 @@ export component AppWindow inherits Window {
             lane-labels: root.lane_labels;
             timeline-points: root.timeline_points;
             time-ticks: root.time_ticks;
+            first-event-x-pct: root.first_event_x_pct;
+            last-event-x-pct: root.last_event_x_pct;
             timeline-content-px: root.timeline_content_px;
             timeline-canvas-x <=> root.timeline_canvas_x;
             timeline-zoom <=> root.timeline_zoom;
