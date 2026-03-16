@@ -6,7 +6,7 @@ tags = []
 
 [sources.params]
 encode = "text"
-base = "../target_data"
+base = "${CASE_PATH}/target_data"
 file = "raw_log.dat"
 
 [[sources]]

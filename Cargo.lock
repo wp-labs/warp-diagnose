@@ -4274,17 +4274,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "orion_overload"
-version = "1.19.2"
-dependencies = [
- "anyhow",
- "derive-getters",
- "serde",
- "thiserror 2.0.18",
- "toml 1.0.6+spec-1.1.0",
-]
-
-[[package]]
 name = "os_info"
 version = "3.14.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -6398,6 +6387,10 @@ dependencies = [
  "anyhow",
  "arrow",
  "chrono",
+ "objc2 0.6.4",
+ "objc2-app-kit 0.3.2",
+ "objc2-foundation 0.3.2",
+ "png 0.17.16",
  "regex",
  "serde",
  "serde_json",
@@ -7445,6 +7438,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "wp-condition"
+version = "1.19.2"
+dependencies = [
+ "orion_exp",
+ "winnow",
+ "wp-primitives",
+]
+
+[[package]]
 name = "wp-connector-api"
 version = "0.8.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -7536,11 +7538,11 @@ dependencies = [
  "ipnet",
  "lazy_static",
  "log",
+ "lru",
  "once_cell",
  "orion-error",
  "orion-variate",
  "orion_conf",
- "orion_overload",
  "r2d2",
  "r2d2_sqlite",
  "rand 0.10.0",
@@ -7554,7 +7556,6 @@ dependencies = [
  "toml 1.0.6+spec-1.1.0",
  "wildmatch",
  "wp-data-fmt",
- "wp-data-utils",
  "wp-error",
  "wp-log",
  "wp-model-core",
@@ -7563,7 +7564,9 @@ dependencies = [
 
 [[package]]
 name = "wp-lang"
-version = "1.19.2"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "43a09ec11d7757719958cbebb1da60f23279428d1e966a7980416009a6c1cb05"
 dependencies = [
  "ahash",
  "anyhow",
@@ -7588,7 +7591,6 @@ dependencies = [
  "once_cell",
  "ordered-float 5.1.0",
  "orion-error",
- "orion_overload",
  "phone",
  "rand 0.10.0",
  "regex",
@@ -7611,7 +7613,7 @@ dependencies = [
  "wp-log",
  "wp-model-core",
  "wp-parse-api",
- "wp-parser",
+ "wp-primitives",
  "wp-specs",
 ]
 
@@ -7698,6 +7700,7 @@ dependencies = [
  "url",
  "wildmatch",
  "winnow",
+ "wp-condition",
  "wp-data-fmt",
  "wp-data-utils",
  "wp-error",
@@ -7705,7 +7708,7 @@ dependencies = [
  "wp-lang",
  "wp-log",
  "wp-model-core",
- "wp-parser",
+ "wp-primitives",
  "wp-specs",
 ]
 
@@ -7725,10 +7728,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "wp-parser"
-version = "1.19.2"
+name = "wp-primitives"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4de22e9b9fdac31efc29311725b239d4cf95d1bf81a1363478d48999d017f668"
 dependencies = [
- "orion_exp",
  "winnow",
 ]
 

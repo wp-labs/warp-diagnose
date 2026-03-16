@@ -1,0 +1,13 @@
+{ stage: "Sink" name: "sink_stat" target: "__runtime" total: 32 success: 32 suc_rate: 100 speed: 3.2 beg_time: "2026-03-15 20:09:09.872851" end_time: "2026-03-15 20:09:09.872851" }
+{ stage: "Pick" name: "pick_stat" target: "file_1" total: 6908 success: 6908 suc_rate: 100 speed: 98.68571428571428 beg_time: "2026-03-15 20:09:08.974937" end_time: "2026-03-15 20:09:08.981445" }
+{ stage: "Sink" name: "sink_stat" target: "miss/[0]" total: 2463 success: 2463 suc_rate: 100 speed: 0.30749063670411986 beg_time: "2026-03-15 20:09:08.978009" end_time: "2026-03-15 20:09:09.778513" }
+{ stage: "Sink" name: "sink_stat" target: "__runtime" total: 34 success: 34 suc_rate: 100 speed: 3.4 beg_time: "2026-03-15 20:50:57.791484" end_time: "2026-03-15 20:50:57.791485" }
+{ stage: "Pick" name: "pick_stat" target: "file_1" total: 6908 success: 6908 suc_rate: 100 speed: 115.13333333333333 beg_time: "2026-03-15 20:50:56.894320" end_time: "2026-03-15 20:50:56.899969" }
+{ stage: "Sink" name: "sink_stat" target: "miss/[0]" total: 2201 success: 2201 suc_rate: 100 speed: 0.2768553459119497 beg_time: "2026-03-15 20:50:56.897026" end_time: "2026-03-15 20:50:57.691792" }
+{ stage: "Sink" name: "sink_stat" target: "__runtime" total: 40 success: 40 suc_rate: 100 speed: 4 beg_time: "2026-03-15 20:50:58.890931" end_time: "2026-03-15 20:50:58.890932" }
+{ stage: "Sink" name: "sink_stat" target: "monitor/[0]" total: 3 success: 3 suc_rate: 100 speed: 0.00410958904109589 beg_time: "2026-03-15 20:50:57.817875" end_time: "2026-03-15 20:50:57.890618" }
+{ stage: "Sink" name: "sink_stat" target: "miss/[0]" total: 3482 success: 3482 suc_rate: 100 speed: 0.32240740740740736 beg_time: "2026-03-15 20:50:57.711900" end_time: "2026-03-15 20:50:58.791576" }
+{ stage: "Sink" name: "sink_stat" target: "__runtime" total: 30 success: 30 suc_rate: 100 speed: 3 beg_time: "2026-03-15 22:12:18.243450" end_time: "2026-03-15 22:12:18.243451" }
+{ stage: "Parse" name: "parse_stat" target: "/wpl/wparse/line" total: 1447 success: 1447 suc_rate: 100 speed: 0.16295045045045045 beg_time: "2026-03-15 22:12:17.330303" end_time: "2026-03-15 22:12:18.217493" }
+{ stage: "Pick" name: "pick_stat" target: "file_1" total: 6908 success: 6908 suc_rate: 100 speed: 53.138461538461534 beg_time: "2026-03-15 22:12:17.329982" end_time: "2026-03-15 22:12:17.342821" }
+{ stage: "Sink" name: "sink_stat" target: "miss/[0]" total: 2904 success: 2904 suc_rate: 100 speed: 0.36074534161490684 beg_time: "2026-03-15 22:12:17.338026" end_time: "2026-03-15 22:12:18.142581" }

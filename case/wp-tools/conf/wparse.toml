@@ -4,9 +4,9 @@ skip_parse = false
 skip_sink = false
 
 [models]
-wpl = "./models/wpl"
-oml = "./models/oml"
-
+wpl = "${CASE_PATH}/models/wpl"
+oml = "${CASE_PATH}/models/oml"
+knowledge = "${CASE_PATH}/models/knowledge"
 [topology]
 sources = "./topology/sources"
 sinks = "./topology/sinks"
@@ -23,7 +23,7 @@ level = "warn,ctrl=info,data=error,matrc=error,dfx=warn,kdb=warn"
 output = "File"
 
 [log_conf.file]
-path = "./data/logs/"
+path = "${CASE_PATH}/data/logs/"
 
 [[stat.pick]]
 key = "pick_stat"

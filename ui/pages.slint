@@ -265,7 +265,7 @@ export component OverviewPage inherits Rectangle {
                                 y: timeline-panel.plot_top_inset - 8px;
                                 width: 2px;
                                 height: max(24px, parent.height - timeline-panel.plot_top_inset - timeline-panel.plot_bottom_inset + 16px);
-                                background: #9fb0c5;
+                                background: #a8b8ca;
                             }
 
                             Rectangle {
@@ -273,7 +273,7 @@ export component OverviewPage inherits Rectangle {
                                 y: timeline-panel.plot_top_inset - 8px;
                                 width: 2px;
                                 height: max(24px, parent.height - timeline-panel.plot_top_inset - timeline-panel.plot_bottom_inset + 16px);
-                                background: #9fb0c5;
+                                background: #a8b8ca;
                             }
 
                             for lane in lane-labels: Rectangle {
@@ -286,15 +286,15 @@ export component OverviewPage inherits Rectangle {
                             }
 
                             for point[i] in timeline-points: Rectangle {
-                                private property <color> tone-core: point.risk_tier >= 9 ? #991b1b
-                                    : (point.risk_tier == 8 ? #dc2626
-                                    : (point.risk_tier == 7 ? #c2410c
-                                    : (point.risk_tier == 6 ? #d97706
-                                    : (point.risk_tier == 5 ? #c99700
-                                    : (point.risk_tier == 4 ? #a3a300
-                                    : (point.risk_tier == 3 ? #6f9a2b
-                                    : (point.risk_tier == 2 ? #5f8f57
-                                    : (point.risk_tier == 1 ? #6d8f84 : #7f9b91))))))));
+                                private property <color> tone-core: point.risk_tier >= 9 ? #9f3146
+                                    : (point.risk_tier == 8 ? #b94644
+                                    : (point.risk_tier == 7 ? #c8623a
+                                    : (point.risk_tier == 6 ? #ca8431
+                                    : (point.risk_tier == 5 ? #b5962d
+                                    : (point.risk_tier == 4 ? #97a238
+                                    : (point.risk_tier == 3 ? #6e9947
+                                    : (point.risk_tier == 2 ? #5f8e68
+                                    : (point.risk_tier == 1 ? #6c8f8c : #8ca0a6))))))));
                                 private property <color> tone-selected: #475569;
                                 width: 11px + point.size_norm * 12px;
                                 height: 11px + point.size_norm * 12px;
@@ -473,7 +473,7 @@ export component OverviewPage inherits Rectangle {
 
                             Text {
                                 text: "Start";
-                                color: #6d7f95;
+                                color: #7d8fa3;
                                 width: parent.width;
                                 height: parent.height;
                                 font-size: 9px;
@@ -492,7 +492,7 @@ export component OverviewPage inherits Rectangle {
 
                             Text {
                                 text: "End";
-                                color: #6d7f95;
+                                color: #7d8fa3;
                                 width: parent.width;
                                 height: parent.height;
                                 font-size: 9px;

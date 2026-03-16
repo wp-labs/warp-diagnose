@@ -6,11 +6,18 @@ oml = ["*"]
 tags = ["biz:demo"]
 
 [[sink_group.sinks]]
+name = "json"
+connect = "file_json_sink"
+[sink_group.sinks.params]
+base = "${CASE_PATH}/data/out_dat"
+file = "wp-log.json"
+
+[[sink_group.sinks]]
 name = "arrow"
 connect = "arrow_file_sink"
 tags = ["sink:arrow"]
-
 [sink_group.sinks.params]
+base = "${CASE_PATH}/data/out_dat"
 file = "wp-log.arrow"
 tag = "wparse"
 fields = [
@@ -25,13 +32,7 @@ fields = [
   { name = "impl_importance", type = "digit" },
   { name = "action_weight", type = "digit" },
   { name = "status_weight", type = "digit" },
-  { name = "risk_score", type = "float" },
+  { name = "risk_score", type = "digit" },
   { name = "content", type = "chars" },
   { name = "source", type = "chars" },
 ]
-
-[[sink_group.sinks]]
-name = "json"
-connect = "file_json_sink"
-[sink_group.sinks.params]
-file = "wp-log.json"

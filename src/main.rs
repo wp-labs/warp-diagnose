@@ -7,6 +7,9 @@ use warp_diagnose::data;
 
 slint::include_modules!();
 
+#[cfg(target_os = "macos")]
+mod macos_icon;
+
 fn fallback_table_page_size(app: &AppWindow) -> usize {
     let table = &runtime_config().table;
     let window_height = app.get_logical_window_height() as usize;
@@ -419,6 +422,14 @@ fn main() -> Result<(), slint::PlatformError> {
     let window = &runtime_config().window;
     app.window()
         .set_size(slint::LogicalSize::new(window.width, window.height));
+
+    #[cfg(target_os = "macos")]
+    {
+        macos_icon::install_app_icon();
+        let _ = slint::invoke_from_event_loop(|| {
+            macos_icon::install_app_icon();
+        });
+    }
 
     let state = Rc::new(RefCell::new(UiState {
         dashboard: data::load_default_sources(),
