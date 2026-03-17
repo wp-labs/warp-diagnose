@@ -3,13 +3,13 @@
 
 [data]
 # Primary input for log data. Can be Arrow or JSON/NDJSON.
-primary_log_path = "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wp-tools/data/out_dat/wp-log.arrow"
+primary_log_path = "case/simple/data/out_dat/wp-log.arrow"
 
 # Raw source log path used by diagnose for fallback/context.
-wparse_log_path = "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/target_data/raw_log.dat"
+wparse_log_path = "case/simple/target_data/raw_log.dat"
 
 # Wfusion alert source. Can point to an Arrow file or an alerts directory.
-wfusion_alerts_path = "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wp-tools/alerts"
+wfusion_alerts_path = "case/simple/data/out_dat"
 wfusion_enabled = true
 
 [timeline]

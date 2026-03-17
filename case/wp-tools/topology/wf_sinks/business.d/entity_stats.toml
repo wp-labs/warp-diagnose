@@ -7,7 +7,7 @@ connect = "arrow_file_sink"
 name = "entity_stats_arrow"
 
 [sink_group.sinks.params]
-base = "../simple/data/out_dat"
+base = "${CASE_PATH}/data/out_dat"
 file = "wf-entity.arrow"
 fields = [
   { name = "__wfu_id", type = "chars" },
@@ -28,5 +28,5 @@ name = "entity_stats_json"
 fields = ["__wfu_entity_id", "subject", "event_count" ]
 
 [sink_group.sinks.params]
-base = "../simple/data/out_dat"
+base = "${CASE_PATH}/data/out_dat"
 file = "wf-entity.json"

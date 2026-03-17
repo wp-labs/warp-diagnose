@@ -7,7 +7,7 @@ connect = "arrow_file_sink"
 name = "semantic_file"
 
 [sink_group.sinks.params]
-base = "../simple/data/out_dat"
+base = "${CASE_PATH}/data/out_dat"
 file = "wf-semantic.arrow"
 tag = "wf_semantic"
 fields = [

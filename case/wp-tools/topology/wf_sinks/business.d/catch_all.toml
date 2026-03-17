@@ -7,7 +7,7 @@ connect = "arrow_file_sink"
 name = "all_alerts"
 
 [sink_group.sinks.params]
-base = "../simple/data/out_dat"
+base = "${CASE_PATH}/data/out_dat"
 file = "wf-alert.arrow"
 fields = [
   { name = "__wfu_id", type = "chars" },
@@ -36,5 +36,5 @@ connect = "file_json_sink"
 name = "all_alerts_json"
 
 [sink_group.sinks.params]
-base = "../simple/data/out_dat"
+base = "${CASE_PATH}/data/out_dat"
 file = "wf-alert.json"
