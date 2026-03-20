@@ -7,6 +7,7 @@ name = "error"
 connect = "file_json_sink"
 
 [sink_group.sinks.params]
+base = "${CASE_PATH}/data/out_dat"
 file = "error.dat"
 
 [sink_group.sinks.expect]

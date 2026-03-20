@@ -1,0 +1,41 @@
+2026-03-18T02:31:33.250753Z DEBUG [conf] engine.start{mode=batch}: loaded schema file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/simple/models/schemas/wparse_semantic.wfs schemas=4
+2026-03-18T02:31:33.252933Z DEBUG [conf] engine.start{mode=batch}: compiled rule file file=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/simple/models/rules/wparse_semantic.wfl rules=2
+2026-03-18T02:31:33.253043Z DEBUG [conf] engine.start{mode=batch}: over vs over_cap validation passed windows=4
+2026-03-18T02:31:33.257626Z  INFO [sys] engine.start{mode=batch}: engine bootstrap complete schemas=4 rules=2
+2026-03-18T02:31:33.257818Z  INFO engine.start{mode=batch}: suc! engine-bootstrap: 
+call context:
+	mode : batch
+	base_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wp-tools
+ mod_path=wf_runtime::lifecycle
+2026-03-18T02:31:33.257844Z  INFO [sys] WarpFusion reactor started without tcp listener
+2026-03-18T02:31:33.258276Z DEBUG [sys] watching task group task_group="metrics"
+2026-03-18T02:31:33.258274Z DEBUG [sys] watching task group task_group="rules"
+2026-03-18T02:31:33.258276Z DEBUG [sys] watching task group task_group="alert"
+2026-03-18T02:31:33.258298Z DEBUG [sys] task group finished task_group="metrics"
+2026-03-18T02:31:33.258376Z DEBUG [sys] watching task group task_group="evictor"
+2026-03-18T02:31:33.258502Z DEBUG [sys] watching task group task_group="receiver"
+2026-03-18T02:31:33.258866Z  INFO [conn] starting arrow file replay source=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/simple/data/out_dat/wp-log.arrow stream="wparse"
+2026-03-18T02:31:33.258799Z DEBUG [pipe] <window_risk#0> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-18T02:31:33.258802Z DEBUG [pipe] <window_entity_stats#1> read_since window=wparse_events cursor=0 new_cursor=0 batches=0 gap=false
+2026-03-18T02:31:33.259986Z DEBUG [pipe] frame decoded stream="wparse" rows=116
+2026-03-18T02:31:33.260079Z DEBUG [pipe] route report delivered=1 dropped_late=0 skipped=0
+2026-03-18T02:31:33.260093Z DEBUG [pipe] <window_entity_stats#1> read_since window=wparse_events cursor=0 new_cursor=1 batches=1 gap=false
+2026-03-18T02:31:33.260098Z DEBUG [pipe] <window_risk#0> read_since window=wparse_events cursor=0 new_cursor=1 batches=1 gap=false
+2026-03-18T02:31:33.261007Z DEBUG [pipe] frame decoded stream="wparse" rows=1066
+2026-03-18T02:31:33.261106Z DEBUG [pipe] route report delivered=1 dropped_late=0 skipped=0
+2026-03-18T02:31:33.261900Z DEBUG [pipe] frame decoded stream="wparse" rows=981
+2026-03-18T02:31:33.261995Z DEBUG [pipe] route report delivered=1 dropped_late=0 skipped=0
+2026-03-18T02:31:33.262043Z  INFO [conn] arrow file replay complete source=/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/simple/data/out_dat/wp-log.arrow stream="wparse" rows=2163
+2026-03-18T02:31:33.262075Z  INFO [sys] batch receiver completed; initiating automatic shutdown task_group="receiver"
+2026-03-18T02:31:33.262085Z DEBUG [sys] task group finished task_group="receiver"
+2026-03-18T02:31:33.262111Z DEBUG [sys] task group finished task_group="evictor"
+2026-03-18T02:31:33.264521Z DEBUG [pipe] <window_entity_stats#1> read_since window=wparse_events cursor=1 new_cursor=3 batches=2 gap=false
+2026-03-18T02:31:33.267513Z DEBUG [pipe] <window_risk#0> read_since window=wparse_events cursor=1 new_cursor=3 batches=2 gap=false
+2026-03-18T02:31:33.332227Z DEBUG [pipe] <window_entity_stats#1> flush complete alerts=28
+2026-03-18T02:31:33.333140Z DEBUG [pipe] <window_entity_stats#1> rule task shutdown complete
+2026-03-18T02:31:33.334879Z  INFO arrow_file sink first-send: tag=default rows=1 payload_bytes=5907 log.target="wp_core_connectors::sinks::arrow_file" log.module_path="wp_core_connectors::sinks::arrow_file" log.file="/Users/zuowenjian/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wp-core-connectors-0.1.0/src/sinks/arrow_file.rs" log.line=161
+2026-03-18T02:31:33.339546Z DEBUG [pipe] <window_risk#0> flush complete alerts=2
+2026-03-18T02:31:33.339558Z DEBUG [pipe] <window_risk#0> rule task shutdown complete
+2026-03-18T02:31:33.339593Z DEBUG [sys] task group finished task_group="rules"
+2026-03-18T02:31:33.340054Z  INFO arrow_file sink first-send: tag=default rows=1 payload_bytes=3091 log.target="wp_core_connectors::sinks::arrow_file" log.module_path="wp_core_connectors::sinks::arrow_file" log.file="/Users/zuowenjian/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wp-core-connectors-0.1.0/src/sinks/arrow_file.rs" log.line=161
+2026-03-18T02:31:33.355223Z DEBUG [sys] task group finished task_group="alert"

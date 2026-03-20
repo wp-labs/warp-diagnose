@@ -7,6 +7,7 @@ name = "miss"
 connect = "file_raw_sink"
 
 [sink_group.sinks.params]
+base = "${CASE_PATH}/data/out_dat"
 file = "miss.dat"
 
 [sink_group.sinks.expect]

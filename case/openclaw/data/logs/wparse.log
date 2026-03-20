@@ -1,0 +1,2502 @@
+2026-03-19 11:04:20.133344000 [INFO ] [ctrl   ] log conf: level: warn,ctrl=info,data=error,matrc=error,dfx=warn,kdb=warn
+output: File
+path: Some("../openclaw/data/logs/")
+ 
+2026-03-19 11:04:20.133536000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='arrow-file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:11 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:11
+2026-03-19 11:04:20.133584000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='arrow-ipc' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:12 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:12
+2026-03-19 11:04:20.133619000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='blackhole' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:13 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:13
+2026-03-19 11:04:20.133653000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:14 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:14
+2026-03-19 11:04:20.133686000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='syslog' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:15 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:15
+2026-03-19 11:04:20.133717000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='tcp' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:16 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:16
+2026-03-19 11:04:20.133747000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='test_rescue' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:17 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:17
+2026-03-19 11:04:20.133778000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='syslog' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/syslog/mod.rs:48 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/syslog/mod.rs:48
+2026-03-19 11:04:20.133812000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='tcp' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/tcp/factory.rs:116 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/tcp/factory.rs:116
+2026-03-19 11:04:20.133842000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/file/factory.rs:140 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/file/factory.rs:140
+2026-03-19 11:04:20.133936000 [INFO ] [ctrl   ] version 0.21.0 (branch env/local, commit 2b94aa99, built 2026-03-17T19:00:25+08:00 via rustc 1.92.0 (ded5c06cf 2025-12-08))
+2026-03-19 11:04:20.133965000 [INFO ] [ctrl   ] enterprise control plane disabled (feature 'enterprise-backend' not enabled)
+2026-03-19 11:04:20.134325000 [INFO ] [ctrl   ] build engine with run_mode=Batch, parallel=2, line_max=None
+2026-03-19 11:04:20.135103000 [INFO ] [ctrl   ] semantic dict: 语义词典配置有效: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/semantic_dict.toml | 模式: ADD（扩展内置词典） | 词汇数: 179
+2026-03-19 11:04:20.139265000 [INFO ] [ctrl   ] suc! load table to kdb: 
+call context:
+	table_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/./example
+	data_path : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/./example/data.csv
+
+2026-03-19 11:04:20.139304000 [INFO ] [ctrl   ] load table /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/. suc!
+2026-03-19 11:04:20.139424000 [INFO ] [ctrl   ] init authority knowdb success(/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/knowdb.toml) 
+2026-03-19 11:04:20.140981000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : default/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:04:20.141001000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : default/[0]
+	kind : file
+
+2026-03-19 11:04:20.141030000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : error/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:04:20.141047000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : error/[0]
+	kind : file
+
+2026-03-19 11:04:20.141072000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : miss/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:04:20.141088000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : miss/[0]
+	kind : file
+
+2026-03-19 11:04:20.141112000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : monitor/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:04:20.141127000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : monitor/[0]
+	kind : file
+
+2026-03-19 11:04:20.141152000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : residue/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:04:20.141167000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : residue/[0]
+	kind : file
+
+2026-03-19 11:04:20.141506000 [INFO ] [ctrl   ] create sink:default/[0] batch_size=128
+2026-03-19 11:04:20.141638000 [INFO ] [ctrl   ] create sink:residue/[0] batch_size=1
+2026-03-19 11:04:20.141751000 [INFO ] [ctrl   ] create sink:miss/[0] batch_size=1
+2026-03-19 11:04:20.141856000 [INFO ] [ctrl   ] create sink:error/[0] batch_size=1
+2026-03-19 11:04:20.141988000 [INFO ] [ctrl   ] create sink:monitor/[0] batch_size=1
+2026-03-19 11:04:20.142630000 [INFO ] [ctrl   ] load all wpl code beg...
+2026-03-19 11:04:20.142652000 [INFO ] [ctrl   ] find conf files in: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl
+2026-03-19 11:04:20.142799000 [INFO ] [ctrl   ] load conf file: "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl/parse.wpl"
+2026-03-19 11:04:20.142973000 [INFO ] [ctrl   ] success load & parse code : "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl/parse.wpl"
+2026-03-19 11:04:20.143000000 [INFO ] [ctrl   ] load all wpl code end
+2026-03-19 11:04:20.143021000 [INFO ] [ctrl   ] load all oml model
+2026-03-19 11:04:20.143037000 [INFO ] [ctrl   ] find conf files in: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/oml
+2026-03-19 11:04:20.144011000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : demo/json
+	kind : file
+: validate suc!
+2026-03-19 11:04:20.144027000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : demo/json
+	kind : file
+
+2026-03-19 11:04:20.144069000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : demo/arrow
+	kind : arrow-file
+: validate suc!
+2026-03-19 11:04:20.144084000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : demo/arrow
+	kind : arrow-file
+
+2026-03-19 11:04:20.144234000 [INFO ] [ctrl   ] init SinkGroup: demo
+2026-03-19 11:04:20.144261000 [INFO ] [ctrl   ] alloc sink res : sink demo 
+2026-03-19 11:04:20.144489000 [INFO ] [ctrl   ] create sink:demo/json batch_size=1024
+2026-03-19 11:04:20.144725000 [INFO ] [ctrl   ] create sink:demo/arrow batch_size=1024
+2026-03-19 11:04:20.144823000 [INFO ] [ctrl   ] alloc parse res : wpl rule /wpl/wparse/line  
+2026-03-19 11:04:20.144971000 [WARN ] [ctrl   ] rule_mapping.dat 生成时未加载任何 OML 模型，请检查 [models].oml 配置 (当前: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/oml)
+2026-03-19 11:04:20.145082000 [INFO ] [ctrl   ] save data file suc : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wp-tools/.run/rule_mapping.dat 
+2026-03-19 11:04:20.145152000 [INFO ] [ctrl   ] start warp-service: run_mode=batch, parallel=2, line_max=None
+2026-03-19 11:04:20.145182000 [INFO ] [ctrl   ] semantic analysis: enabled
+2026-03-19 11:04:20.145228000 [INFO ] [ctrl   ] 数据源配置统计: V2源=1个, 接受器(来自V2)=0个
+2026-03-19 11:04:20.145248000 [INFO ] [ctrl   ] run-mode=batch: 跳过启动接受器任务
+2026-03-19 11:04:20.145266000 [INFO ] [ctrl   ] monitor proc start: stat_sec=60, stat_print=false
+2026-03-19 11:04:20.145388000 [INFO ] [ctrl   ] start 2 parallel to parse (frames)
+2026-03-19 11:04:20.145431000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:04:20.145446000 [INFO ] [ctrl   ] monitor loop started (stat_sec=60, stat_print=false)
+2026-03-19 11:04:20.145524000 [INFO ] [ctrl   ] actor(wparse-parse) work start
+2026-03-19 11:04:20.145620000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:04:20.145636000 [WARN ] [ctrl   ] parse engine pipelin cnt: 1
+2026-03-19 11:04:20.145677000 [INFO ] [ctrl   ] actor(wparse-parse) work start
+2026-03-19 11:04:20.145801000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:04:20.145906000 [INFO ] [ctrl   ] spawn tokio Sink Group demo batch_size=1024 batch_timeout_ms=300
+2026-03-19 11:04:20.146017000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:04:20.146128000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:04:20.146149000 [WARN ] [ctrl   ] parse engine pipelin cnt: 1
+2026-03-19 11:04:20.146167000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:04:20.246843000 [INFO ] [ctrl   ] 启动数据收集(Frame)： 1个数据源
+2026-03-19 11:04:20.246901000 [INFO ] [ctrl   ] spawning picker for source 'file_1' (line_max=None, speed_limit=20000)
+2026-03-19 11:04:20.246943000 [WARN ] [ctrl   ] engine started!
+2026-03-19 11:04:20.246971000 [INFO ] [ctrl   ] 启动数据源 picker(Frame): file_1
+2026-03-19 11:04:20.247054000 [INFO ] [ctrl   ] Starting data source 'file_1'
+2026-03-19 11:04:20.247102000 [INFO ] [ctrl   ] Data source 'file_1' started (speed_limit=Some(20000), max_count=None)
+2026-03-19 11:04:20.247130000 [INFO ] [ctrl   ] file_1-picker speed init 20000  limit ns times:800000000,
+2026-03-19 11:04:20.247145000 [WARN ] [ctrl   ] actor:file_1-picker 20000
+2026-03-19 11:04:20.247947000 [INFO ] [ctrl   ] file_1-picker round status=Terminal (pending_cnt=0, send_cnt=0)
+2026-03-19 11:04:20.247993000 [INFO ] [ctrl   ] Closing data source 'file_1'
+2026-03-19 11:04:20.248010000 [INFO ] [ctrl   ] file_1-picker dispatch loop exited (max_line=None, total_pending=0)
+2026-03-19 11:04:20.248032000 [INFO ] [ctrl   ] 数据源 'file_1' picker 正常结束
+2026-03-19 11:04:20.259329000 [INFO ] [ctrl   ] exit-policy Batch: enter quiescing (trigger=RoleFinished(Picker))
+2026-03-19 11:04:20.259374000 [INFO ] [ctrl   ] data channel closed; parser loop exits
+2026-03-19 11:04:20.259392000 [INFO ] [ctrl   ] engine proc frames end: total 6
+2026-03-19 11:04:20.259427000 [INFO ] [ctrl   ] actor(wparse-parse) work end
+2026-03-19 11:04:20.295252000 [INFO ] [ctrl   ] data channel closed; parser loop exits
+2026-03-19 11:04:20.295302000 [INFO ] [ctrl   ] engine proc frames end: total 44
+2026-03-19 11:04:20.295336000 [INFO ] [ctrl   ] actor(wparse-parse) work end
+2026-03-19 11:04:20.305550000 [INFO ] [ctrl   ] exit-policy Batch: enter stopping (trigger=RoleFinished(Parser))
+2026-03-19 11:04:20.305584000 [INFO ] [ctrl   ] picker broadcast cmd :Isolate
+2026-03-19 11:04:20.305609000 [INFO ] [ctrl   ] wpl-parse broadcast cmd :Isolate
+2026-03-19 11:04:20.305625000 [INFO ] [ctrl   ] amt broadcast cmd :Isolate
+2026-03-19 11:04:20.305639000 [INFO ] [ctrl   ] oml-sink broadcast cmd :Isolate
+2026-03-19 11:04:20.305653000 [INFO ] [ctrl   ] infra broadcast cmd :Isolate
+2026-03-19 11:04:20.305667000 [INFO ] [ctrl   ] monitor broadcast cmd :Isolate
+2026-03-19 11:04:20.305683000 [INFO ] [ctrl   ] work-sink:demo                 update cmd: CtrlCmd::Alone 
+2026-03-19 11:04:20.305708000 [INFO ] [ctrl   ] picker broadcast cmd :Stop(Immediate) 
+2026-03-19 11:04:20.305725000 [INFO ] [ctrl   ] monitor recv cmd: CtrlCmd::Alone
+2026-03-19 11:04:20.305760000 [INFO ] [ctrl   ] monitor update cmd: CtrlCmd::Alone 
+2026-03-19 11:04:20.305779000 [INFO ] [ctrl   ] picker group routines end
+2026-03-19 11:04:20.305792000 [INFO ] [ctrl   ] role group Picker(picker) await end!
+2026-03-19 11:04:20.305803000 [INFO ] [ctrl   ] wpl-parse broadcast cmd :Stop(Immediate) 
+2026-03-19 11:04:20.305817000 [INFO ] [ctrl   ] wpl-parse group routines end
+2026-03-19 11:04:20.305827000 [INFO ] [ctrl   ] role group Parser(wpl-parse) await end!
+2026-03-19 11:04:20.305837000 [INFO ] [ctrl   ] amt broadcast cmd :Stop(Immediate) 
+2026-03-19 11:04:20.305847000 [INFO ] [ctrl   ] amt group routines [0] wait... 
+2026-03-19 11:04:20.305861000 [INFO ] [ctrl   ] infra sinks  update cmd: CtrlCmd::Alone 
+2026-03-19 11:04:20.308003000 [INFO ] [ctrl   ] maintainer Recv cmd : Isolate
+2026-03-19 11:04:20.332489000 [INFO ] [ctrl   ] maintainer Recv cmd : Stop(Immediate)
+2026-03-19 11:04:20.332538000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:04:20.332579000 [INFO ] [ctrl   ] amt group routines end
+2026-03-19 11:04:20.332593000 [INFO ] [ctrl   ] role group Maintainer(amt) await end!
+2026-03-19 11:04:20.332605000 [INFO ] [ctrl   ] oml-sink broadcast cmd :Stop(Immediate) 
+2026-03-19 11:04:20.332620000 [INFO ] [ctrl   ] oml-sink group routines [0] wait... 
+2026-03-19 11:04:20.332634000 [INFO ] [ctrl   ] work-sink:demo                 update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:04:20.332654000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:04:20.332667000 [INFO ] [ctrl   ] demo enter draining state
+2026-03-19 11:04:20.332680000 [INFO ] [ctrl   ] demo drain complete
+2026-03-19 11:04:20.338589000 [INFO ] [ctrl   ] demo async sinks proc end
+2026-03-19 11:04:20.338712000 [INFO ] [ctrl   ] oml-sink group routines end
+2026-03-19 11:04:20.338735000 [INFO ] [ctrl   ] role group Sink(oml-sink) await end!
+2026-03-19 11:04:20.338746000 [INFO ] [ctrl   ] infra broadcast cmd :Stop(Immediate) 
+2026-03-19 11:04:20.338760000 [INFO ] [ctrl   ] infra group routines [0] wait... 
+2026-03-19 11:04:20.338773000 [INFO ] [ctrl   ] infra sinks  update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:04:20.338790000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:04:20.338802000 [INFO ] [ctrl   ] infra sinks enter draining state
+2026-03-19 11:04:20.338820000 [INFO ] [ctrl   ] infra sinks drain complete
+2026-03-19 11:04:20.345527000 [INFO ] [ctrl   ] infra:default async sinks proc end
+2026-03-19 11:04:20.348619000 [INFO ] [ctrl   ] infra:miss async sinks proc end
+2026-03-19 11:04:20.352753000 [INFO ] [ctrl   ] infra:residue async sinks proc end
+2026-03-19 11:04:20.355613000 [INFO ] [ctrl   ] infra:monitor async sinks proc end
+2026-03-19 11:04:20.359485000 [INFO ] [ctrl   ] infra:error async sinks proc end
+2026-03-19 11:04:20.359622000 [INFO ] [ctrl   ] infra group routines end
+2026-03-19 11:04:20.359637000 [INFO ] [ctrl   ] role group Infra(infra) await end!
+2026-03-19 11:04:20.359651000 [INFO ] [ctrl   ] monitor broadcast cmd :Stop(Immediate) 
+2026-03-19 11:04:20.359667000 [INFO ] [ctrl   ] monitor group routines [0] wait... 
+2026-03-19 11:04:20.359682000 [INFO ] [ctrl   ] monitor recv cmd: CtrlCmd::Stop(StopNow)
+2026-03-19 11:04:20.359699000 [INFO ] [ctrl   ] monitor update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:04:20.359710000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:04:20.359760000 [INFO ] [ctrl   ] monitor proc end (total_events=19)
+2026-03-19 11:04:20.360565000 [INFO ] [ctrl   ] monitor group routines end
+2026-03-19 11:04:20.360577000 [INFO ] [ctrl   ] role group Monitor(monitor) await end!
+2026-03-19 11:04:20.360586000 [INFO ] [ctrl   ] all role groups await end!
+2026-03-19 11:06:22.195826000 [INFO ] [ctrl   ] log conf: level: warn,ctrl=info,data=error,matrc=error,dfx=warn,kdb=warn
+output: File
+path: Some("../openclaw/data/logs/")
+ 
+2026-03-19 11:06:22.195968000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='arrow-file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:11 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:11
+2026-03-19 11:06:22.196003000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='arrow-ipc' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:12 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:12
+2026-03-19 11:06:22.196018000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='blackhole' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:13 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:13
+2026-03-19 11:06:22.196031000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:14 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:14
+2026-03-19 11:06:22.196046000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='syslog' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:15 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:15
+2026-03-19 11:06:22.196058000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='tcp' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:16 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:16
+2026-03-19 11:06:22.196070000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='test_rescue' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:17 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:17
+2026-03-19 11:06:22.196084000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='syslog' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/syslog/mod.rs:48 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/syslog/mod.rs:48
+2026-03-19 11:06:22.196097000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='tcp' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/tcp/factory.rs:116 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/tcp/factory.rs:116
+2026-03-19 11:06:22.196109000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/file/factory.rs:140 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/file/factory.rs:140
+2026-03-19 11:06:22.196161000 [INFO ] [ctrl   ] version 0.21.0 (branch env/local, commit 2b94aa99, built 2026-03-17T19:00:25+08:00 via rustc 1.92.0 (ded5c06cf 2025-12-08))
+2026-03-19 11:06:22.196175000 [INFO ] [ctrl   ] enterprise control plane disabled (feature 'enterprise-backend' not enabled)
+2026-03-19 11:06:22.196600000 [INFO ] [ctrl   ] build engine with run_mode=Batch, parallel=2, line_max=None
+2026-03-19 11:06:22.197059000 [INFO ] [ctrl   ] semantic dict: 语义词典配置有效: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/semantic_dict.toml | 模式: ADD（扩展内置词典） | 词汇数: 179
+2026-03-19 11:06:22.201250000 [INFO ] [ctrl   ] suc! load table to kdb: 
+call context:
+	table_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/./example
+	data_path : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/./example/data.csv
+
+2026-03-19 11:06:22.201286000 [INFO ] [ctrl   ] load table /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/. suc!
+2026-03-19 11:06:22.201384000 [INFO ] [ctrl   ] init authority knowdb success(/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/knowdb.toml) 
+2026-03-19 11:06:22.202899000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : default/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:06:22.202930000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : default/[0]
+	kind : file
+
+2026-03-19 11:06:22.202964000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : error/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:06:22.202983000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : error/[0]
+	kind : file
+
+2026-03-19 11:06:22.203012000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : miss/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:06:22.203030000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : miss/[0]
+	kind : file
+
+2026-03-19 11:06:22.203057000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : monitor/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:06:22.203074000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : monitor/[0]
+	kind : file
+
+2026-03-19 11:06:22.203100000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : residue/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:06:22.203117000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : residue/[0]
+	kind : file
+
+2026-03-19 11:06:22.203591000 [INFO ] [ctrl   ] create sink:default/[0] batch_size=128
+2026-03-19 11:06:22.203792000 [INFO ] [ctrl   ] create sink:residue/[0] batch_size=1
+2026-03-19 11:06:22.204108000 [INFO ] [ctrl   ] create sink:miss/[0] batch_size=1
+2026-03-19 11:06:22.204356000 [INFO ] [ctrl   ] create sink:error/[0] batch_size=1
+2026-03-19 11:06:22.204566000 [INFO ] [ctrl   ] create sink:monitor/[0] batch_size=1
+2026-03-19 11:06:22.205191000 [INFO ] [ctrl   ] load all wpl code beg...
+2026-03-19 11:06:22.205216000 [INFO ] [ctrl   ] find conf files in: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl
+2026-03-19 11:06:22.205365000 [INFO ] [ctrl   ] load conf file: "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl/parse.wpl"
+2026-03-19 11:06:22.205540000 [INFO ] [ctrl   ] success load & parse code : "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl/parse.wpl"
+2026-03-19 11:06:22.205569000 [INFO ] [ctrl   ] load all wpl code end
+2026-03-19 11:06:22.205591000 [INFO ] [ctrl   ] load all oml model
+2026-03-19 11:06:22.205608000 [INFO ] [ctrl   ] find conf files in: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/oml
+2026-03-19 11:06:22.206627000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : demo/json
+	kind : file
+: validate suc!
+2026-03-19 11:06:22.206654000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : demo/json
+	kind : file
+
+2026-03-19 11:06:22.206699000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : demo/arrow
+	kind : arrow-file
+: validate suc!
+2026-03-19 11:06:22.206715000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : demo/arrow
+	kind : arrow-file
+
+2026-03-19 11:06:22.206868000 [INFO ] [ctrl   ] init SinkGroup: demo
+2026-03-19 11:06:22.206895000 [INFO ] [ctrl   ] alloc sink res : sink demo 
+2026-03-19 11:06:22.207035000 [INFO ] [ctrl   ] create sink:demo/json batch_size=1024
+2026-03-19 11:06:22.207222000 [INFO ] [ctrl   ] create sink:demo/arrow batch_size=1024
+2026-03-19 11:06:22.207315000 [INFO ] [ctrl   ] alloc parse res : wpl rule /wpl/wparse/line  
+2026-03-19 11:06:22.207473000 [WARN ] [ctrl   ] rule_mapping.dat 生成时未加载任何 OML 模型，请检查 [models].oml 配置 (当前: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/oml)
+2026-03-19 11:06:22.207612000 [INFO ] [ctrl   ] save data file suc : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wp-tools/.run/rule_mapping.dat 
+2026-03-19 11:06:22.207664000 [INFO ] [ctrl   ] start warp-service: run_mode=batch, parallel=2, line_max=None
+2026-03-19 11:06:22.207680000 [INFO ] [ctrl   ] semantic analysis: enabled
+2026-03-19 11:06:22.207721000 [INFO ] [ctrl   ] 数据源配置统计: V2源=1个, 接受器(来自V2)=0个
+2026-03-19 11:06:22.207738000 [INFO ] [ctrl   ] run-mode=batch: 跳过启动接受器任务
+2026-03-19 11:06:22.207757000 [INFO ] [ctrl   ] start 2 parallel to parse (frames)
+2026-03-19 11:06:22.207784000 [INFO ] [ctrl   ] monitor proc start: stat_sec=60, stat_print=false
+2026-03-19 11:06:22.207927000 [INFO ] [ctrl   ] actor(wparse-parse) work start
+2026-03-19 11:06:22.208058000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:06:22.208077000 [WARN ] [ctrl   ] parse engine pipelin cnt: 1
+2026-03-19 11:06:22.208100000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:06:22.208209000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:06:22.208306000 [INFO ] [ctrl   ] spawn tokio Sink Group demo batch_size=1024 batch_timeout_ms=300
+2026-03-19 11:06:22.208425000 [INFO ] [ctrl   ] actor(wparse-parse) work start
+2026-03-19 11:06:22.208514000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:06:22.208531000 [INFO ] [ctrl   ] monitor loop started (stat_sec=60, stat_print=false)
+2026-03-19 11:06:22.208547000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:06:22.208565000 [WARN ] [ctrl   ] parse engine pipelin cnt: 1
+2026-03-19 11:06:22.208584000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:06:22.309831000 [INFO ] [ctrl   ] 启动数据收集(Frame)： 1个数据源
+2026-03-19 11:06:22.309883000 [INFO ] [ctrl   ] spawning picker for source 'file_1' (line_max=None, speed_limit=20000)
+2026-03-19 11:06:22.309926000 [WARN ] [ctrl   ] engine started!
+2026-03-19 11:06:22.309945000 [INFO ] [ctrl   ] 启动数据源 picker(Frame): file_1
+2026-03-19 11:06:22.310000000 [INFO ] [ctrl   ] Starting data source 'file_1'
+2026-03-19 11:06:22.310084000 [INFO ] [ctrl   ] Data source 'file_1' started (speed_limit=Some(20000), max_count=None)
+2026-03-19 11:06:22.310137000 [INFO ] [ctrl   ] file_1-picker speed init 20000  limit ns times:800000000,
+2026-03-19 11:06:22.310157000 [WARN ] [ctrl   ] actor:file_1-picker 20000
+2026-03-19 11:06:22.311127000 [INFO ] [ctrl   ] file_1-picker round status=Terminal (pending_cnt=0, send_cnt=0)
+2026-03-19 11:06:22.311183000 [INFO ] [ctrl   ] Closing data source 'file_1'
+2026-03-19 11:06:22.311208000 [INFO ] [ctrl   ] file_1-picker dispatch loop exited (max_line=None, total_pending=0)
+2026-03-19 11:06:22.311252000 [INFO ] [ctrl   ] 数据源 'file_1' picker 正常结束
+2026-03-19 11:06:22.322381000 [INFO ] [ctrl   ] exit-policy Batch: enter quiescing (trigger=RoleFinished(Picker))
+2026-03-19 11:06:22.322429000 [INFO ] [ctrl   ] data channel closed; parser loop exits
+2026-03-19 11:06:22.322461000 [INFO ] [ctrl   ] engine proc frames end: total 6
+2026-03-19 11:06:22.322525000 [INFO ] [ctrl   ] actor(wparse-parse) work end
+2026-03-19 11:06:22.358156000 [INFO ] [ctrl   ] data channel closed; parser loop exits
+2026-03-19 11:06:22.358187000 [INFO ] [ctrl   ] engine proc frames end: total 44
+2026-03-19 11:06:22.358217000 [INFO ] [ctrl   ] actor(wparse-parse) work end
+2026-03-19 11:06:22.369274000 [INFO ] [ctrl   ] exit-policy Batch: enter stopping (trigger=RoleFinished(Parser))
+2026-03-19 11:06:22.369303000 [INFO ] [ctrl   ] picker broadcast cmd :Isolate
+2026-03-19 11:06:22.369326000 [INFO ] [ctrl   ] wpl-parse broadcast cmd :Isolate
+2026-03-19 11:06:22.369344000 [INFO ] [ctrl   ] amt broadcast cmd :Isolate
+2026-03-19 11:06:22.369360000 [INFO ] [ctrl   ] oml-sink broadcast cmd :Isolate
+2026-03-19 11:06:22.369371000 [INFO ] [ctrl   ] maintainer Recv cmd : Isolate
+2026-03-19 11:06:22.369390000 [INFO ] [ctrl   ] infra broadcast cmd :Isolate
+2026-03-19 11:06:22.369412000 [INFO ] [ctrl   ] work-sink:demo                 update cmd: CtrlCmd::Alone 
+2026-03-19 11:06:22.369446000 [INFO ] [ctrl   ] monitor broadcast cmd :Isolate
+2026-03-19 11:06:22.369464000 [INFO ] [ctrl   ] infra sinks  update cmd: CtrlCmd::Alone 
+2026-03-19 11:06:22.369479000 [INFO ] [ctrl   ] monitor recv cmd: CtrlCmd::Alone
+2026-03-19 11:06:22.369496000 [INFO ] [ctrl   ] monitor update cmd: CtrlCmd::Alone 
+2026-03-19 11:06:22.369513000 [INFO ] [ctrl   ] picker broadcast cmd :Stop(Immediate) 
+2026-03-19 11:06:22.369533000 [INFO ] [ctrl   ] picker group routines end
+2026-03-19 11:06:22.369551000 [INFO ] [ctrl   ] role group Picker(picker) await end!
+2026-03-19 11:06:22.369576000 [INFO ] [ctrl   ] wpl-parse broadcast cmd :Stop(Immediate) 
+2026-03-19 11:06:22.369590000 [INFO ] [ctrl   ] wpl-parse group routines end
+2026-03-19 11:06:22.369600000 [INFO ] [ctrl   ] role group Parser(wpl-parse) await end!
+2026-03-19 11:06:22.369609000 [INFO ] [ctrl   ] amt broadcast cmd :Stop(Immediate) 
+2026-03-19 11:06:22.369619000 [INFO ] [ctrl   ] amt group routines [0] wait... 
+2026-03-19 11:06:22.393912000 [INFO ] [ctrl   ] maintainer Recv cmd : Stop(Immediate)
+2026-03-19 11:06:22.393952000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:06:22.393995000 [INFO ] [ctrl   ] amt group routines end
+2026-03-19 11:06:22.394012000 [INFO ] [ctrl   ] role group Maintainer(amt) await end!
+2026-03-19 11:06:22.394026000 [INFO ] [ctrl   ] oml-sink broadcast cmd :Stop(Immediate) 
+2026-03-19 11:06:22.394043000 [INFO ] [ctrl   ] oml-sink group routines [0] wait... 
+2026-03-19 11:06:22.394054000 [INFO ] [ctrl   ] work-sink:demo                 update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:06:22.394070000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:06:22.394080000 [INFO ] [ctrl   ] demo enter draining state
+2026-03-19 11:06:22.394093000 [INFO ] [ctrl   ] demo drain complete
+2026-03-19 11:06:22.398800000 [INFO ] [ctrl   ] demo async sinks proc end
+2026-03-19 11:06:22.398909000 [INFO ] [ctrl   ] oml-sink group routines end
+2026-03-19 11:06:22.398924000 [INFO ] [ctrl   ] role group Sink(oml-sink) await end!
+2026-03-19 11:06:22.398936000 [INFO ] [ctrl   ] infra broadcast cmd :Stop(Immediate) 
+2026-03-19 11:06:22.398952000 [INFO ] [ctrl   ] infra group routines [0] wait... 
+2026-03-19 11:06:22.398963000 [INFO ] [ctrl   ] infra sinks  update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:06:22.398978000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:06:22.398990000 [INFO ] [ctrl   ] infra sinks enter draining state
+2026-03-19 11:06:22.399009000 [INFO ] [ctrl   ] infra sinks drain complete
+2026-03-19 11:06:22.406653000 [INFO ] [ctrl   ] infra:default async sinks proc end
+2026-03-19 11:06:22.410818000 [INFO ] [ctrl   ] infra:miss async sinks proc end
+2026-03-19 11:06:22.414666000 [INFO ] [ctrl   ] infra:residue async sinks proc end
+2026-03-19 11:06:22.418808000 [INFO ] [ctrl   ] infra:monitor async sinks proc end
+2026-03-19 11:06:22.422670000 [INFO ] [ctrl   ] infra:error async sinks proc end
+2026-03-19 11:06:22.422774000 [INFO ] [ctrl   ] infra group routines end
+2026-03-19 11:06:22.422792000 [INFO ] [ctrl   ] role group Infra(infra) await end!
+2026-03-19 11:06:22.422806000 [INFO ] [ctrl   ] monitor broadcast cmd :Stop(Immediate) 
+2026-03-19 11:06:22.422824000 [INFO ] [ctrl   ] monitor group routines [0] wait... 
+2026-03-19 11:06:22.422839000 [INFO ] [ctrl   ] monitor recv cmd: CtrlCmd::Stop(StopNow)
+2026-03-19 11:06:22.422853000 [INFO ] [ctrl   ] monitor update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:06:22.422865000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:06:22.422914000 [INFO ] [ctrl   ] monitor proc end (total_events=19)
+2026-03-19 11:06:22.423865000 [INFO ] [ctrl   ] monitor group routines end
+2026-03-19 11:06:22.423880000 [INFO ] [ctrl   ] role group Monitor(monitor) await end!
+2026-03-19 11:06:22.423891000 [INFO ] [ctrl   ] all role groups await end!
+2026-03-19 11:08:21.765819000 [INFO ] [ctrl   ] log conf: level: warn,ctrl=info,data=error,matrc=error,dfx=warn,kdb=warn
+output: File
+path: Some("../openclaw/data/logs/")
+ 
+2026-03-19 11:08:21.766248000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='arrow-file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:11 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:11
+2026-03-19 11:08:21.766303000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='arrow-ipc' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:12 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:12
+2026-03-19 11:08:21.766339000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='blackhole' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:13 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:13
+2026-03-19 11:08:21.766387000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:14 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:14
+2026-03-19 11:08:21.766421000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='syslog' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:15 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:15
+2026-03-19 11:08:21.766451000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='tcp' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:16 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:16
+2026-03-19 11:08:21.766480000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='test_rescue' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:17 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:17
+2026-03-19 11:08:21.766614000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='syslog' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/syslog/mod.rs:48 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/syslog/mod.rs:48
+2026-03-19 11:08:21.766691000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='tcp' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/tcp/factory.rs:116 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/tcp/factory.rs:116
+2026-03-19 11:08:21.766723000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/file/factory.rs:140 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/file/factory.rs:140
+2026-03-19 11:08:21.766896000 [INFO ] [ctrl   ] version 0.21.0 (branch env/local, commit 2b94aa99, built 2026-03-17T19:00:25+08:00 via rustc 1.92.0 (ded5c06cf 2025-12-08))
+2026-03-19 11:08:21.766929000 [INFO ] [ctrl   ] enterprise control plane disabled (feature 'enterprise-backend' not enabled)
+2026-03-19 11:08:21.767598000 [INFO ] [ctrl   ] build engine with run_mode=Batch, parallel=2, line_max=None
+2026-03-19 11:08:21.768650000 [INFO ] [ctrl   ] semantic dict: 语义词典配置有效: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/semantic_dict.toml | 模式: ADD（扩展内置词典） | 词汇数: 179
+2026-03-19 11:08:21.774179000 [INFO ] [ctrl   ] suc! load table to kdb: 
+call context:
+	table_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/./example
+	data_path : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/./example/data.csv
+
+2026-03-19 11:08:21.774231000 [INFO ] [ctrl   ] load table /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/. suc!
+2026-03-19 11:08:21.774334000 [INFO ] [ctrl   ] init authority knowdb success(/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/knowdb.toml) 
+2026-03-19 11:08:21.776991000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : default/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:08:21.777023000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : default/[0]
+	kind : file
+
+2026-03-19 11:08:21.777058000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : error/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:08:21.777077000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : error/[0]
+	kind : file
+
+2026-03-19 11:08:21.777110000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : miss/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:08:21.777126000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : miss/[0]
+	kind : file
+
+2026-03-19 11:08:21.777151000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : monitor/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:08:21.777167000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : monitor/[0]
+	kind : file
+
+2026-03-19 11:08:21.777191000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : residue/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:08:21.777207000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : residue/[0]
+	kind : file
+
+2026-03-19 11:08:21.777626000 [INFO ] [ctrl   ] create sink:default/[0] batch_size=128
+2026-03-19 11:08:21.777777000 [INFO ] [ctrl   ] create sink:residue/[0] batch_size=1
+2026-03-19 11:08:21.778199000 [INFO ] [ctrl   ] create sink:miss/[0] batch_size=1
+2026-03-19 11:08:21.778443000 [INFO ] [ctrl   ] create sink:error/[0] batch_size=1
+2026-03-19 11:08:21.778589000 [INFO ] [ctrl   ] create sink:monitor/[0] batch_size=1
+2026-03-19 11:08:21.779592000 [INFO ] [ctrl   ] load all wpl code beg...
+2026-03-19 11:08:21.779620000 [INFO ] [ctrl   ] find conf files in: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl
+2026-03-19 11:08:21.779795000 [INFO ] [ctrl   ] load conf file: "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl/parse.wpl"
+2026-03-19 11:08:21.780170000 [INFO ] [ctrl   ] success load & parse code : "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl/parse.wpl"
+2026-03-19 11:08:21.780203000 [INFO ] [ctrl   ] load all wpl code end
+2026-03-19 11:08:21.780223000 [INFO ] [ctrl   ] load all oml model
+2026-03-19 11:08:21.780240000 [INFO ] [ctrl   ] find conf files in: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/oml
+2026-03-19 11:08:21.780348000 [INFO ] [ctrl   ] load conf file: "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/oml/model.oml"
+2026-03-19 11:08:21.781496000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : demo/json
+	kind : file
+: validate suc!
+2026-03-19 11:08:21.781514000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : demo/json
+	kind : file
+
+2026-03-19 11:08:21.781559000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : demo/arrow
+	kind : arrow-file
+: validate suc!
+2026-03-19 11:08:21.781573000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : demo/arrow
+	kind : arrow-file
+
+2026-03-19 11:08:21.781697000 [INFO ] [ctrl   ] update_sink_mdl_index, match oml /oml/wparse
+2026-03-19 11:08:21.781746000 [INFO ] [ctrl   ] init SinkGroup: demo
+2026-03-19 11:08:21.781770000 [INFO ] [ctrl   ] alloc sink res : sink demo 
+2026-03-19 11:08:21.781787000 [INFO ] [ctrl   ] alloc sink res : sink demo oml model: /oml/wparse
+2026-03-19 11:08:21.781922000 [INFO ] [ctrl   ] create sink:demo/json batch_size=1024
+2026-03-19 11:08:21.782104000 [INFO ] [ctrl   ] create sink:demo/arrow batch_size=1024
+2026-03-19 11:08:21.782200000 [INFO ] [ctrl   ] alloc parse res : wpl rule /wpl/wparse/line  
+2026-03-19 11:08:21.782233000 [INFO ] [ctrl   ] alloc parse res : rule /wpl/wparse/line  sink agent: demo
+2026-03-19 11:08:21.782544000 [INFO ] [ctrl   ] save data file suc : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wp-tools/.run/rule_mapping.dat 
+2026-03-19 11:08:21.782597000 [INFO ] [ctrl   ] start warp-service: run_mode=batch, parallel=2, line_max=None
+2026-03-19 11:08:21.782611000 [INFO ] [ctrl   ] semantic analysis: enabled
+2026-03-19 11:08:21.782650000 [INFO ] [ctrl   ] 数据源配置统计: V2源=1个, 接受器(来自V2)=0个
+2026-03-19 11:08:21.782665000 [INFO ] [ctrl   ] run-mode=batch: 跳过启动接受器任务
+2026-03-19 11:08:21.782681000 [INFO ] [ctrl   ] monitor proc start: stat_sec=60, stat_print=false
+2026-03-19 11:08:21.782830000 [INFO ] [ctrl   ] start 2 parallel to parse (frames)
+2026-03-19 11:08:21.782898000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:08:21.782921000 [INFO ] [ctrl   ] monitor loop started (stat_sec=60, stat_print=false)
+2026-03-19 11:08:21.782965000 [INFO ] [ctrl   ] actor(wparse-parse) work start
+2026-03-19 11:08:21.783084000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:08:21.783113000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:08:21.783213000 [WARN ] [ctrl   ] parse engine pipelin cnt: 1
+2026-03-19 11:08:21.783235000 [INFO ] [ctrl   ] actor(wparse-parse) work start
+2026-03-19 11:08:21.783330000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:08:21.783344000 [WARN ] [ctrl   ] parse engine pipelin cnt: 1
+2026-03-19 11:08:21.783360000 [INFO ] [ctrl   ] spawn tokio Sink Group demo batch_size=1024 batch_timeout_ms=300
+2026-03-19 11:08:21.783460000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:08:21.783551000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:08:21.884402000 [INFO ] [ctrl   ] 启动数据收集(Frame)： 1个数据源
+2026-03-19 11:08:21.884465000 [INFO ] [ctrl   ] spawning picker for source 'file_1' (line_max=None, speed_limit=20000)
+2026-03-19 11:08:21.884507000 [WARN ] [ctrl   ] engine started!
+2026-03-19 11:08:21.884528000 [INFO ] [ctrl   ] 启动数据源 picker(Frame): file_1
+2026-03-19 11:08:21.884589000 [INFO ] [ctrl   ] Starting data source 'file_1'
+2026-03-19 11:08:21.884661000 [INFO ] [ctrl   ] Data source 'file_1' started (speed_limit=Some(20000), max_count=None)
+2026-03-19 11:08:21.884701000 [INFO ] [ctrl   ] file_1-picker speed init 20000  limit ns times:800000000,
+2026-03-19 11:08:21.884721000 [WARN ] [ctrl   ] actor:file_1-picker 20000
+2026-03-19 11:08:21.887211000 [INFO ] [ctrl   ] file_1-picker round status=Terminal (pending_cnt=0, send_cnt=0)
+2026-03-19 11:08:21.887343000 [INFO ] [ctrl   ] Closing data source 'file_1'
+2026-03-19 11:08:21.887374000 [INFO ] [ctrl   ] file_1-picker dispatch loop exited (max_line=None, total_pending=0)
+2026-03-19 11:08:21.887452000 [INFO ] [ctrl   ] 数据源 'file_1' picker 正常结束
+2026-03-19 11:08:21.895878000 [INFO ] [ctrl   ] exit-policy Batch: enter quiescing (trigger=RoleFinished(Picker))
+2026-03-19 11:08:21.895936000 [INFO ] [ctrl   ] data channel closed; parser loop exits
+2026-03-19 11:08:21.895966000 [INFO ] [ctrl   ] engine proc frames end: total 6
+2026-03-19 11:08:21.896013000 [INFO ] [ctrl   ] actor(wparse-parse) work end
+2026-03-19 11:08:21.933714000 [INFO ] [ctrl   ] data channel closed; parser loop exits
+2026-03-19 11:08:21.933752000 [INFO ] [ctrl   ] engine proc frames end: total 44
+2026-03-19 11:08:21.933782000 [INFO ] [ctrl   ] actor(wparse-parse) work end
+2026-03-19 11:08:21.943544000 [INFO ] [ctrl   ] exit-policy Batch: enter stopping (trigger=RoleFinished(Parser))
+2026-03-19 11:08:21.943569000 [INFO ] [ctrl   ] picker broadcast cmd :Isolate
+2026-03-19 11:08:21.943589000 [INFO ] [ctrl   ] wpl-parse broadcast cmd :Isolate
+2026-03-19 11:08:21.943605000 [INFO ] [ctrl   ] amt broadcast cmd :Isolate
+2026-03-19 11:08:21.943623000 [INFO ] [ctrl   ] oml-sink broadcast cmd :Isolate
+2026-03-19 11:08:21.943634000 [INFO ] [ctrl   ] maintainer Recv cmd : Isolate
+2026-03-19 11:08:21.943651000 [INFO ] [ctrl   ] work-sink:demo                 update cmd: CtrlCmd::Alone 
+2026-03-19 11:08:21.943675000 [INFO ] [ctrl   ] infra broadcast cmd :Isolate
+2026-03-19 11:08:21.943703000 [INFO ] [ctrl   ] monitor broadcast cmd :Isolate
+2026-03-19 11:08:21.943719000 [INFO ] [ctrl   ] infra sinks  update cmd: CtrlCmd::Alone 
+2026-03-19 11:08:21.943739000 [INFO ] [ctrl   ] picker broadcast cmd :Stop(Immediate) 
+2026-03-19 11:08:21.943758000 [INFO ] [ctrl   ] monitor recv cmd: CtrlCmd::Alone
+2026-03-19 11:08:21.943772000 [INFO ] [ctrl   ] monitor update cmd: CtrlCmd::Alone 
+2026-03-19 11:08:21.943782000 [INFO ] [ctrl   ] picker group routines end
+2026-03-19 11:08:21.943795000 [INFO ] [ctrl   ] role group Picker(picker) await end!
+2026-03-19 11:08:21.943806000 [INFO ] [ctrl   ] wpl-parse broadcast cmd :Stop(Immediate) 
+2026-03-19 11:08:21.943819000 [INFO ] [ctrl   ] wpl-parse group routines end
+2026-03-19 11:08:21.943840000 [INFO ] [ctrl   ] role group Parser(wpl-parse) await end!
+2026-03-19 11:08:21.943850000 [INFO ] [ctrl   ] amt broadcast cmd :Stop(Immediate) 
+2026-03-19 11:08:21.943860000 [INFO ] [ctrl   ] amt group routines [0] wait... 
+2026-03-19 11:08:21.966202000 [INFO ] [ctrl   ] maintainer Recv cmd : Stop(Immediate)
+2026-03-19 11:08:21.966236000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:08:21.966276000 [INFO ] [ctrl   ] amt group routines end
+2026-03-19 11:08:21.966290000 [INFO ] [ctrl   ] role group Maintainer(amt) await end!
+2026-03-19 11:08:21.966302000 [INFO ] [ctrl   ] oml-sink broadcast cmd :Stop(Immediate) 
+2026-03-19 11:08:21.966316000 [INFO ] [ctrl   ] oml-sink group routines [0] wait... 
+2026-03-19 11:08:21.966329000 [INFO ] [ctrl   ] work-sink:demo                 update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:08:21.966341000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:08:21.966349000 [INFO ] [ctrl   ] demo enter draining state
+2026-03-19 11:08:21.966360000 [INFO ] [ctrl   ] demo drain complete
+2026-03-19 11:08:21.984772000 [INFO ] [ctrl   ] demo async sinks proc end
+2026-03-19 11:08:21.985067000 [INFO ] [ctrl   ] oml-sink group routines end
+2026-03-19 11:08:21.985080000 [INFO ] [ctrl   ] role group Sink(oml-sink) await end!
+2026-03-19 11:08:21.985092000 [INFO ] [ctrl   ] infra broadcast cmd :Stop(Immediate) 
+2026-03-19 11:08:21.985106000 [INFO ] [ctrl   ] infra group routines [0] wait... 
+2026-03-19 11:08:21.985118000 [INFO ] [ctrl   ] infra sinks  update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:08:21.985131000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:08:21.985140000 [INFO ] [ctrl   ] infra sinks enter draining state
+2026-03-19 11:08:21.985155000 [INFO ] [ctrl   ] infra sinks drain complete
+2026-03-19 11:08:21.989743000 [INFO ] [ctrl   ] infra:default async sinks proc end
+2026-03-19 11:08:21.993724000 [INFO ] [ctrl   ] infra:miss async sinks proc end
+2026-03-19 11:08:21.997742000 [INFO ] [ctrl   ] infra:residue async sinks proc end
+2026-03-19 11:08:22.001756000 [INFO ] [ctrl   ] infra:monitor async sinks proc end
+2026-03-19 11:08:22.005742000 [INFO ] [ctrl   ] infra:error async sinks proc end
+2026-03-19 11:08:22.005834000 [INFO ] [ctrl   ] infra group routines end
+2026-03-19 11:08:22.005847000 [INFO ] [ctrl   ] role group Infra(infra) await end!
+2026-03-19 11:08:22.005861000 [INFO ] [ctrl   ] monitor broadcast cmd :Stop(Immediate) 
+2026-03-19 11:08:22.005874000 [INFO ] [ctrl   ] monitor group routines [0] wait... 
+2026-03-19 11:08:22.005886000 [INFO ] [ctrl   ] monitor recv cmd: CtrlCmd::Stop(StopNow)
+2026-03-19 11:08:22.005900000 [INFO ] [ctrl   ] monitor update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:08:22.005913000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:08:22.005954000 [INFO ] [ctrl   ] monitor proc end (total_events=19)
+2026-03-19 11:08:22.006597000 [INFO ] [ctrl   ] monitor group routines end
+2026-03-19 11:08:22.006608000 [INFO ] [ctrl   ] role group Monitor(monitor) await end!
+2026-03-19 11:08:22.006618000 [INFO ] [ctrl   ] all role groups await end!
+2026-03-19 11:11:10.017367000 [INFO ] [ctrl   ] log conf: level: warn,ctrl=info,data=error,matrc=error,dfx=warn,kdb=warn
+output: File
+path: Some("../openclaw/data/logs/")
+ 
+2026-03-19 11:11:10.017593000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='arrow-file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:11 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:11
+2026-03-19 11:11:10.017642000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='arrow-ipc' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:12 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:12
+2026-03-19 11:11:10.017672000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='blackhole' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:13 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:13
+2026-03-19 11:11:10.017714000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:14 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:14
+2026-03-19 11:11:10.017747000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='syslog' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:15 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:15
+2026-03-19 11:11:10.017773000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='tcp' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:16 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:16
+2026-03-19 11:11:10.017801000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='test_rescue' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:17 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:17
+2026-03-19 11:11:10.017826000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='syslog' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/syslog/mod.rs:48 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/syslog/mod.rs:48
+2026-03-19 11:11:10.017854000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='tcp' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/tcp/factory.rs:116 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/tcp/factory.rs:116
+2026-03-19 11:11:10.017877000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/file/factory.rs:140 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/file/factory.rs:140
+2026-03-19 11:11:10.017971000 [INFO ] [ctrl   ] version 0.21.0 (branch env/local, commit 2b94aa99, built 2026-03-17T19:00:25+08:00 via rustc 1.92.0 (ded5c06cf 2025-12-08))
+2026-03-19 11:11:10.018005000 [INFO ] [ctrl   ] enterprise control plane disabled (feature 'enterprise-backend' not enabled)
+2026-03-19 11:11:10.018488000 [INFO ] [ctrl   ] build engine with run_mode=Batch, parallel=2, line_max=None
+2026-03-19 11:11:10.019300000 [INFO ] [ctrl   ] semantic dict: 语义词典配置有效: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/semantic_dict.toml | 模式: ADD（扩展内置词典） | 词汇数: 179
+2026-03-19 11:11:10.023545000 [INFO ] [ctrl   ] suc! load table to kdb: 
+call context:
+	table_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/./example
+	data_path : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/./example/data.csv
+
+2026-03-19 11:11:10.023568000 [INFO ] [ctrl   ] load table /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/. suc!
+2026-03-19 11:11:10.023654000 [INFO ] [ctrl   ] init authority knowdb success(/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/knowdb.toml) 
+2026-03-19 11:11:10.025177000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : default/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:11:10.025195000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : default/[0]
+	kind : file
+
+2026-03-19 11:11:10.025236000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : error/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:11:10.025254000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : error/[0]
+	kind : file
+
+2026-03-19 11:11:10.025279000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : miss/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:11:10.025294000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : miss/[0]
+	kind : file
+
+2026-03-19 11:11:10.025323000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : monitor/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:11:10.025338000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : monitor/[0]
+	kind : file
+
+2026-03-19 11:11:10.025361000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : residue/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:11:10.025376000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : residue/[0]
+	kind : file
+
+2026-03-19 11:11:10.025785000 [INFO ] [ctrl   ] create sink:default/[0] batch_size=128
+2026-03-19 11:11:10.025975000 [INFO ] [ctrl   ] create sink:residue/[0] batch_size=1
+2026-03-19 11:11:10.026104000 [INFO ] [ctrl   ] create sink:miss/[0] batch_size=1
+2026-03-19 11:11:10.026218000 [INFO ] [ctrl   ] create sink:error/[0] batch_size=1
+2026-03-19 11:11:10.026341000 [INFO ] [ctrl   ] create sink:monitor/[0] batch_size=1
+2026-03-19 11:11:10.027038000 [INFO ] [ctrl   ] load all wpl code beg...
+2026-03-19 11:11:10.027072000 [INFO ] [ctrl   ] find conf files in: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl
+2026-03-19 11:11:10.027236000 [INFO ] [ctrl   ] load conf file: "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl/parse.wpl"
+2026-03-19 11:11:10.027481000 [INFO ] [ctrl   ] success load & parse code : "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl/parse.wpl"
+2026-03-19 11:11:10.027522000 [INFO ] [ctrl   ] load all wpl code end
+2026-03-19 11:11:10.027548000 [INFO ] [ctrl   ] load all oml model
+2026-03-19 11:11:10.027568000 [INFO ] [ctrl   ] find conf files in: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/oml
+2026-03-19 11:11:10.027994000 [INFO ] [ctrl   ] load conf file: "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/oml/model.oml"
+2026-03-19 11:11:10.029402000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : demo/json
+	kind : file
+: validate suc!
+2026-03-19 11:11:10.029425000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : demo/json
+	kind : file
+
+2026-03-19 11:11:10.029473000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : demo/arrow
+	kind : arrow-file
+: validate suc!
+2026-03-19 11:11:10.029492000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : demo/arrow
+	kind : arrow-file
+
+2026-03-19 11:11:10.029621000 [INFO ] [ctrl   ] update_sink_mdl_index, match oml /oml/wparse
+2026-03-19 11:11:10.029674000 [INFO ] [ctrl   ] init SinkGroup: demo
+2026-03-19 11:11:10.029700000 [INFO ] [ctrl   ] alloc sink res : sink demo 
+2026-03-19 11:11:10.029717000 [INFO ] [ctrl   ] alloc sink res : sink demo oml model: /oml/wparse
+2026-03-19 11:11:10.029940000 [INFO ] [ctrl   ] create sink:demo/json batch_size=1024
+2026-03-19 11:11:10.030231000 [INFO ] [ctrl   ] create sink:demo/arrow batch_size=1024
+2026-03-19 11:11:10.030364000 [INFO ] [ctrl   ] alloc parse res : wpl rule /wpl/wparse/line  
+2026-03-19 11:11:10.030403000 [INFO ] [ctrl   ] alloc parse res : rule /wpl/wparse/line  sink agent: demo
+2026-03-19 11:11:10.030744000 [INFO ] [ctrl   ] save data file suc : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wp-tools/.run/rule_mapping.dat 
+2026-03-19 11:11:10.030837000 [INFO ] [ctrl   ] start warp-service: run_mode=batch, parallel=2, line_max=None
+2026-03-19 11:11:10.030854000 [INFO ] [ctrl   ] semantic analysis: enabled
+2026-03-19 11:11:10.030912000 [INFO ] [ctrl   ] 数据源配置统计: V2源=1个, 接受器(来自V2)=0个
+2026-03-19 11:11:10.030930000 [INFO ] [ctrl   ] run-mode=batch: 跳过启动接受器任务
+2026-03-19 11:11:10.030947000 [INFO ] [ctrl   ] start 2 parallel to parse (frames)
+2026-03-19 11:11:10.030968000 [INFO ] [ctrl   ] monitor proc start: stat_sec=60, stat_print=false
+2026-03-19 11:11:10.031137000 [INFO ] [ctrl   ] actor(wparse-parse) work start
+2026-03-19 11:11:10.031281000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:11:10.031411000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:11:10.031453000 [INFO ] [ctrl   ] monitor loop started (stat_sec=60, stat_print=false)
+2026-03-19 11:11:10.031485000 [INFO ] [ctrl   ] spawn tokio Sink Group demo batch_size=1024 batch_timeout_ms=300
+2026-03-19 11:11:10.031596000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:11:10.031618000 [INFO ] [ctrl   ] actor(wparse-parse) work start
+2026-03-19 11:11:10.031740000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:11:10.031757000 [WARN ] [ctrl   ] parse engine pipelin cnt: 1
+2026-03-19 11:11:10.031773000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:11:10.031884000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:11:10.031900000 [WARN ] [ctrl   ] parse engine pipelin cnt: 1
+2026-03-19 11:11:10.132921000 [INFO ] [ctrl   ] 启动数据收集(Frame)： 1个数据源
+2026-03-19 11:11:10.133061000 [INFO ] [ctrl   ] spawning picker for source 'file_1' (line_max=None, speed_limit=20000)
+2026-03-19 11:11:10.133121000 [WARN ] [ctrl   ] engine started!
+2026-03-19 11:11:10.133154000 [INFO ] [ctrl   ] 启动数据源 picker(Frame): file_1
+2026-03-19 11:11:10.133188000 [INFO ] [ctrl   ] Starting data source 'file_1'
+2026-03-19 11:11:10.133250000 [INFO ] [ctrl   ] Data source 'file_1' started (speed_limit=Some(20000), max_count=None)
+2026-03-19 11:11:10.133286000 [INFO ] [ctrl   ] file_1-picker speed init 20000  limit ns times:800000000,
+2026-03-19 11:11:10.133304000 [WARN ] [ctrl   ] actor:file_1-picker 20000
+2026-03-19 11:11:10.134200000 [INFO ] [ctrl   ] file_1-picker round status=Terminal (pending_cnt=0, send_cnt=0)
+2026-03-19 11:11:10.134258000 [INFO ] [ctrl   ] Closing data source 'file_1'
+2026-03-19 11:11:10.134281000 [INFO ] [ctrl   ] file_1-picker dispatch loop exited (max_line=None, total_pending=0)
+2026-03-19 11:11:10.134324000 [INFO ] [ctrl   ] 数据源 'file_1' picker 正常结束
+2026-03-19 11:11:10.144468000 [INFO ] [ctrl   ] exit-policy Batch: enter quiescing (trigger=RoleFinished(Picker))
+2026-03-19 11:11:10.144518000 [INFO ] [ctrl   ] data channel closed; parser loop exits
+2026-03-19 11:11:10.144544000 [INFO ] [ctrl   ] engine proc frames end: total 6
+2026-03-19 11:11:10.144586000 [INFO ] [ctrl   ] actor(wparse-parse) work end
+2026-03-19 11:11:10.181556000 [INFO ] [ctrl   ] data channel closed; parser loop exits
+2026-03-19 11:11:10.181598000 [INFO ] [ctrl   ] engine proc frames end: total 44
+2026-03-19 11:11:10.181634000 [INFO ] [ctrl   ] actor(wparse-parse) work end
+2026-03-19 11:11:10.192922000 [INFO ] [ctrl   ] exit-policy Batch: enter stopping (trigger=RoleFinished(Parser))
+2026-03-19 11:11:10.192980000 [INFO ] [ctrl   ] picker broadcast cmd :Isolate
+2026-03-19 11:11:10.193006000 [INFO ] [ctrl   ] wpl-parse broadcast cmd :Isolate
+2026-03-19 11:11:10.193023000 [INFO ] [ctrl   ] amt broadcast cmd :Isolate
+2026-03-19 11:11:10.193038000 [INFO ] [ctrl   ] oml-sink broadcast cmd :Isolate
+2026-03-19 11:11:10.193053000 [INFO ] [ctrl   ] infra broadcast cmd :Isolate
+2026-03-19 11:11:10.193064000 [INFO ] [ctrl   ] work-sink:demo                 update cmd: CtrlCmd::Alone 
+2026-03-19 11:11:10.193100000 [INFO ] [ctrl   ] monitor broadcast cmd :Isolate
+2026-03-19 11:11:10.193119000 [INFO ] [ctrl   ] infra sinks  update cmd: CtrlCmd::Alone 
+2026-03-19 11:11:10.193141000 [INFO ] [ctrl   ] picker broadcast cmd :Stop(Immediate) 
+2026-03-19 11:11:10.193155000 [INFO ] [ctrl   ] monitor recv cmd: CtrlCmd::Alone
+2026-03-19 11:11:10.193170000 [INFO ] [ctrl   ] monitor update cmd: CtrlCmd::Alone 
+2026-03-19 11:11:10.193186000 [INFO ] [ctrl   ] picker group routines end
+2026-03-19 11:11:10.193198000 [INFO ] [ctrl   ] role group Picker(picker) await end!
+2026-03-19 11:11:10.193208000 [INFO ] [ctrl   ] wpl-parse broadcast cmd :Stop(Immediate) 
+2026-03-19 11:11:10.193220000 [INFO ] [ctrl   ] wpl-parse group routines end
+2026-03-19 11:11:10.193229000 [INFO ] [ctrl   ] role group Parser(wpl-parse) await end!
+2026-03-19 11:11:10.193238000 [INFO ] [ctrl   ] amt broadcast cmd :Stop(Immediate) 
+2026-03-19 11:11:10.193248000 [INFO ] [ctrl   ] amt group routines [0] wait... 
+2026-03-19 11:11:10.194327000 [INFO ] [ctrl   ] maintainer Recv cmd : Isolate
+2026-03-19 11:11:10.217542000 [INFO ] [ctrl   ] maintainer Recv cmd : Stop(Immediate)
+2026-03-19 11:11:10.217579000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:11:10.217618000 [INFO ] [ctrl   ] amt group routines end
+2026-03-19 11:11:10.217633000 [INFO ] [ctrl   ] role group Maintainer(amt) await end!
+2026-03-19 11:11:10.217644000 [INFO ] [ctrl   ] oml-sink broadcast cmd :Stop(Immediate) 
+2026-03-19 11:11:10.217657000 [INFO ] [ctrl   ] oml-sink group routines [0] wait... 
+2026-03-19 11:11:10.217670000 [INFO ] [ctrl   ] work-sink:demo                 update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:11:10.217683000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:11:10.217692000 [INFO ] [ctrl   ] demo enter draining state
+2026-03-19 11:11:10.217703000 [INFO ] [ctrl   ] demo drain complete
+2026-03-19 11:11:10.235031000 [INFO ] [ctrl   ] demo async sinks proc end
+2026-03-19 11:11:10.235298000 [INFO ] [ctrl   ] oml-sink group routines end
+2026-03-19 11:11:10.235311000 [INFO ] [ctrl   ] role group Sink(oml-sink) await end!
+2026-03-19 11:11:10.235322000 [INFO ] [ctrl   ] infra broadcast cmd :Stop(Immediate) 
+2026-03-19 11:11:10.235335000 [INFO ] [ctrl   ] infra group routines [0] wait... 
+2026-03-19 11:11:10.235347000 [INFO ] [ctrl   ] infra sinks  update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:11:10.235360000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:11:10.235370000 [INFO ] [ctrl   ] infra sinks enter draining state
+2026-03-19 11:11:10.235385000 [INFO ] [ctrl   ] infra sinks drain complete
+2026-03-19 11:11:10.239001000 [INFO ] [ctrl   ] infra:default async sinks proc end
+2026-03-19 11:11:10.242055000 [INFO ] [ctrl   ] infra:miss async sinks proc end
+2026-03-19 11:11:10.245976000 [INFO ] [ctrl   ] infra:residue async sinks proc end
+2026-03-19 11:11:10.250003000 [INFO ] [ctrl   ] infra:monitor async sinks proc end
+2026-03-19 11:11:10.254004000 [INFO ] [ctrl   ] infra:error async sinks proc end
+2026-03-19 11:11:10.254076000 [INFO ] [ctrl   ] infra group routines end
+2026-03-19 11:11:10.254089000 [INFO ] [ctrl   ] role group Infra(infra) await end!
+2026-03-19 11:11:10.254101000 [INFO ] [ctrl   ] monitor broadcast cmd :Stop(Immediate) 
+2026-03-19 11:11:10.254112000 [INFO ] [ctrl   ] monitor group routines [0] wait... 
+2026-03-19 11:11:10.254124000 [INFO ] [ctrl   ] monitor recv cmd: CtrlCmd::Stop(StopNow)
+2026-03-19 11:11:10.254136000 [INFO ] [ctrl   ] monitor update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:11:10.254147000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:11:10.254184000 [INFO ] [ctrl   ] monitor proc end (total_events=19)
+2026-03-19 11:11:10.254841000 [INFO ] [ctrl   ] monitor group routines end
+2026-03-19 11:11:10.254850000 [INFO ] [ctrl   ] role group Monitor(monitor) await end!
+2026-03-19 11:11:10.254858000 [INFO ] [ctrl   ] all role groups await end!
+2026-03-19 11:11:26.352114000 [INFO ] [ctrl   ] log conf: level: warn,ctrl=info,data=error,matrc=error,dfx=warn,kdb=warn
+output: File
+path: Some("../openclaw/data/logs/")
+ 
+2026-03-19 11:11:26.352302000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='arrow-file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:11 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:11
+2026-03-19 11:11:26.352336000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='arrow-ipc' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:12 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:12
+2026-03-19 11:11:26.352360000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='blackhole' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:13 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:13
+2026-03-19 11:11:26.352383000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:14 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:14
+2026-03-19 11:11:26.352420000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='syslog' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:15 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:15
+2026-03-19 11:11:26.352443000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='tcp' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:16 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:16
+2026-03-19 11:11:26.352468000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='test_rescue' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:17 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:17
+2026-03-19 11:11:26.352490000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='syslog' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/syslog/mod.rs:48 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/syslog/mod.rs:48
+2026-03-19 11:11:26.352509000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='tcp' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/tcp/factory.rs:116 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/tcp/factory.rs:116
+2026-03-19 11:11:26.352529000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/file/factory.rs:140 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/file/factory.rs:140
+2026-03-19 11:11:26.352602000 [INFO ] [ctrl   ] version 0.21.0 (branch env/local, commit 2b94aa99, built 2026-03-17T19:00:25+08:00 via rustc 1.92.0 (ded5c06cf 2025-12-08))
+2026-03-19 11:11:26.352622000 [INFO ] [ctrl   ] enterprise control plane disabled (feature 'enterprise-backend' not enabled)
+2026-03-19 11:11:26.352956000 [INFO ] [ctrl   ] build engine with run_mode=Batch, parallel=2, line_max=None
+2026-03-19 11:11:26.353638000 [INFO ] [ctrl   ] semantic dict: 语义词典配置有效: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/semantic_dict.toml | 模式: ADD（扩展内置词典） | 词汇数: 179
+2026-03-19 11:11:26.356931000 [INFO ] [ctrl   ] suc! load table to kdb: 
+call context:
+	table_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/./example
+	data_path : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/./example/data.csv
+
+2026-03-19 11:11:26.356958000 [INFO ] [ctrl   ] load table /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/. suc!
+2026-03-19 11:11:26.357035000 [INFO ] [ctrl   ] init authority knowdb success(/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/knowdb.toml) 
+2026-03-19 11:11:26.358234000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : default/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:11:26.358254000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : default/[0]
+	kind : file
+
+2026-03-19 11:11:26.358280000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : error/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:11:26.358294000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : error/[0]
+	kind : file
+
+2026-03-19 11:11:26.358316000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : miss/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:11:26.358329000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : miss/[0]
+	kind : file
+
+2026-03-19 11:11:26.358349000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : monitor/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:11:26.358366000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : monitor/[0]
+	kind : file
+
+2026-03-19 11:11:26.358386000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : residue/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:11:26.358399000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : residue/[0]
+	kind : file
+
+2026-03-19 11:11:26.358678000 [INFO ] [ctrl   ] create sink:default/[0] batch_size=128
+2026-03-19 11:11:26.358782000 [INFO ] [ctrl   ] create sink:residue/[0] batch_size=1
+2026-03-19 11:11:26.358876000 [INFO ] [ctrl   ] create sink:miss/[0] batch_size=1
+2026-03-19 11:11:26.358959000 [INFO ] [ctrl   ] create sink:error/[0] batch_size=1
+2026-03-19 11:11:26.359063000 [INFO ] [ctrl   ] create sink:monitor/[0] batch_size=1
+2026-03-19 11:11:26.359586000 [INFO ] [ctrl   ] load all wpl code beg...
+2026-03-19 11:11:26.359610000 [INFO ] [ctrl   ] find conf files in: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl
+2026-03-19 11:11:26.359732000 [INFO ] [ctrl   ] load conf file: "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl/parse.wpl"
+2026-03-19 11:11:26.359898000 [INFO ] [ctrl   ] success load & parse code : "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl/parse.wpl"
+2026-03-19 11:11:26.359924000 [INFO ] [ctrl   ] load all wpl code end
+2026-03-19 11:11:26.359943000 [INFO ] [ctrl   ] load all oml model
+2026-03-19 11:11:26.359958000 [INFO ] [ctrl   ] find conf files in: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/oml
+2026-03-19 11:11:26.360051000 [INFO ] [ctrl   ] load conf file: "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/oml/model.oml"
+2026-03-19 11:11:26.361227000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : demo/json
+	kind : file
+: validate suc!
+2026-03-19 11:11:26.361265000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : demo/json
+	kind : file
+
+2026-03-19 11:11:26.361311000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : demo/arrow
+	kind : arrow-file
+: validate suc!
+2026-03-19 11:11:26.361328000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : demo/arrow
+	kind : arrow-file
+
+2026-03-19 11:11:26.361501000 [INFO ] [ctrl   ] update_sink_mdl_index, match oml /oml/wparse
+2026-03-19 11:11:26.361566000 [INFO ] [ctrl   ] init SinkGroup: demo
+2026-03-19 11:11:26.361594000 [INFO ] [ctrl   ] alloc sink res : sink demo 
+2026-03-19 11:11:26.361612000 [INFO ] [ctrl   ] alloc sink res : sink demo oml model: /oml/wparse
+2026-03-19 11:11:26.361848000 [INFO ] [ctrl   ] create sink:demo/json batch_size=1024
+2026-03-19 11:11:26.362124000 [INFO ] [ctrl   ] create sink:demo/arrow batch_size=1024
+2026-03-19 11:11:26.362238000 [INFO ] [ctrl   ] alloc parse res : wpl rule /wpl/wparse/line  
+2026-03-19 11:11:26.362272000 [INFO ] [ctrl   ] alloc parse res : rule /wpl/wparse/line  sink agent: demo
+2026-03-19 11:11:26.362504000 [INFO ] [ctrl   ] save data file suc : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wp-tools/.run/rule_mapping.dat 
+2026-03-19 11:11:26.362567000 [INFO ] [ctrl   ] start warp-service: run_mode=batch, parallel=2, line_max=None
+2026-03-19 11:11:26.362582000 [INFO ] [ctrl   ] semantic analysis: enabled
+2026-03-19 11:11:26.362623000 [INFO ] [ctrl   ] 数据源配置统计: V2源=1个, 接受器(来自V2)=0个
+2026-03-19 11:11:26.362638000 [INFO ] [ctrl   ] run-mode=batch: 跳过启动接受器任务
+2026-03-19 11:11:26.362650000 [INFO ] [ctrl   ] monitor proc start: stat_sec=60, stat_print=false
+2026-03-19 11:11:26.362786000 [INFO ] [ctrl   ] start 2 parallel to parse (frames)
+2026-03-19 11:11:26.362828000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:11:26.362841000 [INFO ] [ctrl   ] monitor loop started (stat_sec=60, stat_print=false)
+2026-03-19 11:11:26.362914000 [INFO ] [ctrl   ] actor(wparse-parse) work start
+2026-03-19 11:11:26.363011000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:11:26.363025000 [INFO ] [ctrl   ] actor(wparse-parse) work start
+2026-03-19 11:11:26.363172000 [WARN ] [ctrl   ] parse engine pipelin cnt: 1
+2026-03-19 11:11:26.363192000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:11:26.363304000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:11:26.363417000 [INFO ] [ctrl   ] spawn tokio Sink Group demo batch_size=1024 batch_timeout_ms=300
+2026-03-19 11:11:26.363505000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:11:26.363522000 [WARN ] [ctrl   ] parse engine pipelin cnt: 1
+2026-03-19 11:11:26.363537000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:11:26.464572000 [INFO ] [ctrl   ] 启动数据收集(Frame)： 1个数据源
+2026-03-19 11:11:26.464637000 [INFO ] [ctrl   ] spawning picker for source 'file_1' (line_max=None, speed_limit=20000)
+2026-03-19 11:11:26.464677000 [WARN ] [ctrl   ] engine started!
+2026-03-19 11:11:26.464701000 [INFO ] [ctrl   ] 启动数据源 picker(Frame): file_1
+2026-03-19 11:11:26.464756000 [INFO ] [ctrl   ] Starting data source 'file_1'
+2026-03-19 11:11:26.464828000 [INFO ] [ctrl   ] Data source 'file_1' started (speed_limit=Some(20000), max_count=None)
+2026-03-19 11:11:26.464871000 [INFO ] [ctrl   ] file_1-picker speed init 20000  limit ns times:800000000,
+2026-03-19 11:11:26.464888000 [WARN ] [ctrl   ] actor:file_1-picker 20000
+2026-03-19 11:11:26.465759000 [INFO ] [ctrl   ] file_1-picker round status=Terminal (pending_cnt=0, send_cnt=0)
+2026-03-19 11:11:26.465793000 [INFO ] [ctrl   ] Closing data source 'file_1'
+2026-03-19 11:11:26.465807000 [INFO ] [ctrl   ] file_1-picker dispatch loop exited (max_line=None, total_pending=0)
+2026-03-19 11:11:26.465840000 [INFO ] [ctrl   ] 数据源 'file_1' picker 正常结束
+2026-03-19 11:11:26.475479000 [INFO ] [ctrl   ] exit-policy Batch: enter quiescing (trigger=RoleFinished(Picker))
+2026-03-19 11:11:26.475524000 [INFO ] [ctrl   ] data channel closed; parser loop exits
+2026-03-19 11:11:26.475552000 [INFO ] [ctrl   ] engine proc frames end: total 6
+2026-03-19 11:11:26.475588000 [INFO ] [ctrl   ] actor(wparse-parse) work end
+2026-03-19 11:11:26.509634000 [INFO ] [ctrl   ] data channel closed; parser loop exits
+2026-03-19 11:11:26.509684000 [INFO ] [ctrl   ] engine proc frames end: total 44
+2026-03-19 11:11:26.509713000 [INFO ] [ctrl   ] actor(wparse-parse) work end
+2026-03-19 11:11:26.521065000 [INFO ] [ctrl   ] exit-policy Batch: enter stopping (trigger=RoleFinished(Parser))
+2026-03-19 11:11:26.521116000 [INFO ] [ctrl   ] picker broadcast cmd :Isolate
+2026-03-19 11:11:26.521143000 [INFO ] [ctrl   ] wpl-parse broadcast cmd :Isolate
+2026-03-19 11:11:26.521160000 [INFO ] [ctrl   ] amt broadcast cmd :Isolate
+2026-03-19 11:11:26.521173000 [INFO ] [ctrl   ] oml-sink broadcast cmd :Isolate
+2026-03-19 11:11:26.521186000 [INFO ] [ctrl   ] infra broadcast cmd :Isolate
+2026-03-19 11:11:26.521202000 [INFO ] [ctrl   ] work-sink:demo                 update cmd: CtrlCmd::Alone 
+2026-03-19 11:11:26.521227000 [INFO ] [ctrl   ] monitor broadcast cmd :Isolate
+2026-03-19 11:11:26.521244000 [INFO ] [ctrl   ] infra sinks  update cmd: CtrlCmd::Alone 
+2026-03-19 11:11:26.521267000 [INFO ] [ctrl   ] picker broadcast cmd :Stop(Immediate) 
+2026-03-19 11:11:26.521285000 [INFO ] [ctrl   ] monitor recv cmd: CtrlCmd::Alone
+2026-03-19 11:11:26.521302000 [INFO ] [ctrl   ] monitor update cmd: CtrlCmd::Alone 
+2026-03-19 11:11:26.521322000 [INFO ] [ctrl   ] picker group routines end
+2026-03-19 11:11:26.521335000 [INFO ] [ctrl   ] role group Picker(picker) await end!
+2026-03-19 11:11:26.521345000 [INFO ] [ctrl   ] wpl-parse broadcast cmd :Stop(Immediate) 
+2026-03-19 11:11:26.521357000 [INFO ] [ctrl   ] wpl-parse group routines end
+2026-03-19 11:11:26.521365000 [INFO ] [ctrl   ] role group Parser(wpl-parse) await end!
+2026-03-19 11:11:26.521374000 [INFO ] [ctrl   ] amt broadcast cmd :Stop(Immediate) 
+2026-03-19 11:11:26.521384000 [INFO ] [ctrl   ] amt group routines [0] wait... 
+2026-03-19 11:11:26.529224000 [INFO ] [ctrl   ] maintainer Recv cmd : Isolate
+2026-03-19 11:11:26.553519000 [INFO ] [ctrl   ] maintainer Recv cmd : Stop(Immediate)
+2026-03-19 11:11:26.553565000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:11:26.553648000 [INFO ] [ctrl   ] amt group routines end
+2026-03-19 11:11:26.553703000 [INFO ] [ctrl   ] role group Maintainer(amt) await end!
+2026-03-19 11:11:26.553721000 [INFO ] [ctrl   ] oml-sink broadcast cmd :Stop(Immediate) 
+2026-03-19 11:11:26.553744000 [INFO ] [ctrl   ] oml-sink group routines [0] wait... 
+2026-03-19 11:11:26.553759000 [INFO ] [ctrl   ] work-sink:demo                 update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:11:26.553776000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:11:26.553786000 [INFO ] [ctrl   ] demo enter draining state
+2026-03-19 11:11:26.553798000 [INFO ] [ctrl   ] demo drain complete
+2026-03-19 11:11:26.574715000 [INFO ] [ctrl   ] demo async sinks proc end
+2026-03-19 11:11:26.574978000 [INFO ] [ctrl   ] oml-sink group routines end
+2026-03-19 11:11:26.574996000 [INFO ] [ctrl   ] role group Sink(oml-sink) await end!
+2026-03-19 11:11:26.575010000 [INFO ] [ctrl   ] infra broadcast cmd :Stop(Immediate) 
+2026-03-19 11:11:26.575027000 [INFO ] [ctrl   ] infra group routines [0] wait... 
+2026-03-19 11:11:26.575043000 [INFO ] [ctrl   ] infra sinks  update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:11:26.575057000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:11:26.575067000 [INFO ] [ctrl   ] infra sinks enter draining state
+2026-03-19 11:11:26.575084000 [INFO ] [ctrl   ] infra sinks drain complete
+2026-03-19 11:11:26.578701000 [INFO ] [ctrl   ] infra:default async sinks proc end
+2026-03-19 11:11:26.582664000 [INFO ] [ctrl   ] infra:miss async sinks proc end
+2026-03-19 11:11:26.588648000 [INFO ] [ctrl   ] infra:residue async sinks proc end
+2026-03-19 11:11:26.591688000 [INFO ] [ctrl   ] infra:monitor async sinks proc end
+2026-03-19 11:11:26.594692000 [INFO ] [ctrl   ] infra:error async sinks proc end
+2026-03-19 11:11:26.594792000 [INFO ] [ctrl   ] infra group routines end
+2026-03-19 11:11:26.594805000 [INFO ] [ctrl   ] role group Infra(infra) await end!
+2026-03-19 11:11:26.594820000 [INFO ] [ctrl   ] monitor broadcast cmd :Stop(Immediate) 
+2026-03-19 11:11:26.594837000 [INFO ] [ctrl   ] monitor group routines [0] wait... 
+2026-03-19 11:11:26.594850000 [INFO ] [ctrl   ] monitor recv cmd: CtrlCmd::Stop(StopNow)
+2026-03-19 11:11:26.594862000 [INFO ] [ctrl   ] monitor update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:11:26.594872000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:11:26.594915000 [INFO ] [ctrl   ] monitor proc end (total_events=19)
+2026-03-19 11:11:26.595594000 [INFO ] [ctrl   ] monitor group routines end
+2026-03-19 11:11:26.595607000 [INFO ] [ctrl   ] role group Monitor(monitor) await end!
+2026-03-19 11:11:26.595616000 [INFO ] [ctrl   ] all role groups await end!
+2026-03-19 11:12:09.563810000 [INFO ] [ctrl   ] log conf: level: warn,ctrl=info,data=error,matrc=error,dfx=warn,kdb=warn
+output: File
+path: Some("../openclaw/data/logs/")
+ 
+2026-03-19 11:12:09.563950000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='arrow-file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:11 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:11
+2026-03-19 11:12:09.563981000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='arrow-ipc' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:12 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:12
+2026-03-19 11:12:09.564002000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='blackhole' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:13 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:13
+2026-03-19 11:12:09.564022000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:14 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:14
+2026-03-19 11:12:09.564045000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='syslog' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:15 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:15
+2026-03-19 11:12:09.564064000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='tcp' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:16 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:16
+2026-03-19 11:12:09.564082000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='test_rescue' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:17 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:17
+2026-03-19 11:12:09.564101000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='syslog' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/syslog/mod.rs:48 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/syslog/mod.rs:48
+2026-03-19 11:12:09.564119000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='tcp' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/tcp/factory.rs:116 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/tcp/factory.rs:116
+2026-03-19 11:12:09.564136000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/file/factory.rs:140 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/file/factory.rs:140
+2026-03-19 11:12:09.564196000 [INFO ] [ctrl   ] version 0.21.0 (branch env/local, commit 2b94aa99, built 2026-03-17T19:00:25+08:00 via rustc 1.92.0 (ded5c06cf 2025-12-08))
+2026-03-19 11:12:09.564224000 [INFO ] [ctrl   ] enterprise control plane disabled (feature 'enterprise-backend' not enabled)
+2026-03-19 11:12:09.564601000 [INFO ] [ctrl   ] build engine with run_mode=Batch, parallel=2, line_max=None
+2026-03-19 11:12:09.565240000 [INFO ] [ctrl   ] semantic dict: 语义词典配置有效: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/semantic_dict.toml | 模式: ADD（扩展内置词典） | 词汇数: 179
+2026-03-19 11:12:09.568909000 [INFO ] [ctrl   ] suc! load table to kdb: 
+call context:
+	table_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/./example
+	data_path : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/./example/data.csv
+
+2026-03-19 11:12:09.568944000 [INFO ] [ctrl   ] load table /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/. suc!
+2026-03-19 11:12:09.569064000 [INFO ] [ctrl   ] init authority knowdb success(/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/knowdb.toml) 
+2026-03-19 11:12:09.570299000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : default/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:12:09.570319000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : default/[0]
+	kind : file
+
+2026-03-19 11:12:09.570345000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : error/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:12:09.570359000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : error/[0]
+	kind : file
+
+2026-03-19 11:12:09.570381000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : miss/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:12:09.570395000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : miss/[0]
+	kind : file
+
+2026-03-19 11:12:09.570416000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : monitor/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:12:09.570429000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : monitor/[0]
+	kind : file
+
+2026-03-19 11:12:09.570449000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : residue/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:12:09.570462000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : residue/[0]
+	kind : file
+
+2026-03-19 11:12:09.570790000 [INFO ] [ctrl   ] create sink:default/[0] batch_size=128
+2026-03-19 11:12:09.570896000 [INFO ] [ctrl   ] create sink:residue/[0] batch_size=1
+2026-03-19 11:12:09.570978000 [INFO ] [ctrl   ] create sink:miss/[0] batch_size=1
+2026-03-19 11:12:09.571058000 [INFO ] [ctrl   ] create sink:error/[0] batch_size=1
+2026-03-19 11:12:09.571138000 [INFO ] [ctrl   ] create sink:monitor/[0] batch_size=1
+2026-03-19 11:12:09.571583000 [INFO ] [ctrl   ] load all wpl code beg...
+2026-03-19 11:12:09.571600000 [INFO ] [ctrl   ] find conf files in: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl
+2026-03-19 11:12:09.571712000 [INFO ] [ctrl   ] load conf file: "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl/parse.wpl"
+2026-03-19 11:12:09.571882000 [INFO ] [ctrl   ] success load & parse code : "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl/parse.wpl"
+2026-03-19 11:12:09.571907000 [INFO ] [ctrl   ] load all wpl code end
+2026-03-19 11:12:09.571924000 [INFO ] [ctrl   ] load all oml model
+2026-03-19 11:12:09.571938000 [INFO ] [ctrl   ] find conf files in: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/oml
+2026-03-19 11:12:09.572022000 [INFO ] [ctrl   ] load conf file: "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/oml/model.oml"
+2026-03-19 11:12:09.572819000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : demo/json
+	kind : file
+: validate suc!
+2026-03-19 11:12:09.572832000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : demo/json
+	kind : file
+
+2026-03-19 11:12:09.572865000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : demo/arrow
+	kind : arrow-file
+: validate suc!
+2026-03-19 11:12:09.572877000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : demo/arrow
+	kind : arrow-file
+
+2026-03-19 11:12:09.572976000 [INFO ] [ctrl   ] update_sink_mdl_index, match oml /oml/wparse
+2026-03-19 11:12:09.573016000 [INFO ] [ctrl   ] init SinkGroup: demo
+2026-03-19 11:12:09.573036000 [INFO ] [ctrl   ] alloc sink res : sink demo 
+2026-03-19 11:12:09.573049000 [INFO ] [ctrl   ] alloc sink res : sink demo oml model: /oml/wparse
+2026-03-19 11:12:09.573128000 [INFO ] [ctrl   ] create sink:demo/json batch_size=1024
+2026-03-19 11:12:09.573257000 [INFO ] [ctrl   ] create sink:demo/arrow batch_size=1024
+2026-03-19 11:12:09.573340000 [INFO ] [ctrl   ] alloc parse res : wpl rule /wpl/wparse/line  
+2026-03-19 11:12:09.573362000 [INFO ] [ctrl   ] alloc parse res : rule /wpl/wparse/line  sink agent: demo
+2026-03-19 11:12:09.573595000 [INFO ] [ctrl   ] save data file suc : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wp-tools/.run/rule_mapping.dat 
+2026-03-19 11:12:09.573657000 [INFO ] [ctrl   ] start warp-service: run_mode=batch, parallel=2, line_max=None
+2026-03-19 11:12:09.573675000 [INFO ] [ctrl   ] semantic analysis: enabled
+2026-03-19 11:12:09.573714000 [INFO ] [ctrl   ] 数据源配置统计: V2源=1个, 接受器(来自V2)=0个
+2026-03-19 11:12:09.573729000 [INFO ] [ctrl   ] run-mode=batch: 跳过启动接受器任务
+2026-03-19 11:12:09.573745000 [INFO ] [ctrl   ] monitor proc start: stat_sec=60, stat_print=false
+2026-03-19 11:12:09.573865000 [INFO ] [ctrl   ] start 2 parallel to parse (frames)
+2026-03-19 11:12:09.573899000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:12:09.573916000 [INFO ] [ctrl   ] monitor loop started (stat_sec=60, stat_print=false)
+2026-03-19 11:12:09.574006000 [INFO ] [ctrl   ] actor(wparse-parse) work start
+2026-03-19 11:12:09.574092000 [INFO ] [ctrl   ] actor(wparse-parse) work start
+2026-03-19 11:12:09.574194000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:12:09.574208000 [WARN ] [ctrl   ] parse engine pipelin cnt: 1
+2026-03-19 11:12:09.574222000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:12:09.574298000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:12:09.574402000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:12:09.574416000 [WARN ] [ctrl   ] parse engine pipelin cnt: 1
+2026-03-19 11:12:09.574430000 [INFO ] [ctrl   ] spawn tokio Sink Group demo batch_size=1024 batch_timeout_ms=300
+2026-03-19 11:12:09.574499000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:12:09.676066000 [INFO ] [ctrl   ] 启动数据收集(Frame)： 1个数据源
+2026-03-19 11:12:09.676135000 [INFO ] [ctrl   ] spawning picker for source 'file_1' (line_max=None, speed_limit=20000)
+2026-03-19 11:12:09.676175000 [WARN ] [ctrl   ] engine started!
+2026-03-19 11:12:09.676196000 [INFO ] [ctrl   ] 启动数据源 picker(Frame): file_1
+2026-03-19 11:12:09.676225000 [INFO ] [ctrl   ] Starting data source 'file_1'
+2026-03-19 11:12:09.676276000 [INFO ] [ctrl   ] Data source 'file_1' started (speed_limit=Some(20000), max_count=None)
+2026-03-19 11:12:09.676315000 [INFO ] [ctrl   ] file_1-picker speed init 20000  limit ns times:800000000,
+2026-03-19 11:12:09.676331000 [WARN ] [ctrl   ] actor:file_1-picker 20000
+2026-03-19 11:12:09.677098000 [INFO ] [ctrl   ] file_1-picker round status=Terminal (pending_cnt=0, send_cnt=0)
+2026-03-19 11:12:09.677163000 [INFO ] [ctrl   ] Closing data source 'file_1'
+2026-03-19 11:12:09.677184000 [INFO ] [ctrl   ] file_1-picker dispatch loop exited (max_line=None, total_pending=0)
+2026-03-19 11:12:09.677225000 [INFO ] [ctrl   ] 数据源 'file_1' picker 正常结束
+2026-03-19 11:12:09.688556000 [INFO ] [ctrl   ] exit-policy Batch: enter quiescing (trigger=RoleFinished(Picker))
+2026-03-19 11:12:09.688626000 [INFO ] [ctrl   ] data channel closed; parser loop exits
+2026-03-19 11:12:09.688663000 [INFO ] [ctrl   ] engine proc frames end: total 6
+2026-03-19 11:12:09.688699000 [INFO ] [ctrl   ] actor(wparse-parse) work end
+2026-03-19 11:12:09.719699000 [INFO ] [ctrl   ] data channel closed; parser loop exits
+2026-03-19 11:12:09.719742000 [INFO ] [ctrl   ] engine proc frames end: total 44
+2026-03-19 11:12:09.719773000 [INFO ] [ctrl   ] actor(wparse-parse) work end
+2026-03-19 11:12:09.724374000 [INFO ] [ctrl   ] exit-policy Batch: enter stopping (trigger=RoleFinished(Parser))
+2026-03-19 11:12:09.724397000 [INFO ] [ctrl   ] picker broadcast cmd :Isolate
+2026-03-19 11:12:09.724423000 [INFO ] [ctrl   ] wpl-parse broadcast cmd :Isolate
+2026-03-19 11:12:09.724442000 [INFO ] [ctrl   ] amt broadcast cmd :Isolate
+2026-03-19 11:12:09.724458000 [INFO ] [ctrl   ] oml-sink broadcast cmd :Isolate
+2026-03-19 11:12:09.724474000 [INFO ] [ctrl   ] infra broadcast cmd :Isolate
+2026-03-19 11:12:09.724486000 [INFO ] [ctrl   ] work-sink:demo                 update cmd: CtrlCmd::Alone 
+2026-03-19 11:12:09.724507000 [INFO ] [ctrl   ] monitor broadcast cmd :Isolate
+2026-03-19 11:12:09.724532000 [INFO ] [ctrl   ] infra sinks  update cmd: CtrlCmd::Alone 
+2026-03-19 11:12:09.724552000 [INFO ] [ctrl   ] picker broadcast cmd :Stop(Immediate) 
+2026-03-19 11:12:09.724573000 [INFO ] [ctrl   ] monitor recv cmd: CtrlCmd::Alone
+2026-03-19 11:12:09.724589000 [INFO ] [ctrl   ] monitor update cmd: CtrlCmd::Alone 
+2026-03-19 11:12:09.724604000 [INFO ] [ctrl   ] picker group routines end
+2026-03-19 11:12:09.724615000 [INFO ] [ctrl   ] role group Picker(picker) await end!
+2026-03-19 11:12:09.724626000 [INFO ] [ctrl   ] wpl-parse broadcast cmd :Stop(Immediate) 
+2026-03-19 11:12:09.724638000 [INFO ] [ctrl   ] wpl-parse group routines end
+2026-03-19 11:12:09.724647000 [INFO ] [ctrl   ] role group Parser(wpl-parse) await end!
+2026-03-19 11:12:09.724656000 [INFO ] [ctrl   ] amt broadcast cmd :Stop(Immediate) 
+2026-03-19 11:12:09.724666000 [INFO ] [ctrl   ] amt group routines [0] wait... 
+2026-03-19 11:12:09.736603000 [INFO ] [ctrl   ] maintainer Recv cmd : Isolate
+2026-03-19 11:12:09.759887000 [INFO ] [ctrl   ] maintainer Recv cmd : Stop(Immediate)
+2026-03-19 11:12:09.759925000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:12:09.759966000 [INFO ] [ctrl   ] amt group routines end
+2026-03-19 11:12:09.759982000 [INFO ] [ctrl   ] role group Maintainer(amt) await end!
+2026-03-19 11:12:09.759996000 [INFO ] [ctrl   ] oml-sink broadcast cmd :Stop(Immediate) 
+2026-03-19 11:12:09.760011000 [INFO ] [ctrl   ] oml-sink group routines [0] wait... 
+2026-03-19 11:12:09.760024000 [INFO ] [ctrl   ] work-sink:demo                 update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:12:09.760038000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:12:09.760048000 [INFO ] [ctrl   ] demo enter draining state
+2026-03-19 11:12:09.760060000 [INFO ] [ctrl   ] demo drain complete
+2026-03-19 11:12:09.777084000 [INFO ] [ctrl   ] demo async sinks proc end
+2026-03-19 11:12:09.777746000 [INFO ] [ctrl   ] oml-sink group routines end
+2026-03-19 11:12:09.777759000 [INFO ] [ctrl   ] role group Sink(oml-sink) await end!
+2026-03-19 11:12:09.777770000 [INFO ] [ctrl   ] infra broadcast cmd :Stop(Immediate) 
+2026-03-19 11:12:09.777785000 [INFO ] [ctrl   ] infra group routines [0] wait... 
+2026-03-19 11:12:09.777800000 [INFO ] [ctrl   ] infra sinks  update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:12:09.777814000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:12:09.777823000 [INFO ] [ctrl   ] infra sinks enter draining state
+2026-03-19 11:12:09.777838000 [INFO ] [ctrl   ] infra sinks drain complete
+2026-03-19 11:12:09.781042000 [INFO ] [ctrl   ] infra:default async sinks proc end
+2026-03-19 11:12:09.785019000 [INFO ] [ctrl   ] infra:miss async sinks proc end
+2026-03-19 11:12:09.789052000 [INFO ] [ctrl   ] infra:residue async sinks proc end
+2026-03-19 11:12:09.792087000 [INFO ] [ctrl   ] infra:monitor async sinks proc end
+2026-03-19 11:12:09.796050000 [INFO ] [ctrl   ] infra:error async sinks proc end
+2026-03-19 11:12:09.796145000 [INFO ] [ctrl   ] infra group routines end
+2026-03-19 11:12:09.796161000 [INFO ] [ctrl   ] role group Infra(infra) await end!
+2026-03-19 11:12:09.796176000 [INFO ] [ctrl   ] monitor broadcast cmd :Stop(Immediate) 
+2026-03-19 11:12:09.796196000 [INFO ] [ctrl   ] monitor group routines [0] wait... 
+2026-03-19 11:12:09.796211000 [INFO ] [ctrl   ] monitor recv cmd: CtrlCmd::Stop(StopNow)
+2026-03-19 11:12:09.796228000 [INFO ] [ctrl   ] monitor update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:12:09.796243000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:12:09.796304000 [INFO ] [ctrl   ] monitor proc end (total_events=19)
+2026-03-19 11:12:09.797043000 [INFO ] [ctrl   ] monitor group routines end
+2026-03-19 11:12:09.797057000 [INFO ] [ctrl   ] role group Monitor(monitor) await end!
+2026-03-19 11:12:09.797067000 [INFO ] [ctrl   ] all role groups await end!
+2026-03-19 11:12:23.413710000 [INFO ] [ctrl   ] log conf: level: warn,ctrl=info,data=error,matrc=error,dfx=warn,kdb=warn
+output: File
+path: Some("../openclaw/data/logs/")
+ 
+2026-03-19 11:12:23.413891000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='arrow-file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:11 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:11
+2026-03-19 11:12:23.413939000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='arrow-ipc' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:12 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:12
+2026-03-19 11:12:23.413973000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='blackhole' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:13 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:13
+2026-03-19 11:12:23.414005000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:14 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:14
+2026-03-19 11:12:23.414038000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='syslog' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:15 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:15
+2026-03-19 11:12:23.414073000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='tcp' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:16 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:16
+2026-03-19 11:12:23.414189000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='test_rescue' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:17 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:17
+2026-03-19 11:12:23.414219000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='syslog' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/syslog/mod.rs:48 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/syslog/mod.rs:48
+2026-03-19 11:12:23.414251000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='tcp' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/tcp/factory.rs:116 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/tcp/factory.rs:116
+2026-03-19 11:12:23.414280000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/file/factory.rs:140 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/file/factory.rs:140
+2026-03-19 11:12:23.414374000 [INFO ] [ctrl   ] version 0.21.0 (branch env/local, commit 2b94aa99, built 2026-03-17T19:00:25+08:00 via rustc 1.92.0 (ded5c06cf 2025-12-08))
+2026-03-19 11:12:23.414402000 [INFO ] [ctrl   ] enterprise control plane disabled (feature 'enterprise-backend' not enabled)
+2026-03-19 11:12:23.414812000 [INFO ] [ctrl   ] build engine with run_mode=Batch, parallel=2, line_max=None
+2026-03-19 11:12:23.415668000 [INFO ] [ctrl   ] semantic dict: 语义词典配置有效: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/semantic_dict.toml | 模式: ADD（扩展内置词典） | 词汇数: 179
+2026-03-19 11:12:23.419806000 [INFO ] [ctrl   ] suc! load table to kdb: 
+call context:
+	table_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/./example
+	data_path : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/./example/data.csv
+
+2026-03-19 11:12:23.419857000 [INFO ] [ctrl   ] load table /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/. suc!
+2026-03-19 11:12:23.419961000 [INFO ] [ctrl   ] init authority knowdb success(/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/knowdb.toml) 
+2026-03-19 11:12:23.421554000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : default/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:12:23.421579000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : default/[0]
+	kind : file
+
+2026-03-19 11:12:23.421616000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : error/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:12:23.421636000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : error/[0]
+	kind : file
+
+2026-03-19 11:12:23.421666000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : miss/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:12:23.421685000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : miss/[0]
+	kind : file
+
+2026-03-19 11:12:23.421714000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : monitor/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:12:23.421731000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : monitor/[0]
+	kind : file
+
+2026-03-19 11:12:23.421759000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : residue/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:12:23.421776000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : residue/[0]
+	kind : file
+
+2026-03-19 11:12:23.422153000 [INFO ] [ctrl   ] create sink:default/[0] batch_size=128
+2026-03-19 11:12:23.422290000 [INFO ] [ctrl   ] create sink:residue/[0] batch_size=1
+2026-03-19 11:12:23.422389000 [INFO ] [ctrl   ] create sink:miss/[0] batch_size=1
+2026-03-19 11:12:23.422492000 [INFO ] [ctrl   ] create sink:error/[0] batch_size=1
+2026-03-19 11:12:23.422591000 [INFO ] [ctrl   ] create sink:monitor/[0] batch_size=1
+2026-03-19 11:12:23.423120000 [INFO ] [ctrl   ] load all wpl code beg...
+2026-03-19 11:12:23.423140000 [INFO ] [ctrl   ] find conf files in: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl
+2026-03-19 11:12:23.423276000 [INFO ] [ctrl   ] load conf file: "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl/parse.wpl"
+2026-03-19 11:12:23.423479000 [INFO ] [ctrl   ] success load & parse code : "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl/parse.wpl"
+2026-03-19 11:12:23.423510000 [INFO ] [ctrl   ] load all wpl code end
+2026-03-19 11:12:23.423533000 [INFO ] [ctrl   ] load all oml model
+2026-03-19 11:12:23.423554000 [INFO ] [ctrl   ] find conf files in: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/oml
+2026-03-19 11:12:23.423665000 [INFO ] [ctrl   ] load conf file: "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/oml/model.oml"
+2026-03-19 11:12:23.424751000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : demo/json
+	kind : file
+: validate suc!
+2026-03-19 11:12:23.424787000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : demo/json
+	kind : file
+
+2026-03-19 11:12:23.424847000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : demo/arrow
+	kind : arrow-file
+: validate suc!
+2026-03-19 11:12:23.424868000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : demo/arrow
+	kind : arrow-file
+
+2026-03-19 11:12:23.425012000 [INFO ] [ctrl   ] update_sink_mdl_index, match oml /oml/wparse
+2026-03-19 11:12:23.425082000 [INFO ] [ctrl   ] init SinkGroup: demo
+2026-03-19 11:12:23.425115000 [INFO ] [ctrl   ] alloc sink res : sink demo 
+2026-03-19 11:12:23.425135000 [INFO ] [ctrl   ] alloc sink res : sink demo oml model: /oml/wparse
+2026-03-19 11:12:23.425345000 [INFO ] [ctrl   ] create sink:demo/json batch_size=1024
+2026-03-19 11:12:23.425543000 [INFO ] [ctrl   ] create sink:demo/arrow batch_size=1024
+2026-03-19 11:12:23.425659000 [INFO ] [ctrl   ] alloc parse res : wpl rule /wpl/wparse/line  
+2026-03-19 11:12:23.425688000 [INFO ] [ctrl   ] alloc parse res : rule /wpl/wparse/line  sink agent: demo
+2026-03-19 11:12:23.425936000 [INFO ] [ctrl   ] save data file suc : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wp-tools/.run/rule_mapping.dat 
+2026-03-19 11:12:23.426005000 [INFO ] [ctrl   ] start warp-service: run_mode=batch, parallel=2, line_max=None
+2026-03-19 11:12:23.426023000 [INFO ] [ctrl   ] semantic analysis: enabled
+2026-03-19 11:12:23.426068000 [INFO ] [ctrl   ] 数据源配置统计: V2源=1个, 接受器(来自V2)=0个
+2026-03-19 11:12:23.426086000 [INFO ] [ctrl   ] run-mode=batch: 跳过启动接受器任务
+2026-03-19 11:12:23.426106000 [INFO ] [ctrl   ] monitor proc start: stat_sec=60, stat_print=false
+2026-03-19 11:12:23.426281000 [INFO ] [ctrl   ] start 2 parallel to parse (frames)
+2026-03-19 11:12:23.426361000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:12:23.426383000 [INFO ] [ctrl   ] monitor loop started (stat_sec=60, stat_print=false)
+2026-03-19 11:12:23.426443000 [INFO ] [ctrl   ] actor(wparse-parse) work start
+2026-03-19 11:12:23.426612000 [INFO ] [ctrl   ] actor(wparse-parse) work start
+2026-03-19 11:12:23.426753000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:12:23.426779000 [WARN ] [ctrl   ] parse engine pipelin cnt: 1
+2026-03-19 11:12:23.426807000 [INFO ] [ctrl   ] spawn tokio Sink Group demo batch_size=1024 batch_timeout_ms=300
+2026-03-19 11:12:23.426926000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:12:23.427062000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:12:23.427093000 [WARN ] [ctrl   ] parse engine pipelin cnt: 1
+2026-03-19 11:12:23.427161000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:12:23.427194000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:12:23.528411000 [INFO ] [ctrl   ] 启动数据收集(Frame)： 1个数据源
+2026-03-19 11:12:23.528497000 [INFO ] [ctrl   ] spawning picker for source 'file_1' (line_max=None, speed_limit=20000)
+2026-03-19 11:12:23.528538000 [WARN ] [ctrl   ] engine started!
+2026-03-19 11:12:23.528573000 [INFO ] [ctrl   ] 启动数据源 picker(Frame): file_1
+2026-03-19 11:12:23.528665000 [INFO ] [ctrl   ] Starting data source 'file_1'
+2026-03-19 11:12:23.528759000 [INFO ] [ctrl   ] Data source 'file_1' started (speed_limit=Some(20000), max_count=None)
+2026-03-19 11:12:23.528813000 [INFO ] [ctrl   ] file_1-picker speed init 20000  limit ns times:800000000,
+2026-03-19 11:12:23.528832000 [WARN ] [ctrl   ] actor:file_1-picker 20000
+2026-03-19 11:12:23.529815000 [INFO ] [ctrl   ] file_1-picker round status=Terminal (pending_cnt=0, send_cnt=0)
+2026-03-19 11:12:23.529874000 [INFO ] [ctrl   ] Closing data source 'file_1'
+2026-03-19 11:12:23.529899000 [INFO ] [ctrl   ] file_1-picker dispatch loop exited (max_line=None, total_pending=0)
+2026-03-19 11:12:23.529942000 [INFO ] [ctrl   ] 数据源 'file_1' picker 正常结束
+2026-03-19 11:12:23.541097000 [INFO ] [ctrl   ] exit-policy Batch: enter quiescing (trigger=RoleFinished(Picker))
+2026-03-19 11:12:23.541155000 [INFO ] [ctrl   ] data channel closed; parser loop exits
+2026-03-19 11:12:23.541201000 [INFO ] [ctrl   ] engine proc frames end: total 6
+2026-03-19 11:12:23.541239000 [INFO ] [ctrl   ] actor(wparse-parse) work end
+2026-03-19 11:12:23.575727000 [INFO ] [ctrl   ] data channel closed; parser loop exits
+2026-03-19 11:12:23.575786000 [INFO ] [ctrl   ] engine proc frames end: total 44
+2026-03-19 11:12:23.575821000 [INFO ] [ctrl   ] actor(wparse-parse) work end
+2026-03-19 11:12:23.588281000 [INFO ] [ctrl   ] exit-policy Batch: enter stopping (trigger=RoleFinished(Parser))
+2026-03-19 11:12:23.588360000 [INFO ] [ctrl   ] picker broadcast cmd :Isolate
+2026-03-19 11:12:23.588389000 [INFO ] [ctrl   ] wpl-parse broadcast cmd :Isolate
+2026-03-19 11:12:23.588407000 [INFO ] [ctrl   ] amt broadcast cmd :Isolate
+2026-03-19 11:12:23.588424000 [INFO ] [ctrl   ] oml-sink broadcast cmd :Isolate
+2026-03-19 11:12:23.588448000 [INFO ] [ctrl   ] maintainer Recv cmd : Isolate
+2026-03-19 11:12:23.588469000 [INFO ] [ctrl   ] work-sink:demo                 update cmd: CtrlCmd::Alone 
+2026-03-19 11:12:23.588499000 [INFO ] [ctrl   ] infra broadcast cmd :Isolate
+2026-03-19 11:12:23.588517000 [INFO ] [ctrl   ] monitor broadcast cmd :Isolate
+2026-03-19 11:12:23.588533000 [INFO ] [ctrl   ] infra sinks  update cmd: CtrlCmd::Alone 
+2026-03-19 11:12:23.588551000 [INFO ] [ctrl   ] picker broadcast cmd :Stop(Immediate) 
+2026-03-19 11:12:23.588577000 [INFO ] [ctrl   ] monitor recv cmd: CtrlCmd::Alone
+2026-03-19 11:12:23.588591000 [INFO ] [ctrl   ] picker group routines end
+2026-03-19 11:12:23.588611000 [INFO ] [ctrl   ] role group Picker(picker) await end!
+2026-03-19 11:12:23.588629000 [INFO ] [ctrl   ] wpl-parse broadcast cmd :Stop(Immediate) 
+2026-03-19 11:12:23.588647000 [INFO ] [ctrl   ] monitor update cmd: CtrlCmd::Alone 
+2026-03-19 11:12:23.588666000 [INFO ] [ctrl   ] wpl-parse group routines end
+2026-03-19 11:12:23.588679000 [INFO ] [ctrl   ] role group Parser(wpl-parse) await end!
+2026-03-19 11:12:23.588689000 [INFO ] [ctrl   ] amt broadcast cmd :Stop(Immediate) 
+2026-03-19 11:12:23.588700000 [INFO ] [ctrl   ] amt group routines [0] wait... 
+2026-03-19 11:12:23.613037000 [INFO ] [ctrl   ] maintainer Recv cmd : Stop(Immediate)
+2026-03-19 11:12:23.613082000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:12:23.613147000 [INFO ] [ctrl   ] amt group routines end
+2026-03-19 11:12:23.613210000 [INFO ] [ctrl   ] role group Maintainer(amt) await end!
+2026-03-19 11:12:23.613226000 [INFO ] [ctrl   ] oml-sink broadcast cmd :Stop(Immediate) 
+2026-03-19 11:12:23.613247000 [INFO ] [ctrl   ] oml-sink group routines [0] wait... 
+2026-03-19 11:12:23.613262000 [INFO ] [ctrl   ] work-sink:demo                 update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:12:23.613280000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:12:23.613289000 [INFO ] [ctrl   ] demo enter draining state
+2026-03-19 11:12:23.613301000 [INFO ] [ctrl   ] demo drain complete
+2026-03-19 11:12:23.631690000 [INFO ] [ctrl   ] demo async sinks proc end
+2026-03-19 11:12:23.631951000 [INFO ] [ctrl   ] oml-sink group routines end
+2026-03-19 11:12:23.631969000 [INFO ] [ctrl   ] role group Sink(oml-sink) await end!
+2026-03-19 11:12:23.631983000 [INFO ] [ctrl   ] infra broadcast cmd :Stop(Immediate) 
+2026-03-19 11:12:23.632000000 [INFO ] [ctrl   ] infra group routines [0] wait... 
+2026-03-19 11:12:23.632013000 [INFO ] [ctrl   ] infra sinks  update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:12:23.632025000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:12:23.632035000 [INFO ] [ctrl   ] infra sinks enter draining state
+2026-03-19 11:12:23.632049000 [INFO ] [ctrl   ] infra sinks drain complete
+2026-03-19 11:12:23.635623000 [INFO ] [ctrl   ] infra:default async sinks proc end
+2026-03-19 11:12:23.639613000 [INFO ] [ctrl   ] infra:miss async sinks proc end
+2026-03-19 11:12:23.643647000 [INFO ] [ctrl   ] infra:residue async sinks proc end
+2026-03-19 11:12:23.647598000 [INFO ] [ctrl   ] infra:monitor async sinks proc end
+2026-03-19 11:12:23.650658000 [INFO ] [ctrl   ] infra:error async sinks proc end
+2026-03-19 11:12:23.650762000 [INFO ] [ctrl   ] infra group routines end
+2026-03-19 11:12:23.650782000 [INFO ] [ctrl   ] role group Infra(infra) await end!
+2026-03-19 11:12:23.650798000 [INFO ] [ctrl   ] monitor broadcast cmd :Stop(Immediate) 
+2026-03-19 11:12:23.650816000 [INFO ] [ctrl   ] monitor group routines [0] wait... 
+2026-03-19 11:12:23.650829000 [INFO ] [ctrl   ] monitor recv cmd: CtrlCmd::Stop(StopNow)
+2026-03-19 11:12:23.650844000 [INFO ] [ctrl   ] monitor update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:12:23.650856000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:12:23.650900000 [INFO ] [ctrl   ] monitor proc end (total_events=19)
+2026-03-19 11:12:23.651542000 [INFO ] [ctrl   ] monitor group routines end
+2026-03-19 11:12:23.651554000 [INFO ] [ctrl   ] role group Monitor(monitor) await end!
+2026-03-19 11:12:23.651564000 [INFO ] [ctrl   ] all role groups await end!
+2026-03-19 11:12:51.658487000 [INFO ] [ctrl   ] log conf: level: warn,ctrl=info,data=error,matrc=error,dfx=warn,kdb=warn
+output: File
+path: Some("../openclaw/data/logs/")
+ 
+2026-03-19 11:12:51.658625000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='arrow-file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:11 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:11
+2026-03-19 11:12:51.658658000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='arrow-ipc' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:12 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:12
+2026-03-19 11:12:51.658682000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='blackhole' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:13 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:13
+2026-03-19 11:12:51.658702000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:14 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:14
+2026-03-19 11:12:51.658741000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='syslog' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:15 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:15
+2026-03-19 11:12:51.658761000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='tcp' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:16 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:16
+2026-03-19 11:12:51.658781000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='test_rescue' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:17 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:17
+2026-03-19 11:12:51.658799000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='syslog' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/syslog/mod.rs:48 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/syslog/mod.rs:48
+2026-03-19 11:12:51.658818000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='tcp' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/tcp/factory.rs:116 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/tcp/factory.rs:116
+2026-03-19 11:12:51.658836000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/file/factory.rs:140 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/file/factory.rs:140
+2026-03-19 11:12:51.658896000 [INFO ] [ctrl   ] version 0.21.0 (branch env/local, commit 2b94aa99, built 2026-03-17T19:00:25+08:00 via rustc 1.92.0 (ded5c06cf 2025-12-08))
+2026-03-19 11:12:51.658915000 [INFO ] [ctrl   ] enterprise control plane disabled (feature 'enterprise-backend' not enabled)
+2026-03-19 11:12:51.659229000 [INFO ] [ctrl   ] build engine with run_mode=Batch, parallel=2, line_max=None
+2026-03-19 11:12:51.659818000 [INFO ] [ctrl   ] semantic dict: 语义词典配置有效: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/semantic_dict.toml | 模式: ADD（扩展内置词典） | 词汇数: 179
+2026-03-19 11:12:51.663746000 [INFO ] [ctrl   ] suc! load table to kdb: 
+call context:
+	table_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/./example
+	data_path : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/./example/data.csv
+
+2026-03-19 11:12:51.663787000 [INFO ] [ctrl   ] load table /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/. suc!
+2026-03-19 11:12:51.663965000 [INFO ] [ctrl   ] init authority knowdb success(/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/knowdb.toml) 
+2026-03-19 11:12:51.665175000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : default/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:12:51.665206000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : default/[0]
+	kind : file
+
+2026-03-19 11:12:51.665231000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : error/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:12:51.665247000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : error/[0]
+	kind : file
+
+2026-03-19 11:12:51.665267000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : miss/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:12:51.665281000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : miss/[0]
+	kind : file
+
+2026-03-19 11:12:51.665300000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : monitor/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:12:51.665313000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : monitor/[0]
+	kind : file
+
+2026-03-19 11:12:51.665331000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : residue/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:12:51.665344000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : residue/[0]
+	kind : file
+
+2026-03-19 11:12:51.665714000 [INFO ] [ctrl   ] create sink:default/[0] batch_size=128
+2026-03-19 11:12:51.665873000 [INFO ] [ctrl   ] create sink:residue/[0] batch_size=1
+2026-03-19 11:12:51.665985000 [INFO ] [ctrl   ] create sink:miss/[0] batch_size=1
+2026-03-19 11:12:51.666118000 [INFO ] [ctrl   ] create sink:error/[0] batch_size=1
+2026-03-19 11:12:51.666224000 [INFO ] [ctrl   ] create sink:monitor/[0] batch_size=1
+2026-03-19 11:12:51.666731000 [INFO ] [ctrl   ] load all wpl code beg...
+2026-03-19 11:12:51.666751000 [INFO ] [ctrl   ] find conf files in: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl
+2026-03-19 11:12:51.666871000 [INFO ] [ctrl   ] load conf file: "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl/parse.wpl"
+2026-03-19 11:12:51.667064000 [INFO ] [ctrl   ] success load & parse code : "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl/parse.wpl"
+2026-03-19 11:12:51.667093000 [INFO ] [ctrl   ] load all wpl code end
+2026-03-19 11:12:51.667112000 [INFO ] [ctrl   ] load all oml model
+2026-03-19 11:12:51.667127000 [INFO ] [ctrl   ] find conf files in: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/oml
+2026-03-19 11:12:51.667214000 [INFO ] [ctrl   ] load conf file: "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/oml/model.oml"
+2026-03-19 11:12:51.668061000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : demo/json
+	kind : file
+: validate suc!
+2026-03-19 11:12:51.668076000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : demo/json
+	kind : file
+
+2026-03-19 11:12:51.668110000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : demo/arrow
+	kind : arrow-file
+: validate suc!
+2026-03-19 11:12:51.668123000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : demo/arrow
+	kind : arrow-file
+
+2026-03-19 11:12:51.668223000 [INFO ] [ctrl   ] update_sink_mdl_index, match oml /oml/wparse
+2026-03-19 11:12:51.668263000 [INFO ] [ctrl   ] init SinkGroup: demo
+2026-03-19 11:12:51.668283000 [INFO ] [ctrl   ] alloc sink res : sink demo 
+2026-03-19 11:12:51.668297000 [INFO ] [ctrl   ] alloc sink res : sink demo oml model: /oml/wparse
+2026-03-19 11:12:51.668435000 [INFO ] [ctrl   ] create sink:demo/json batch_size=1024
+2026-03-19 11:12:51.668583000 [INFO ] [ctrl   ] create sink:demo/arrow batch_size=1024
+2026-03-19 11:12:51.668669000 [INFO ] [ctrl   ] alloc parse res : wpl rule /wpl/wparse/line  
+2026-03-19 11:12:51.668693000 [INFO ] [ctrl   ] alloc parse res : rule /wpl/wparse/line  sink agent: demo
+2026-03-19 11:12:51.668882000 [INFO ] [ctrl   ] save data file suc : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wp-tools/.run/rule_mapping.dat 
+2026-03-19 11:12:51.668932000 [INFO ] [ctrl   ] start warp-service: run_mode=batch, parallel=2, line_max=None
+2026-03-19 11:12:51.668947000 [INFO ] [ctrl   ] semantic analysis: enabled
+2026-03-19 11:12:51.668979000 [INFO ] [ctrl   ] 数据源配置统计: V2源=1个, 接受器(来自V2)=0个
+2026-03-19 11:12:51.668992000 [INFO ] [ctrl   ] run-mode=batch: 跳过启动接受器任务
+2026-03-19 11:12:51.669002000 [INFO ] [ctrl   ] monitor proc start: stat_sec=60, stat_print=false
+2026-03-19 11:12:51.669112000 [INFO ] [ctrl   ] start 2 parallel to parse (frames)
+2026-03-19 11:12:51.669146000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:12:51.669159000 [INFO ] [ctrl   ] monitor loop started (stat_sec=60, stat_print=false)
+2026-03-19 11:12:51.669291000 [INFO ] [ctrl   ] actor(wparse-parse) work start
+2026-03-19 11:12:51.669425000 [INFO ] [ctrl   ] actor(wparse-parse) work start
+2026-03-19 11:12:51.669518000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:12:51.669532000 [WARN ] [ctrl   ] parse engine pipelin cnt: 1
+2026-03-19 11:12:51.669547000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:12:51.669636000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:12:51.669650000 [WARN ] [ctrl   ] parse engine pipelin cnt: 1
+2026-03-19 11:12:51.669663000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:12:51.669742000 [INFO ] [ctrl   ] spawn tokio Sink Group demo batch_size=1024 batch_timeout_ms=300
+2026-03-19 11:12:51.669822000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:12:51.770078000 [INFO ] [ctrl   ] 启动数据收集(Frame)： 1个数据源
+2026-03-19 11:12:51.770174000 [INFO ] [ctrl   ] spawning picker for source 'file_1' (line_max=None, speed_limit=20000)
+2026-03-19 11:12:51.770221000 [WARN ] [ctrl   ] engine started!
+2026-03-19 11:12:51.770242000 [INFO ] [ctrl   ] 启动数据源 picker(Frame): file_1
+2026-03-19 11:12:51.770316000 [INFO ] [ctrl   ] Starting data source 'file_1'
+2026-03-19 11:12:51.770380000 [INFO ] [ctrl   ] Data source 'file_1' started (speed_limit=Some(20000), max_count=None)
+2026-03-19 11:12:51.770414000 [INFO ] [ctrl   ] file_1-picker speed init 20000  limit ns times:800000000,
+2026-03-19 11:12:51.770429000 [WARN ] [ctrl   ] actor:file_1-picker 20000
+2026-03-19 11:12:51.771246000 [INFO ] [ctrl   ] file_1-picker round status=Terminal (pending_cnt=0, send_cnt=0)
+2026-03-19 11:12:51.771301000 [INFO ] [ctrl   ] Closing data source 'file_1'
+2026-03-19 11:12:51.771319000 [INFO ] [ctrl   ] file_1-picker dispatch loop exited (max_line=None, total_pending=0)
+2026-03-19 11:12:51.771351000 [INFO ] [ctrl   ] 数据源 'file_1' picker 正常结束
+2026-03-19 11:12:51.781280000 [INFO ] [ctrl   ] exit-policy Batch: enter quiescing (trigger=RoleFinished(Picker))
+2026-03-19 11:12:51.781334000 [INFO ] [ctrl   ] data channel closed; parser loop exits
+2026-03-19 11:12:51.781361000 [INFO ] [ctrl   ] engine proc frames end: total 6
+2026-03-19 11:12:51.781397000 [INFO ] [ctrl   ] actor(wparse-parse) work end
+2026-03-19 11:12:51.818092000 [INFO ] [ctrl   ] data channel closed; parser loop exits
+2026-03-19 11:12:51.818142000 [INFO ] [ctrl   ] engine proc frames end: total 44
+2026-03-19 11:12:51.818177000 [INFO ] [ctrl   ] actor(wparse-parse) work end
+2026-03-19 11:12:51.825025000 [INFO ] [ctrl   ] exit-policy Batch: enter stopping (trigger=RoleFinished(Parser))
+2026-03-19 11:12:51.825091000 [INFO ] [ctrl   ] picker broadcast cmd :Isolate
+2026-03-19 11:12:51.825119000 [INFO ] [ctrl   ] wpl-parse broadcast cmd :Isolate
+2026-03-19 11:12:51.825137000 [INFO ] [ctrl   ] amt broadcast cmd :Isolate
+2026-03-19 11:12:51.825153000 [INFO ] [ctrl   ] oml-sink broadcast cmd :Isolate
+2026-03-19 11:12:51.825177000 [INFO ] [ctrl   ] infra broadcast cmd :Isolate
+2026-03-19 11:12:51.825193000 [INFO ] [ctrl   ] work-sink:demo                 update cmd: CtrlCmd::Alone 
+2026-03-19 11:12:51.825218000 [INFO ] [ctrl   ] monitor broadcast cmd :Isolate
+2026-03-19 11:12:51.825250000 [INFO ] [ctrl   ] infra sinks  update cmd: CtrlCmd::Alone 
+2026-03-19 11:12:51.825269000 [INFO ] [ctrl   ] picker broadcast cmd :Stop(Immediate) 
+2026-03-19 11:12:51.825289000 [INFO ] [ctrl   ] monitor recv cmd: CtrlCmd::Alone
+2026-03-19 11:12:51.825308000 [INFO ] [ctrl   ] monitor update cmd: CtrlCmd::Alone 
+2026-03-19 11:12:51.825327000 [INFO ] [ctrl   ] picker group routines end
+2026-03-19 11:12:51.825343000 [INFO ] [ctrl   ] role group Picker(picker) await end!
+2026-03-19 11:12:51.825364000 [INFO ] [ctrl   ] wpl-parse broadcast cmd :Stop(Immediate) 
+2026-03-19 11:12:51.825377000 [INFO ] [ctrl   ] wpl-parse group routines end
+2026-03-19 11:12:51.825387000 [INFO ] [ctrl   ] role group Parser(wpl-parse) await end!
+2026-03-19 11:12:51.825396000 [INFO ] [ctrl   ] amt broadcast cmd :Stop(Immediate) 
+2026-03-19 11:12:51.825406000 [INFO ] [ctrl   ] amt group routines [0] wait... 
+2026-03-19 11:12:51.835654000 [INFO ] [ctrl   ] maintainer Recv cmd : Isolate
+2026-03-19 11:12:51.859837000 [INFO ] [ctrl   ] maintainer Recv cmd : Stop(Immediate)
+2026-03-19 11:12:51.859878000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:12:51.859919000 [INFO ] [ctrl   ] amt group routines end
+2026-03-19 11:12:51.859941000 [INFO ] [ctrl   ] role group Maintainer(amt) await end!
+2026-03-19 11:12:51.859956000 [INFO ] [ctrl   ] oml-sink broadcast cmd :Stop(Immediate) 
+2026-03-19 11:12:51.859974000 [INFO ] [ctrl   ] oml-sink group routines [0] wait... 
+2026-03-19 11:12:51.859987000 [INFO ] [ctrl   ] work-sink:demo                 update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:12:51.860003000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:12:51.860013000 [INFO ] [ctrl   ] demo enter draining state
+2026-03-19 11:12:51.860025000 [INFO ] [ctrl   ] demo drain complete
+2026-03-19 11:12:51.876022000 [INFO ] [ctrl   ] demo async sinks proc end
+2026-03-19 11:12:51.876359000 [INFO ] [ctrl   ] oml-sink group routines end
+2026-03-19 11:12:51.876378000 [INFO ] [ctrl   ] role group Sink(oml-sink) await end!
+2026-03-19 11:12:51.876392000 [INFO ] [ctrl   ] infra broadcast cmd :Stop(Immediate) 
+2026-03-19 11:12:51.876408000 [INFO ] [ctrl   ] infra group routines [0] wait... 
+2026-03-19 11:12:51.876424000 [INFO ] [ctrl   ] infra sinks  update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:12:51.876437000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:12:51.876447000 [INFO ] [ctrl   ] infra sinks enter draining state
+2026-03-19 11:12:51.876461000 [INFO ] [ctrl   ] infra sinks drain complete
+2026-03-19 11:12:51.878996000 [INFO ] [ctrl   ] infra:default async sinks proc end
+2026-03-19 11:12:51.882956000 [INFO ] [ctrl   ] infra:miss async sinks proc end
+2026-03-19 11:12:51.886937000 [INFO ] [ctrl   ] infra:residue async sinks proc end
+2026-03-19 11:12:51.890947000 [INFO ] [ctrl   ] infra:monitor async sinks proc end
+2026-03-19 11:12:51.894956000 [INFO ] [ctrl   ] infra:error async sinks proc end
+2026-03-19 11:12:51.895051000 [INFO ] [ctrl   ] infra group routines end
+2026-03-19 11:12:51.895069000 [INFO ] [ctrl   ] role group Infra(infra) await end!
+2026-03-19 11:12:51.895083000 [INFO ] [ctrl   ] monitor broadcast cmd :Stop(Immediate) 
+2026-03-19 11:12:51.895102000 [INFO ] [ctrl   ] monitor group routines [0] wait... 
+2026-03-19 11:12:51.895113000 [INFO ] [ctrl   ] monitor recv cmd: CtrlCmd::Stop(StopNow)
+2026-03-19 11:12:51.895126000 [INFO ] [ctrl   ] monitor update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:12:51.895136000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:12:51.895188000 [INFO ] [ctrl   ] monitor proc end (total_events=19)
+2026-03-19 11:12:51.895917000 [INFO ] [ctrl   ] monitor group routines end
+2026-03-19 11:12:51.895933000 [INFO ] [ctrl   ] role group Monitor(monitor) await end!
+2026-03-19 11:12:51.895945000 [INFO ] [ctrl   ] all role groups await end!
+2026-03-19 11:14:35.369731000 [INFO ] [ctrl   ] log conf: level: warn,ctrl=info,data=error,matrc=error,dfx=warn,kdb=warn
+output: File
+path: Some("../openclaw/data/logs/")
+ 
+2026-03-19 11:14:35.369927000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='arrow-file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:11 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:11
+2026-03-19 11:14:35.369970000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='arrow-ipc' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:12 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:12
+2026-03-19 11:14:35.370000000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='blackhole' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:13 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:13
+2026-03-19 11:14:35.370028000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:14 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:14
+2026-03-19 11:14:35.370057000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='syslog' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:15 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:15
+2026-03-19 11:14:35.370083000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='tcp' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:16 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:16
+2026-03-19 11:14:35.370110000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='test_rescue' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:17 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:17
+2026-03-19 11:14:35.370136000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='syslog' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/syslog/mod.rs:48 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/syslog/mod.rs:48
+2026-03-19 11:14:35.370161000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='tcp' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/tcp/factory.rs:116 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/tcp/factory.rs:116
+2026-03-19 11:14:35.370187000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/file/factory.rs:140 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/file/factory.rs:140
+2026-03-19 11:14:35.370271000 [INFO ] [ctrl   ] version 0.21.0 (branch env/local, commit 2b94aa99, built 2026-03-17T19:00:25+08:00 via rustc 1.92.0 (ded5c06cf 2025-12-08))
+2026-03-19 11:14:35.370297000 [INFO ] [ctrl   ] enterprise control plane disabled (feature 'enterprise-backend' not enabled)
+2026-03-19 11:14:35.370765000 [INFO ] [ctrl   ] build engine with run_mode=Batch, parallel=2, line_max=None
+2026-03-19 11:14:35.371592000 [INFO ] [ctrl   ] semantic dict: 语义词典配置有效: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/semantic_dict.toml | 模式: ADD（扩展内置词典） | 词汇数: 179
+2026-03-19 11:14:35.376328000 [INFO ] [ctrl   ] suc! load table to kdb: 
+call context:
+	table_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/./example
+	data_path : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/./example/data.csv
+
+2026-03-19 11:14:35.376391000 [INFO ] [ctrl   ] load table /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/. suc!
+2026-03-19 11:14:35.376524000 [INFO ] [ctrl   ] init authority knowdb success(/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/knowdb.toml) 
+2026-03-19 11:14:35.378304000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : default/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:14:35.378339000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : default/[0]
+	kind : file
+
+2026-03-19 11:14:35.378374000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : error/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:14:35.378395000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : error/[0]
+	kind : file
+
+2026-03-19 11:14:35.378423000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : miss/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:14:35.378441000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : miss/[0]
+	kind : file
+
+2026-03-19 11:14:35.378467000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : monitor/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:14:35.378484000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : monitor/[0]
+	kind : file
+
+2026-03-19 11:14:35.378509000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : residue/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:14:35.378525000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : residue/[0]
+	kind : file
+
+2026-03-19 11:14:35.378934000 [INFO ] [ctrl   ] create sink:default/[0] batch_size=128
+2026-03-19 11:14:35.379154000 [INFO ] [ctrl   ] create sink:residue/[0] batch_size=1
+2026-03-19 11:14:35.379284000 [INFO ] [ctrl   ] create sink:miss/[0] batch_size=1
+2026-03-19 11:14:35.379405000 [INFO ] [ctrl   ] create sink:error/[0] batch_size=1
+2026-03-19 11:14:35.379535000 [INFO ] [ctrl   ] create sink:monitor/[0] batch_size=1
+2026-03-19 11:14:35.380236000 [INFO ] [ctrl   ] load all wpl code beg...
+2026-03-19 11:14:35.380259000 [INFO ] [ctrl   ] find conf files in: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl
+2026-03-19 11:14:35.380427000 [INFO ] [ctrl   ] load conf file: "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl/parse.wpl"
+2026-03-19 11:14:35.380696000 [INFO ] [ctrl   ] success load & parse code : "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl/parse.wpl"
+2026-03-19 11:14:35.380737000 [INFO ] [ctrl   ] load all wpl code end
+2026-03-19 11:14:35.380764000 [INFO ] [ctrl   ] load all oml model
+2026-03-19 11:14:35.380784000 [INFO ] [ctrl   ] find conf files in: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/oml
+2026-03-19 11:14:35.380924000 [INFO ] [ctrl   ] load conf file: "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/oml/model.oml"
+2026-03-19 11:14:35.382263000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : demo/json
+	kind : file
+: validate suc!
+2026-03-19 11:14:35.382295000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : demo/json
+	kind : file
+
+2026-03-19 11:14:35.382345000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : demo/arrow
+	kind : arrow-file
+: validate suc!
+2026-03-19 11:14:35.382365000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : demo/arrow
+	kind : arrow-file
+
+2026-03-19 11:14:35.382499000 [INFO ] [ctrl   ] update_sink_mdl_index, match oml /oml/wparse
+2026-03-19 11:14:35.382554000 [INFO ] [ctrl   ] init SinkGroup: demo
+2026-03-19 11:14:35.382582000 [INFO ] [ctrl   ] alloc sink res : sink demo 
+2026-03-19 11:14:35.382599000 [INFO ] [ctrl   ] alloc sink res : sink demo oml model: /oml/wparse
+2026-03-19 11:14:35.382769000 [INFO ] [ctrl   ] create sink:demo/json batch_size=1024
+2026-03-19 11:14:35.382998000 [INFO ] [ctrl   ] create sink:demo/arrow batch_size=1024
+2026-03-19 11:14:35.383119000 [INFO ] [ctrl   ] alloc parse res : wpl rule /wpl/wparse/line  
+2026-03-19 11:14:35.383147000 [INFO ] [ctrl   ] alloc parse res : rule /wpl/wparse/line  sink agent: demo
+2026-03-19 11:14:35.383426000 [INFO ] [ctrl   ] save data file suc : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wp-tools/.run/rule_mapping.dat 
+2026-03-19 11:14:35.383485000 [INFO ] [ctrl   ] start warp-service: run_mode=batch, parallel=2, line_max=None
+2026-03-19 11:14:35.383500000 [INFO ] [ctrl   ] semantic analysis: enabled
+2026-03-19 11:14:35.383546000 [INFO ] [ctrl   ] 数据源配置统计: V2源=1个, 接受器(来自V2)=0个
+2026-03-19 11:14:35.383563000 [INFO ] [ctrl   ] run-mode=batch: 跳过启动接受器任务
+2026-03-19 11:14:35.383579000 [INFO ] [ctrl   ] monitor proc start: stat_sec=60, stat_print=false
+2026-03-19 11:14:35.383733000 [INFO ] [ctrl   ] start 2 parallel to parse (frames)
+2026-03-19 11:14:35.383780000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:14:35.383798000 [INFO ] [ctrl   ] monitor loop started (stat_sec=60, stat_print=false)
+2026-03-19 11:14:35.383880000 [INFO ] [ctrl   ] actor(wparse-parse) work start
+2026-03-19 11:14:35.384000000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:14:35.384022000 [WARN ] [ctrl   ] parse engine pipelin cnt: 1
+2026-03-19 11:14:35.384037000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:14:35.384185000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:14:35.384317000 [INFO ] [ctrl   ] spawn tokio Sink Group demo batch_size=1024 batch_timeout_ms=300
+2026-03-19 11:14:35.384424000 [INFO ] [ctrl   ] actor(wparse-parse) work start
+2026-03-19 11:14:35.384506000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:14:35.384523000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:14:35.384539000 [WARN ] [ctrl   ] parse engine pipelin cnt: 1
+2026-03-19 11:14:35.486185000 [INFO ] [ctrl   ] 启动数据收集(Frame)： 1个数据源
+2026-03-19 11:14:35.486268000 [INFO ] [ctrl   ] spawning picker for source 'file_1' (line_max=None, speed_limit=20000)
+2026-03-19 11:14:35.486313000 [INFO ] [ctrl   ] 启动数据源 picker(Frame): file_1
+2026-03-19 11:14:35.486353000 [WARN ] [ctrl   ] engine started!
+2026-03-19 11:14:35.486386000 [INFO ] [ctrl   ] Starting data source 'file_1'
+2026-03-19 11:14:35.486500000 [INFO ] [ctrl   ] Data source 'file_1' started (speed_limit=Some(20000), max_count=None)
+2026-03-19 11:14:35.486543000 [INFO ] [ctrl   ] file_1-picker speed init 20000  limit ns times:800000000,
+2026-03-19 11:14:35.486564000 [WARN ] [ctrl   ] actor:file_1-picker 20000
+2026-03-19 11:14:35.487527000 [INFO ] [ctrl   ] file_1-picker round status=Terminal (pending_cnt=0, send_cnt=0)
+2026-03-19 11:14:35.487571000 [INFO ] [ctrl   ] Closing data source 'file_1'
+2026-03-19 11:14:35.487593000 [INFO ] [ctrl   ] file_1-picker dispatch loop exited (max_line=None, total_pending=0)
+2026-03-19 11:14:35.487635000 [INFO ] [ctrl   ] 数据源 'file_1' picker 正常结束
+2026-03-19 11:14:35.497632000 [INFO ] [ctrl   ] exit-policy Batch: enter quiescing (trigger=RoleFinished(Picker))
+2026-03-19 11:14:35.498007000 [INFO ] [ctrl   ] data channel closed; parser loop exits
+2026-03-19 11:14:35.498051000 [INFO ] [ctrl   ] engine proc frames end: total 6
+2026-03-19 11:14:35.498098000 [INFO ] [ctrl   ] actor(wparse-parse) work end
+2026-03-19 11:14:35.546990000 [INFO ] [ctrl   ] data channel closed; parser loop exits
+2026-03-19 11:14:35.547030000 [INFO ] [ctrl   ] engine proc frames end: total 44
+2026-03-19 11:14:35.547047000 [INFO ] [ctrl   ] actor(wparse-parse) work end
+2026-03-19 11:14:35.558305000 [INFO ] [ctrl   ] exit-policy Batch: enter stopping (trigger=RoleFinished(Parser))
+2026-03-19 11:14:35.558327000 [INFO ] [ctrl   ] picker broadcast cmd :Isolate
+2026-03-19 11:14:35.558349000 [INFO ] [ctrl   ] wpl-parse broadcast cmd :Isolate
+2026-03-19 11:14:35.558365000 [INFO ] [ctrl   ] amt broadcast cmd :Isolate
+2026-03-19 11:14:35.558378000 [INFO ] [ctrl   ] oml-sink broadcast cmd :Isolate
+2026-03-19 11:14:35.558393000 [INFO ] [ctrl   ] infra broadcast cmd :Isolate
+2026-03-19 11:14:35.558405000 [INFO ] [ctrl   ] work-sink:demo                 update cmd: CtrlCmd::Alone 
+2026-03-19 11:14:35.558423000 [INFO ] [ctrl   ] monitor broadcast cmd :Isolate
+2026-03-19 11:14:35.558440000 [INFO ] [ctrl   ] infra sinks  update cmd: CtrlCmd::Alone 
+2026-03-19 11:14:35.558460000 [INFO ] [ctrl   ] picker broadcast cmd :Stop(Immediate) 
+2026-03-19 11:14:35.558478000 [INFO ] [ctrl   ] monitor recv cmd: CtrlCmd::Alone
+2026-03-19 11:14:35.558495000 [INFO ] [ctrl   ] monitor update cmd: CtrlCmd::Alone 
+2026-03-19 11:14:35.558514000 [INFO ] [ctrl   ] picker group routines end
+2026-03-19 11:14:35.558528000 [INFO ] [ctrl   ] role group Picker(picker) await end!
+2026-03-19 11:14:35.558540000 [INFO ] [ctrl   ] wpl-parse broadcast cmd :Stop(Immediate) 
+2026-03-19 11:14:35.558553000 [INFO ] [ctrl   ] wpl-parse group routines end
+2026-03-19 11:14:35.558562000 [INFO ] [ctrl   ] role group Parser(wpl-parse) await end!
+2026-03-19 11:14:35.558571000 [INFO ] [ctrl   ] amt broadcast cmd :Stop(Immediate) 
+2026-03-19 11:14:35.558580000 [INFO ] [ctrl   ] amt group routines [0] wait... 
+2026-03-19 11:14:35.581661000 [INFO ] [ctrl   ] maintainer Recv cmd : Isolate
+2026-03-19 11:14:35.605146000 [INFO ] [ctrl   ] maintainer Recv cmd : Stop(Immediate)
+2026-03-19 11:14:35.605182000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:14:35.605216000 [INFO ] [ctrl   ] amt group routines end
+2026-03-19 11:14:35.605230000 [INFO ] [ctrl   ] role group Maintainer(amt) await end!
+2026-03-19 11:14:35.605240000 [INFO ] [ctrl   ] oml-sink broadcast cmd :Stop(Immediate) 
+2026-03-19 11:14:35.605252000 [INFO ] [ctrl   ] oml-sink group routines [0] wait... 
+2026-03-19 11:14:35.605264000 [INFO ] [ctrl   ] work-sink:demo                 update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:14:35.605281000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:14:35.605292000 [INFO ] [ctrl   ] demo enter draining state
+2026-03-19 11:14:35.605304000 [INFO ] [ctrl   ] demo drain complete
+2026-03-19 11:14:35.616119000 [INFO ] [ctrl   ] demo async sinks proc end
+2026-03-19 11:14:35.616396000 [INFO ] [ctrl   ] oml-sink group routines end
+2026-03-19 11:14:35.616408000 [INFO ] [ctrl   ] role group Sink(oml-sink) await end!
+2026-03-19 11:14:35.616419000 [INFO ] [ctrl   ] infra broadcast cmd :Stop(Immediate) 
+2026-03-19 11:14:35.616432000 [INFO ] [ctrl   ] infra group routines [0] wait... 
+2026-03-19 11:14:35.616441000 [INFO ] [ctrl   ] infra sinks  update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:14:35.616455000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:14:35.616464000 [INFO ] [ctrl   ] infra sinks enter draining state
+2026-03-19 11:14:35.616480000 [INFO ] [ctrl   ] infra sinks drain complete
+2026-03-19 11:14:35.621097000 [INFO ] [ctrl   ] infra:default async sinks proc end
+2026-03-19 11:14:35.626073000 [INFO ] [ctrl   ] infra:miss async sinks proc end
+2026-03-19 11:14:35.630073000 [INFO ] [ctrl   ] infra:residue async sinks proc end
+2026-03-19 11:14:35.634083000 [INFO ] [ctrl   ] infra:monitor async sinks proc end
+2026-03-19 11:14:35.638082000 [INFO ] [ctrl   ] infra:error async sinks proc end
+2026-03-19 11:14:35.638162000 [INFO ] [ctrl   ] infra group routines end
+2026-03-19 11:14:35.638176000 [INFO ] [ctrl   ] role group Infra(infra) await end!
+2026-03-19 11:14:35.638189000 [INFO ] [ctrl   ] monitor broadcast cmd :Stop(Immediate) 
+2026-03-19 11:14:35.638204000 [INFO ] [ctrl   ] monitor group routines [0] wait... 
+2026-03-19 11:14:35.638213000 [INFO ] [ctrl   ] monitor recv cmd: CtrlCmd::Stop(StopNow)
+2026-03-19 11:14:35.638225000 [INFO ] [ctrl   ] monitor update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:14:35.638235000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:14:35.638272000 [INFO ] [ctrl   ] monitor proc end (total_events=23)
+2026-03-19 11:14:35.638917000 [INFO ] [ctrl   ] monitor group routines end
+2026-03-19 11:14:35.638931000 [INFO ] [ctrl   ] role group Monitor(monitor) await end!
+2026-03-19 11:14:35.638938000 [INFO ] [ctrl   ] all role groups await end!
+2026-03-19 11:14:43.777130000 [INFO ] [ctrl   ] log conf: level: warn,ctrl=info,data=error,matrc=error,dfx=warn,kdb=warn
+output: File
+path: Some("../openclaw/data/logs/")
+ 
+2026-03-19 11:14:43.777274000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='arrow-file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:11 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:11
+2026-03-19 11:14:43.777307000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='arrow-ipc' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:12 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:12
+2026-03-19 11:14:43.777333000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='blackhole' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:13 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:13
+2026-03-19 11:14:43.777358000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:14 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:14
+2026-03-19 11:14:43.777385000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='syslog' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:15 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:15
+2026-03-19 11:14:43.777408000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='tcp' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:16 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:16
+2026-03-19 11:14:43.777432000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='test_rescue' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:17 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:17
+2026-03-19 11:14:43.777456000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='syslog' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/syslog/mod.rs:48 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/syslog/mod.rs:48
+2026-03-19 11:14:43.777480000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='tcp' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/tcp/factory.rs:116 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/tcp/factory.rs:116
+2026-03-19 11:14:43.777503000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/file/factory.rs:140 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/file/factory.rs:140
+2026-03-19 11:14:43.777579000 [INFO ] [ctrl   ] version 0.21.0 (branch env/local, commit 2b94aa99, built 2026-03-17T19:00:25+08:00 via rustc 1.92.0 (ded5c06cf 2025-12-08))
+2026-03-19 11:14:43.777602000 [INFO ] [ctrl   ] enterprise control plane disabled (feature 'enterprise-backend' not enabled)
+2026-03-19 11:14:43.777912000 [INFO ] [ctrl   ] build engine with run_mode=Batch, parallel=2, line_max=None
+2026-03-19 11:14:43.778511000 [INFO ] [ctrl   ] semantic dict: 语义词典配置有效: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/semantic_dict.toml | 模式: ADD（扩展内置词典） | 词汇数: 179
+2026-03-19 11:14:43.781709000 [INFO ] [ctrl   ] suc! load table to kdb: 
+call context:
+	table_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/./example
+	data_path : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/./example/data.csv
+
+2026-03-19 11:14:43.781734000 [INFO ] [ctrl   ] load table /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/. suc!
+2026-03-19 11:14:43.781807000 [INFO ] [ctrl   ] init authority knowdb success(/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/knowdb.toml) 
+2026-03-19 11:14:43.783307000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : default/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:14:43.783348000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : default/[0]
+	kind : file
+
+2026-03-19 11:14:43.783378000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : error/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:14:43.783395000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : error/[0]
+	kind : file
+
+2026-03-19 11:14:43.783418000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : miss/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:14:43.783432000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : miss/[0]
+	kind : file
+
+2026-03-19 11:14:43.783453000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : monitor/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:14:43.783466000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : monitor/[0]
+	kind : file
+
+2026-03-19 11:14:43.783486000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : residue/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:14:43.783499000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : residue/[0]
+	kind : file
+
+2026-03-19 11:14:43.783837000 [INFO ] [ctrl   ] create sink:default/[0] batch_size=128
+2026-03-19 11:14:43.783973000 [INFO ] [ctrl   ] create sink:residue/[0] batch_size=1
+2026-03-19 11:14:43.784084000 [INFO ] [ctrl   ] create sink:miss/[0] batch_size=1
+2026-03-19 11:14:43.784179000 [INFO ] [ctrl   ] create sink:error/[0] batch_size=1
+2026-03-19 11:14:43.784272000 [INFO ] [ctrl   ] create sink:monitor/[0] batch_size=1
+2026-03-19 11:14:43.784840000 [INFO ] [ctrl   ] load all wpl code beg...
+2026-03-19 11:14:43.784859000 [INFO ] [ctrl   ] find conf files in: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl
+2026-03-19 11:14:43.784982000 [INFO ] [ctrl   ] load conf file: "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl/parse.wpl"
+2026-03-19 11:14:43.785177000 [INFO ] [ctrl   ] success load & parse code : "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl/parse.wpl"
+2026-03-19 11:14:43.785206000 [INFO ] [ctrl   ] load all wpl code end
+2026-03-19 11:14:43.785245000 [INFO ] [ctrl   ] load all oml model
+2026-03-19 11:14:43.785274000 [INFO ] [ctrl   ] find conf files in: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/oml
+2026-03-19 11:14:43.785499000 [INFO ] [ctrl   ] load conf file: "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/oml/model.oml"
+2026-03-19 11:14:43.786489000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : demo/json
+	kind : file
+: validate suc!
+2026-03-19 11:14:43.786508000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : demo/json
+	kind : file
+
+2026-03-19 11:14:43.786548000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : demo/arrow
+	kind : arrow-file
+: validate suc!
+2026-03-19 11:14:43.786565000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : demo/arrow
+	kind : arrow-file
+
+2026-03-19 11:14:43.786669000 [INFO ] [ctrl   ] update_sink_mdl_index, match oml /oml/wparse
+2026-03-19 11:14:43.786712000 [INFO ] [ctrl   ] init SinkGroup: demo
+2026-03-19 11:14:43.786734000 [INFO ] [ctrl   ] alloc sink res : sink demo 
+2026-03-19 11:14:43.786748000 [INFO ] [ctrl   ] alloc sink res : sink demo oml model: /oml/wparse
+2026-03-19 11:14:43.786904000 [INFO ] [ctrl   ] create sink:demo/json batch_size=1024
+2026-03-19 11:14:43.787055000 [INFO ] [ctrl   ] create sink:demo/arrow batch_size=1024
+2026-03-19 11:14:43.787145000 [INFO ] [ctrl   ] alloc parse res : wpl rule /wpl/wparse/line  
+2026-03-19 11:14:43.787167000 [INFO ] [ctrl   ] alloc parse res : rule /wpl/wparse/line  sink agent: demo
+2026-03-19 11:14:43.787372000 [INFO ] [ctrl   ] save data file suc : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wp-tools/.run/rule_mapping.dat 
+2026-03-19 11:14:43.787434000 [INFO ] [ctrl   ] start warp-service: run_mode=batch, parallel=2, line_max=None
+2026-03-19 11:14:43.787461000 [INFO ] [ctrl   ] semantic analysis: enabled
+2026-03-19 11:14:43.787502000 [INFO ] [ctrl   ] 数据源配置统计: V2源=1个, 接受器(来自V2)=0个
+2026-03-19 11:14:43.787520000 [INFO ] [ctrl   ] run-mode=batch: 跳过启动接受器任务
+2026-03-19 11:14:43.787537000 [INFO ] [ctrl   ] monitor proc start: stat_sec=60, stat_print=false
+2026-03-19 11:14:43.787646000 [INFO ] [ctrl   ] start 2 parallel to parse (frames)
+2026-03-19 11:14:43.787680000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:14:43.787693000 [INFO ] [ctrl   ] monitor loop started (stat_sec=60, stat_print=false)
+2026-03-19 11:14:43.787774000 [INFO ] [ctrl   ] actor(wparse-parse) work start
+2026-03-19 11:14:43.787867000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:14:43.787887000 [WARN ] [ctrl   ] parse engine pipelin cnt: 1
+2026-03-19 11:14:43.787901000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:14:43.787977000 [INFO ] [ctrl   ] actor(wparse-parse) work start
+2026-03-19 11:14:43.788056000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:14:43.788150000 [INFO ] [ctrl   ] spawn tokio Sink Group demo batch_size=1024 batch_timeout_ms=300
+2026-03-19 11:14:43.788226000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:14:43.788242000 [WARN ] [ctrl   ] parse engine pipelin cnt: 1
+2026-03-19 11:14:43.788256000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:14:43.889995000 [INFO ] [ctrl   ] 启动数据收集(Frame)： 1个数据源
+2026-03-19 11:14:43.890061000 [INFO ] [ctrl   ] spawning picker for source 'file_1' (line_max=None, speed_limit=20000)
+2026-03-19 11:14:43.890101000 [WARN ] [ctrl   ] engine started!
+2026-03-19 11:14:43.890128000 [INFO ] [ctrl   ] 启动数据源 picker(Frame): file_1
+2026-03-19 11:14:43.890192000 [INFO ] [ctrl   ] Starting data source 'file_1'
+2026-03-19 11:14:43.890266000 [INFO ] [ctrl   ] Data source 'file_1' started (speed_limit=Some(20000), max_count=None)
+2026-03-19 11:14:43.890310000 [INFO ] [ctrl   ] file_1-picker speed init 20000  limit ns times:800000000,
+2026-03-19 11:14:43.890326000 [WARN ] [ctrl   ] actor:file_1-picker 20000
+2026-03-19 11:14:43.891131000 [INFO ] [ctrl   ] file_1-picker round status=Terminal (pending_cnt=0, send_cnt=0)
+2026-03-19 11:14:43.891187000 [INFO ] [ctrl   ] Closing data source 'file_1'
+2026-03-19 11:14:43.891207000 [INFO ] [ctrl   ] file_1-picker dispatch loop exited (max_line=None, total_pending=0)
+2026-03-19 11:14:43.891236000 [INFO ] [ctrl   ] 数据源 'file_1' picker 正常结束
+2026-03-19 11:14:43.900593000 [INFO ] [ctrl   ] exit-policy Batch: enter quiescing (trigger=RoleFinished(Picker))
+2026-03-19 11:14:43.900649000 [INFO ] [ctrl   ] data channel closed; parser loop exits
+2026-03-19 11:14:43.900679000 [INFO ] [ctrl   ] engine proc frames end: total 6
+2026-03-19 11:14:43.900720000 [INFO ] [ctrl   ] actor(wparse-parse) work end
+2026-03-19 11:14:43.941006000 [INFO ] [ctrl   ] data channel closed; parser loop exits
+2026-03-19 11:14:43.941055000 [INFO ] [ctrl   ] engine proc frames end: total 44
+2026-03-19 11:14:43.941076000 [INFO ] [ctrl   ] actor(wparse-parse) work end
+2026-03-19 11:14:43.948953000 [INFO ] [ctrl   ] exit-policy Batch: enter stopping (trigger=RoleFinished(Parser))
+2026-03-19 11:14:43.948999000 [INFO ] [ctrl   ] picker broadcast cmd :Isolate
+2026-03-19 11:14:43.949030000 [INFO ] [ctrl   ] wpl-parse broadcast cmd :Isolate
+2026-03-19 11:14:43.949049000 [INFO ] [ctrl   ] amt broadcast cmd :Isolate
+2026-03-19 11:14:43.949065000 [INFO ] [ctrl   ] oml-sink broadcast cmd :Isolate
+2026-03-19 11:14:43.949080000 [INFO ] [ctrl   ] infra broadcast cmd :Isolate
+2026-03-19 11:14:43.949093000 [INFO ] [ctrl   ] work-sink:demo                 update cmd: CtrlCmd::Alone 
+2026-03-19 11:14:43.949118000 [INFO ] [ctrl   ] monitor broadcast cmd :Isolate
+2026-03-19 11:14:43.949139000 [INFO ] [ctrl   ] infra sinks  update cmd: CtrlCmd::Alone 
+2026-03-19 11:14:43.949251000 [INFO ] [ctrl   ] picker broadcast cmd :Stop(Immediate) 
+2026-03-19 11:14:43.949273000 [INFO ] [ctrl   ] monitor recv cmd: CtrlCmd::Alone
+2026-03-19 11:14:43.949292000 [INFO ] [ctrl   ] monitor update cmd: CtrlCmd::Alone 
+2026-03-19 11:14:43.949311000 [INFO ] [ctrl   ] picker group routines end
+2026-03-19 11:14:43.949331000 [INFO ] [ctrl   ] role group Picker(picker) await end!
+2026-03-19 11:14:43.949347000 [INFO ] [ctrl   ] wpl-parse broadcast cmd :Stop(Immediate) 
+2026-03-19 11:14:43.949364000 [INFO ] [ctrl   ] wpl-parse group routines end
+2026-03-19 11:14:43.949376000 [INFO ] [ctrl   ] role group Parser(wpl-parse) await end!
+2026-03-19 11:14:43.949390000 [INFO ] [ctrl   ] amt broadcast cmd :Stop(Immediate) 
+2026-03-19 11:14:43.949403000 [INFO ] [ctrl   ] amt group routines [0] wait... 
+2026-03-19 11:14:43.949421000 [INFO ] [ctrl   ] maintainer Recv cmd : Isolate
+2026-03-19 11:14:43.971877000 [INFO ] [ctrl   ] maintainer Recv cmd : Stop(Immediate)
+2026-03-19 11:14:43.971921000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:14:43.971966000 [INFO ] [ctrl   ] amt group routines end
+2026-03-19 11:14:43.971986000 [INFO ] [ctrl   ] role group Maintainer(amt) await end!
+2026-03-19 11:14:43.972002000 [INFO ] [ctrl   ] oml-sink broadcast cmd :Stop(Immediate) 
+2026-03-19 11:14:43.972021000 [INFO ] [ctrl   ] oml-sink group routines [0] wait... 
+2026-03-19 11:14:43.972037000 [INFO ] [ctrl   ] work-sink:demo                 update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:14:43.972053000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:14:43.972064000 [INFO ] [ctrl   ] demo enter draining state
+2026-03-19 11:14:43.972076000 [INFO ] [ctrl   ] demo drain complete
+2026-03-19 11:14:43.983497000 [INFO ] [ctrl   ] demo async sinks proc end
+2026-03-19 11:14:43.984366000 [INFO ] [ctrl   ] oml-sink group routines end
+2026-03-19 11:14:43.984388000 [INFO ] [ctrl   ] role group Sink(oml-sink) await end!
+2026-03-19 11:14:43.984406000 [INFO ] [ctrl   ] infra broadcast cmd :Stop(Immediate) 
+2026-03-19 11:14:43.984427000 [INFO ] [ctrl   ] infra group routines [0] wait... 
+2026-03-19 11:14:43.984439000 [INFO ] [ctrl   ] infra sinks  update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:14:43.984455000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:14:43.984468000 [INFO ] [ctrl   ] infra sinks enter draining state
+2026-03-19 11:14:43.984486000 [INFO ] [ctrl   ] infra sinks drain complete
+2026-03-19 11:14:43.988444000 [INFO ] [ctrl   ] infra:default async sinks proc end
+2026-03-19 11:14:43.992409000 [INFO ] [ctrl   ] infra:miss async sinks proc end
+2026-03-19 11:14:43.997457000 [INFO ] [ctrl   ] infra:residue async sinks proc end
+2026-03-19 11:14:44.001503000 [INFO ] [ctrl   ] infra:monitor async sinks proc end
+2026-03-19 11:14:44.005452000 [INFO ] [ctrl   ] infra:error async sinks proc end
+2026-03-19 11:14:44.005540000 [INFO ] [ctrl   ] infra group routines end
+2026-03-19 11:14:44.005556000 [INFO ] [ctrl   ] role group Infra(infra) await end!
+2026-03-19 11:14:44.005571000 [INFO ] [ctrl   ] monitor broadcast cmd :Stop(Immediate) 
+2026-03-19 11:14:44.005594000 [INFO ] [ctrl   ] monitor group routines [0] wait... 
+2026-03-19 11:14:44.005605000 [INFO ] [ctrl   ] monitor recv cmd: CtrlCmd::Stop(StopNow)
+2026-03-19 11:14:44.005620000 [INFO ] [ctrl   ] monitor update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:14:44.005630000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:14:44.005687000 [INFO ] [ctrl   ] monitor proc end (total_events=20)
+2026-03-19 11:14:44.006388000 [INFO ] [ctrl   ] monitor group routines end
+2026-03-19 11:14:44.006400000 [INFO ] [ctrl   ] role group Monitor(monitor) await end!
+2026-03-19 11:14:44.006409000 [INFO ] [ctrl   ] all role groups await end!
+2026-03-19 11:16:06.133883000 [INFO ] [ctrl   ] log conf: level: warn,ctrl=info,data=error,matrc=error,dfx=warn,kdb=warn
+output: File
+path: Some("../openclaw/data/logs/")
+ 
+2026-03-19 11:16:06.134231000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='arrow-file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:11 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:11
+2026-03-19 11:16:06.134268000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='arrow-ipc' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:12 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:12
+2026-03-19 11:16:06.134295000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='blackhole' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:13 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:13
+2026-03-19 11:16:06.134336000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:14 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:14
+2026-03-19 11:16:06.134361000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='syslog' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:15 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:15
+2026-03-19 11:16:06.134382000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='tcp' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:16 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:16
+2026-03-19 11:16:06.134403000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='test_rescue' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:17 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:17
+2026-03-19 11:16:06.134426000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='syslog' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/syslog/mod.rs:48 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/syslog/mod.rs:48
+2026-03-19 11:16:06.134447000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='tcp' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/tcp/factory.rs:116 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/tcp/factory.rs:116
+2026-03-19 11:16:06.134468000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/file/factory.rs:140 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/file/factory.rs:140
+2026-03-19 11:16:06.134543000 [INFO ] [ctrl   ] version 0.21.0 (branch env/local, commit 2b94aa99, built 2026-03-17T19:00:25+08:00 via rustc 1.92.0 (ded5c06cf 2025-12-08))
+2026-03-19 11:16:06.134565000 [INFO ] [ctrl   ] enterprise control plane disabled (feature 'enterprise-backend' not enabled)
+2026-03-19 11:16:06.134878000 [INFO ] [ctrl   ] build engine with run_mode=Batch, parallel=2, line_max=None
+2026-03-19 11:16:06.135639000 [INFO ] [ctrl   ] semantic dict: 语义词典配置有效: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/semantic_dict.toml | 模式: ADD（扩展内置词典） | 词汇数: 179
+2026-03-19 11:16:06.139796000 [INFO ] [ctrl   ] suc! load table to kdb: 
+call context:
+	table_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/./example
+	data_path : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/./example/data.csv
+
+2026-03-19 11:16:06.139825000 [INFO ] [ctrl   ] load table /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/. suc!
+2026-03-19 11:16:06.139903000 [INFO ] [ctrl   ] init authority knowdb success(/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/knowdb.toml) 
+2026-03-19 11:16:06.142317000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : default/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:16:06.142392000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : default/[0]
+	kind : file
+
+2026-03-19 11:16:06.142422000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : error/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:16:06.142436000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : error/[0]
+	kind : file
+
+2026-03-19 11:16:06.142457000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : miss/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:16:06.142470000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : miss/[0]
+	kind : file
+
+2026-03-19 11:16:06.142490000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : monitor/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:16:06.142503000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : monitor/[0]
+	kind : file
+
+2026-03-19 11:16:06.142523000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : residue/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:16:06.142535000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : residue/[0]
+	kind : file
+
+2026-03-19 11:16:06.142903000 [INFO ] [ctrl   ] create sink:default/[0] batch_size=128
+2026-03-19 11:16:06.143046000 [INFO ] [ctrl   ] create sink:residue/[0] batch_size=1
+2026-03-19 11:16:06.143173000 [INFO ] [ctrl   ] create sink:miss/[0] batch_size=1
+2026-03-19 11:16:06.143459000 [INFO ] [ctrl   ] create sink:error/[0] batch_size=1
+2026-03-19 11:16:06.143568000 [INFO ] [ctrl   ] create sink:monitor/[0] batch_size=1
+2026-03-19 11:16:06.144464000 [INFO ] [ctrl   ] load all wpl code beg...
+2026-03-19 11:16:06.144539000 [INFO ] [ctrl   ] find conf files in: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl
+2026-03-19 11:16:06.144783000 [INFO ] [ctrl   ] load conf file: "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl/parse.wpl"
+2026-03-19 11:16:06.145010000 [INFO ] [ctrl   ] success load & parse code : "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl/parse.wpl"
+2026-03-19 11:16:06.145054000 [INFO ] [ctrl   ] load all wpl code end
+2026-03-19 11:16:06.145076000 [INFO ] [ctrl   ] load all oml model
+2026-03-19 11:16:06.145093000 [INFO ] [ctrl   ] find conf files in: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/oml
+2026-03-19 11:16:06.145209000 [INFO ] [ctrl   ] load conf file: "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/oml/model.oml"
+2026-03-19 11:16:06.146596000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : demo/json
+	kind : file
+: validate suc!
+2026-03-19 11:16:06.146621000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : demo/json
+	kind : file
+
+2026-03-19 11:16:06.146661000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : demo/arrow
+	kind : arrow-file
+: validate suc!
+2026-03-19 11:16:06.146675000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : demo/arrow
+	kind : arrow-file
+
+2026-03-19 11:16:06.146794000 [INFO ] [ctrl   ] update_sink_mdl_index, match oml /oml/wparse
+2026-03-19 11:16:06.146838000 [INFO ] [ctrl   ] init SinkGroup: demo
+2026-03-19 11:16:06.146861000 [INFO ] [ctrl   ] alloc sink res : sink demo 
+2026-03-19 11:16:06.146876000 [INFO ] [ctrl   ] alloc sink res : sink demo oml model: /oml/wparse
+2026-03-19 11:16:06.147004000 [INFO ] [ctrl   ] create sink:demo/json batch_size=1024
+2026-03-19 11:16:06.147159000 [INFO ] [ctrl   ] create sink:demo/arrow batch_size=1024
+2026-03-19 11:16:06.147257000 [INFO ] [ctrl   ] alloc parse res : wpl rule /wpl/wparse/line  
+2026-03-19 11:16:06.147280000 [INFO ] [ctrl   ] alloc parse res : rule /wpl/wparse/line  sink agent: demo
+2026-03-19 11:16:06.147519000 [INFO ] [ctrl   ] save data file suc : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wp-tools/.run/rule_mapping.dat 
+2026-03-19 11:16:06.147570000 [INFO ] [ctrl   ] start warp-service: run_mode=batch, parallel=2, line_max=None
+2026-03-19 11:16:06.147584000 [INFO ] [ctrl   ] semantic analysis: enabled
+2026-03-19 11:16:06.147618000 [INFO ] [ctrl   ] 数据源配置统计: V2源=1个, 接受器(来自V2)=0个
+2026-03-19 11:16:06.147631000 [INFO ] [ctrl   ] run-mode=batch: 跳过启动接受器任务
+2026-03-19 11:16:06.147642000 [INFO ] [ctrl   ] monitor proc start: stat_sec=60, stat_print=false
+2026-03-19 11:16:06.147748000 [INFO ] [ctrl   ] start 2 parallel to parse (frames)
+2026-03-19 11:16:06.147782000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:16:06.147796000 [INFO ] [ctrl   ] monitor loop started (stat_sec=60, stat_print=false)
+2026-03-19 11:16:06.147872000 [INFO ] [ctrl   ] actor(wparse-parse) work start
+2026-03-19 11:16:06.147973000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:16:06.147990000 [INFO ] [ctrl   ] actor(wparse-parse) work start
+2026-03-19 11:16:06.148142000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:16:06.148244000 [WARN ] [ctrl   ] parse engine pipelin cnt: 1
+2026-03-19 11:16:06.148263000 [INFO ] [ctrl   ] spawn tokio Sink Group demo batch_size=1024 batch_timeout_ms=300
+2026-03-19 11:16:06.148348000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:16:06.148422000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:16:06.148436000 [WARN ] [ctrl   ] parse engine pipelin cnt: 1
+2026-03-19 11:16:06.148449000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:16:06.250455000 [INFO ] [ctrl   ] 启动数据收集(Frame)： 1个数据源
+2026-03-19 11:16:06.250534000 [INFO ] [ctrl   ] spawning picker for source 'file_1' (line_max=None, speed_limit=20000)
+2026-03-19 11:16:06.250581000 [WARN ] [ctrl   ] engine started!
+2026-03-19 11:16:06.250608000 [INFO ] [ctrl   ] 启动数据源 picker(Frame): file_1
+2026-03-19 11:16:06.250665000 [INFO ] [ctrl   ] Starting data source 'file_1'
+2026-03-19 11:16:06.250732000 [INFO ] [ctrl   ] Data source 'file_1' started (speed_limit=Some(20000), max_count=None)
+2026-03-19 11:16:06.250763000 [INFO ] [ctrl   ] file_1-picker speed init 20000  limit ns times:800000000,
+2026-03-19 11:16:06.250779000 [WARN ] [ctrl   ] actor:file_1-picker 20000
+2026-03-19 11:16:06.253007000 [INFO ] [ctrl   ] file_1-picker round status=Terminal (pending_cnt=0, send_cnt=0)
+2026-03-19 11:16:06.253061000 [INFO ] [ctrl   ] Closing data source 'file_1'
+2026-03-19 11:16:06.253079000 [INFO ] [ctrl   ] file_1-picker dispatch loop exited (max_line=None, total_pending=0)
+2026-03-19 11:16:06.253104000 [INFO ] [ctrl   ] 数据源 'file_1' picker 正常结束
+2026-03-19 11:16:06.260980000 [INFO ] [ctrl   ] exit-policy Batch: enter quiescing (trigger=RoleFinished(Picker))
+2026-03-19 11:16:06.261054000 [INFO ] [ctrl   ] data channel closed; parser loop exits
+2026-03-19 11:16:06.261085000 [INFO ] [ctrl   ] engine proc frames end: total 6
+2026-03-19 11:16:06.261114000 [INFO ] [ctrl   ] actor(wparse-parse) work end
+2026-03-19 11:16:06.309385000 [INFO ] [ctrl   ] data channel closed; parser loop exits
+2026-03-19 11:16:06.309428000 [INFO ] [ctrl   ] engine proc frames end: total 44
+2026-03-19 11:16:06.309445000 [INFO ] [ctrl   ] actor(wparse-parse) work end
+2026-03-19 11:16:06.320726000 [INFO ] [ctrl   ] exit-policy Batch: enter stopping (trigger=RoleFinished(Parser))
+2026-03-19 11:16:06.320776000 [INFO ] [ctrl   ] picker broadcast cmd :Isolate
+2026-03-19 11:16:06.320823000 [INFO ] [ctrl   ] wpl-parse broadcast cmd :Isolate
+2026-03-19 11:16:06.320882000 [INFO ] [ctrl   ] amt broadcast cmd :Isolate
+2026-03-19 11:16:06.320896000 [INFO ] [ctrl   ] oml-sink broadcast cmd :Isolate
+2026-03-19 11:16:06.320913000 [INFO ] [ctrl   ] infra broadcast cmd :Isolate
+2026-03-19 11:16:06.320926000 [INFO ] [ctrl   ] monitor broadcast cmd :Isolate
+2026-03-19 11:16:06.320941000 [INFO ] [ctrl   ] work-sink:demo                 update cmd: CtrlCmd::Alone 
+2026-03-19 11:16:06.320971000 [INFO ] [ctrl   ] infra sinks  update cmd: CtrlCmd::Alone 
+2026-03-19 11:16:06.320995000 [INFO ] [ctrl   ] picker broadcast cmd :Stop(Immediate) 
+2026-03-19 11:16:06.321016000 [INFO ] [ctrl   ] monitor recv cmd: CtrlCmd::Alone
+2026-03-19 11:16:06.321032000 [INFO ] [ctrl   ] monitor update cmd: CtrlCmd::Alone 
+2026-03-19 11:16:06.321050000 [INFO ] [ctrl   ] picker group routines end
+2026-03-19 11:16:06.321065000 [INFO ] [ctrl   ] role group Picker(picker) await end!
+2026-03-19 11:16:06.321076000 [INFO ] [ctrl   ] wpl-parse broadcast cmd :Stop(Immediate) 
+2026-03-19 11:16:06.321089000 [INFO ] [ctrl   ] wpl-parse group routines end
+2026-03-19 11:16:06.321099000 [INFO ] [ctrl   ] role group Parser(wpl-parse) await end!
+2026-03-19 11:16:06.321108000 [INFO ] [ctrl   ] amt broadcast cmd :Stop(Immediate) 
+2026-03-19 11:16:06.321117000 [INFO ] [ctrl   ] amt group routines [0] wait... 
+2026-03-19 11:16:06.344655000 [INFO ] [ctrl   ] maintainer Recv cmd : Isolate
+2026-03-19 11:16:06.369170000 [INFO ] [ctrl   ] maintainer Recv cmd : Stop(Immediate)
+2026-03-19 11:16:06.369217000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:16:06.369259000 [INFO ] [ctrl   ] amt group routines end
+2026-03-19 11:16:06.369277000 [INFO ] [ctrl   ] role group Maintainer(amt) await end!
+2026-03-19 11:16:06.369289000 [INFO ] [ctrl   ] oml-sink broadcast cmd :Stop(Immediate) 
+2026-03-19 11:16:06.369304000 [INFO ] [ctrl   ] oml-sink group routines [0] wait... 
+2026-03-19 11:16:06.369325000 [INFO ] [ctrl   ] work-sink:demo                 update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:16:06.369348000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:16:06.369361000 [INFO ] [ctrl   ] demo enter draining state
+2026-03-19 11:16:06.369374000 [INFO ] [ctrl   ] demo drain complete
+2026-03-19 11:16:06.381172000 [INFO ] [ctrl   ] demo async sinks proc end
+2026-03-19 11:16:06.381405000 [INFO ] [ctrl   ] oml-sink group routines end
+2026-03-19 11:16:06.381425000 [INFO ] [ctrl   ] role group Sink(oml-sink) await end!
+2026-03-19 11:16:06.381437000 [INFO ] [ctrl   ] infra broadcast cmd :Stop(Immediate) 
+2026-03-19 11:16:06.381452000 [INFO ] [ctrl   ] infra group routines [0] wait... 
+2026-03-19 11:16:06.381469000 [INFO ] [ctrl   ] infra sinks  update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:16:06.381488000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:16:06.381499000 [INFO ] [ctrl   ] infra sinks enter draining state
+2026-03-19 11:16:06.381514000 [INFO ] [ctrl   ] infra sinks drain complete
+2026-03-19 11:16:06.385165000 [INFO ] [ctrl   ] infra:default async sinks proc end
+2026-03-19 11:16:06.388169000 [INFO ] [ctrl   ] infra:miss async sinks proc end
+2026-03-19 11:16:06.395154000 [INFO ] [ctrl   ] infra:residue async sinks proc end
+2026-03-19 11:16:06.399136000 [INFO ] [ctrl   ] infra:monitor async sinks proc end
+2026-03-19 11:16:06.402179000 [INFO ] [ctrl   ] infra:error async sinks proc end
+2026-03-19 11:16:06.402282000 [INFO ] [ctrl   ] infra group routines end
+2026-03-19 11:16:06.402301000 [INFO ] [ctrl   ] role group Infra(infra) await end!
+2026-03-19 11:16:06.402317000 [INFO ] [ctrl   ] monitor broadcast cmd :Stop(Immediate) 
+2026-03-19 11:16:06.402335000 [INFO ] [ctrl   ] monitor group routines [0] wait... 
+2026-03-19 11:16:06.402345000 [INFO ] [ctrl   ] monitor recv cmd: CtrlCmd::Stop(StopNow)
+2026-03-19 11:16:06.402359000 [INFO ] [ctrl   ] monitor update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:16:06.402369000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:16:06.402413000 [INFO ] [ctrl   ] monitor proc end (total_events=23)
+2026-03-19 11:16:06.403138000 [INFO ] [ctrl   ] monitor group routines end
+2026-03-19 11:16:06.403151000 [INFO ] [ctrl   ] role group Monitor(monitor) await end!
+2026-03-19 11:16:06.403162000 [INFO ] [ctrl   ] all role groups await end!
+2026-03-19 11:16:11.154521000 [INFO ] [ctrl   ] log conf: level: warn,ctrl=info,data=error,matrc=error,dfx=warn,kdb=warn
+output: File
+path: Some("../openclaw/data/logs/")
+ 
+2026-03-19 11:16:11.154727000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='arrow-file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:11 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:11
+2026-03-19 11:16:11.154769000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='arrow-ipc' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:12 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:12
+2026-03-19 11:16:11.154801000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='blackhole' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:13 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:13
+2026-03-19 11:16:11.154829000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:14 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:14
+2026-03-19 11:16:11.154858000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='syslog' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:15 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:15
+2026-03-19 11:16:11.154884000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='tcp' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:16 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:16
+2026-03-19 11:16:11.154910000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='test_rescue' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:17 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:17
+2026-03-19 11:16:11.154935000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='syslog' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/syslog/mod.rs:48 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/syslog/mod.rs:48
+2026-03-19 11:16:11.154963000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='tcp' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/tcp/factory.rs:116 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/tcp/factory.rs:116
+2026-03-19 11:16:11.154989000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/file/factory.rs:140 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/file/factory.rs:140
+2026-03-19 11:16:11.155081000 [INFO ] [ctrl   ] version 0.21.0 (branch env/local, commit 2b94aa99, built 2026-03-17T19:00:25+08:00 via rustc 1.92.0 (ded5c06cf 2025-12-08))
+2026-03-19 11:16:11.155111000 [INFO ] [ctrl   ] enterprise control plane disabled (feature 'enterprise-backend' not enabled)
+2026-03-19 11:16:11.155578000 [INFO ] [ctrl   ] build engine with run_mode=Batch, parallel=2, line_max=None
+2026-03-19 11:16:11.156349000 [INFO ] [ctrl   ] semantic dict: 语义词典配置有效: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/semantic_dict.toml | 模式: ADD（扩展内置词典） | 词汇数: 179
+2026-03-19 11:16:11.160487000 [INFO ] [ctrl   ] suc! load table to kdb: 
+call context:
+	table_dir : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/./example
+	data_path : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/./example/data.csv
+
+2026-03-19 11:16:11.160518000 [INFO ] [ctrl   ] load table /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/. suc!
+2026-03-19 11:16:11.160608000 [INFO ] [ctrl   ] init authority knowdb success(/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/knowledge/knowdb.toml) 
+2026-03-19 11:16:11.162045000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : default/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:16:11.162068000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : default/[0]
+	kind : file
+
+2026-03-19 11:16:11.162099000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : error/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:16:11.162117000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : error/[0]
+	kind : file
+
+2026-03-19 11:16:11.162144000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : miss/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:16:11.162161000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : miss/[0]
+	kind : file
+
+2026-03-19 11:16:11.162187000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : monitor/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:16:11.162203000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : monitor/[0]
+	kind : file
+
+2026-03-19 11:16:11.162228000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : residue/[0]
+	kind : file
+: validate suc!
+2026-03-19 11:16:11.162244000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : residue/[0]
+	kind : file
+
+2026-03-19 11:16:11.162643000 [INFO ] [ctrl   ] create sink:default/[0] batch_size=128
+2026-03-19 11:16:11.162778000 [INFO ] [ctrl   ] create sink:residue/[0] batch_size=1
+2026-03-19 11:16:11.162883000 [INFO ] [ctrl   ] create sink:miss/[0] batch_size=1
+2026-03-19 11:16:11.162984000 [INFO ] [ctrl   ] create sink:error/[0] batch_size=1
+2026-03-19 11:16:11.163086000 [INFO ] [ctrl   ] create sink:monitor/[0] batch_size=1
+2026-03-19 11:16:11.163629000 [INFO ] [ctrl   ] load all wpl code beg...
+2026-03-19 11:16:11.163649000 [INFO ] [ctrl   ] find conf files in: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl
+2026-03-19 11:16:11.163784000 [INFO ] [ctrl   ] load conf file: "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl/parse.wpl"
+2026-03-19 11:16:11.164022000 [INFO ] [ctrl   ] success load & parse code : "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/wpl/parse.wpl"
+2026-03-19 11:16:11.164052000 [INFO ] [ctrl   ] load all wpl code end
+2026-03-19 11:16:11.164074000 [INFO ] [ctrl   ] load all oml model
+2026-03-19 11:16:11.164091000 [INFO ] [ctrl   ] find conf files in: /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/oml
+2026-03-19 11:16:11.164203000 [INFO ] [ctrl   ] load conf file: "/Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/openclaw/models/oml/model.oml"
+2026-03-19 11:16:11.165203000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : demo/json
+	kind : file
+: validate suc!
+2026-03-19 11:16:11.165221000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : demo/json
+	kind : file
+
+2026-03-19 11:16:11.165259000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : demo/arrow
+	kind : arrow-file
+: validate suc!
+2026-03-19 11:16:11.165274000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : demo/arrow
+	kind : arrow-file
+
+2026-03-19 11:16:11.165388000 [INFO ] [ctrl   ] update_sink_mdl_index, match oml /oml/wparse
+2026-03-19 11:16:11.165434000 [INFO ] [ctrl   ] init SinkGroup: demo
+2026-03-19 11:16:11.165458000 [INFO ] [ctrl   ] alloc sink res : sink demo 
+2026-03-19 11:16:11.165473000 [INFO ] [ctrl   ] alloc sink res : sink demo oml model: /oml/wparse
+2026-03-19 11:16:11.165649000 [INFO ] [ctrl   ] create sink:demo/json batch_size=1024
+2026-03-19 11:16:11.165837000 [INFO ] [ctrl   ] create sink:demo/arrow batch_size=1024
+2026-03-19 11:16:11.165939000 [INFO ] [ctrl   ] alloc parse res : wpl rule /wpl/wparse/line  
+2026-03-19 11:16:11.165967000 [INFO ] [ctrl   ] alloc parse res : rule /wpl/wparse/line  sink agent: demo
+2026-03-19 11:16:11.166174000 [INFO ] [ctrl   ] save data file suc : /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wp-tools/.run/rule_mapping.dat 
+2026-03-19 11:16:11.166225000 [INFO ] [ctrl   ] start warp-service: run_mode=batch, parallel=2, line_max=None
+2026-03-19 11:16:11.166240000 [INFO ] [ctrl   ] semantic analysis: enabled
+2026-03-19 11:16:11.166276000 [INFO ] [ctrl   ] 数据源配置统计: V2源=1个, 接受器(来自V2)=0个
+2026-03-19 11:16:11.166294000 [INFO ] [ctrl   ] run-mode=batch: 跳过启动接受器任务
+2026-03-19 11:16:11.166310000 [INFO ] [ctrl   ] monitor proc start: stat_sec=60, stat_print=false
+2026-03-19 11:16:11.166421000 [INFO ] [ctrl   ] start 2 parallel to parse (frames)
+2026-03-19 11:16:11.166464000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:16:11.166479000 [INFO ] [ctrl   ] monitor loop started (stat_sec=60, stat_print=false)
+2026-03-19 11:16:11.166566000 [INFO ] [ctrl   ] actor(wparse-parse) work start
+2026-03-19 11:16:11.166693000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:16:11.166767000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:16:11.166871000 [INFO ] [ctrl   ] actor(wparse-parse) work start
+2026-03-19 11:16:11.166970000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:16:11.166989000 [WARN ] [ctrl   ] parse engine pipelin cnt: 1
+2026-03-19 11:16:11.167007000 [WARN ] [ctrl   ] parse engine pipelin cnt: 1
+2026-03-19 11:16:11.167035000 [INFO ] [ctrl   ] spawn tokio Sink Group demo batch_size=1024 batch_timeout_ms=300
+2026-03-19 11:16:11.167131000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:16:11.167212000 [INFO ] [ctrl   ] speed: unlimited (no wait)
+2026-03-19 11:16:11.267509000 [INFO ] [ctrl   ] 启动数据收集(Frame)： 1个数据源
+2026-03-19 11:16:11.267594000 [INFO ] [ctrl   ] spawning picker for source 'file_1' (line_max=None, speed_limit=20000)
+2026-03-19 11:16:11.267649000 [WARN ] [ctrl   ] engine started!
+2026-03-19 11:16:11.267682000 [INFO ] [ctrl   ] 启动数据源 picker(Frame): file_1
+2026-03-19 11:16:11.267851000 [INFO ] [ctrl   ] Starting data source 'file_1'
+2026-03-19 11:16:11.267910000 [INFO ] [ctrl   ] Data source 'file_1' started (speed_limit=Some(20000), max_count=None)
+2026-03-19 11:16:11.267961000 [INFO ] [ctrl   ] file_1-picker speed init 20000  limit ns times:800000000,
+2026-03-19 11:16:11.267984000 [WARN ] [ctrl   ] actor:file_1-picker 20000
+2026-03-19 11:16:11.269230000 [INFO ] [ctrl   ] file_1-picker round status=Terminal (pending_cnt=0, send_cnt=0)
+2026-03-19 11:16:11.269329000 [INFO ] [ctrl   ] Closing data source 'file_1'
+2026-03-19 11:16:11.269358000 [INFO ] [ctrl   ] file_1-picker dispatch loop exited (max_line=None, total_pending=0)
+2026-03-19 11:16:11.269419000 [INFO ] [ctrl   ] 数据源 'file_1' picker 正常结束
+2026-03-19 11:16:11.278316000 [INFO ] [ctrl   ] exit-policy Batch: enter quiescing (trigger=RoleFinished(Picker))
+2026-03-19 11:16:11.278795000 [INFO ] [ctrl   ] data channel closed; parser loop exits
+2026-03-19 11:16:11.278833000 [INFO ] [ctrl   ] engine proc frames end: total 6
+2026-03-19 11:16:11.278874000 [INFO ] [ctrl   ] actor(wparse-parse) work end
+2026-03-19 11:16:11.332456000 [INFO ] [ctrl   ] data channel closed; parser loop exits
+2026-03-19 11:16:11.332507000 [INFO ] [ctrl   ] engine proc frames end: total 44
+2026-03-19 11:16:11.332526000 [INFO ] [ctrl   ] actor(wparse-parse) work end
+2026-03-19 11:16:11.333643000 [INFO ] [ctrl   ] exit-policy Batch: enter stopping (trigger=RoleFinished(Parser))
+2026-03-19 11:16:11.333657000 [INFO ] [ctrl   ] picker broadcast cmd :Isolate
+2026-03-19 11:16:11.333679000 [INFO ] [ctrl   ] wpl-parse broadcast cmd :Isolate
+2026-03-19 11:16:11.333705000 [INFO ] [ctrl   ] amt broadcast cmd :Isolate
+2026-03-19 11:16:11.333736000 [INFO ] [ctrl   ] oml-sink broadcast cmd :Isolate
+2026-03-19 11:16:11.333761000 [INFO ] [ctrl   ] maintainer Recv cmd : Isolate
+2026-03-19 11:16:11.333791000 [INFO ] [ctrl   ] infra broadcast cmd :Isolate
+2026-03-19 11:16:11.333812000 [INFO ] [ctrl   ] work-sink:demo                 update cmd: CtrlCmd::Alone 
+2026-03-19 11:16:11.333841000 [INFO ] [ctrl   ] monitor broadcast cmd :Isolate
+2026-03-19 11:16:11.333859000 [INFO ] [ctrl   ] infra sinks  update cmd: CtrlCmd::Alone 
+2026-03-19 11:16:11.333876000 [INFO ] [ctrl   ] monitor recv cmd: CtrlCmd::Alone
+2026-03-19 11:16:11.333891000 [INFO ] [ctrl   ] monitor update cmd: CtrlCmd::Alone 
+2026-03-19 11:16:11.333910000 [INFO ] [ctrl   ] picker broadcast cmd :Stop(Immediate) 
+2026-03-19 11:16:11.333928000 [INFO ] [ctrl   ] picker group routines end
+2026-03-19 11:16:11.333940000 [INFO ] [ctrl   ] role group Picker(picker) await end!
+2026-03-19 11:16:11.333949000 [INFO ] [ctrl   ] wpl-parse broadcast cmd :Stop(Immediate) 
+2026-03-19 11:16:11.333961000 [INFO ] [ctrl   ] wpl-parse group routines end
+2026-03-19 11:16:11.333970000 [INFO ] [ctrl   ] role group Parser(wpl-parse) await end!
+2026-03-19 11:16:11.333979000 [INFO ] [ctrl   ] amt broadcast cmd :Stop(Immediate) 
+2026-03-19 11:16:11.333988000 [INFO ] [ctrl   ] amt group routines [0] wait... 
+2026-03-19 11:16:11.356942000 [INFO ] [ctrl   ] maintainer Recv cmd : Stop(Immediate)
+2026-03-19 11:16:11.356989000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:16:11.357034000 [INFO ] [ctrl   ] amt group routines end
+2026-03-19 11:16:11.357053000 [INFO ] [ctrl   ] role group Maintainer(amt) await end!
+2026-03-19 11:16:11.357067000 [INFO ] [ctrl   ] oml-sink broadcast cmd :Stop(Immediate) 
+2026-03-19 11:16:11.357083000 [INFO ] [ctrl   ] oml-sink group routines [0] wait... 
+2026-03-19 11:16:11.357095000 [INFO ] [ctrl   ] work-sink:demo                 update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:16:11.357107000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:16:11.357116000 [INFO ] [ctrl   ] demo enter draining state
+2026-03-19 11:16:11.357127000 [INFO ] [ctrl   ] demo drain complete
+2026-03-19 11:16:11.363519000 [INFO ] [ctrl   ] demo async sinks proc end
+2026-03-19 11:16:11.363926000 [INFO ] [ctrl   ] oml-sink group routines end
+2026-03-19 11:16:11.363942000 [INFO ] [ctrl   ] role group Sink(oml-sink) await end!
+2026-03-19 11:16:11.363954000 [INFO ] [ctrl   ] infra broadcast cmd :Stop(Immediate) 
+2026-03-19 11:16:11.363966000 [INFO ] [ctrl   ] infra group routines [0] wait... 
+2026-03-19 11:16:11.363980000 [INFO ] [ctrl   ] infra sinks  update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:16:11.363995000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:16:11.364006000 [INFO ] [ctrl   ] infra sinks enter draining state
+2026-03-19 11:16:11.364024000 [INFO ] [ctrl   ] infra sinks drain complete
+2026-03-19 11:16:11.367463000 [INFO ] [ctrl   ] infra:default async sinks proc end
+2026-03-19 11:16:11.371444000 [INFO ] [ctrl   ] infra:miss async sinks proc end
+2026-03-19 11:16:11.375461000 [INFO ] [ctrl   ] infra:residue async sinks proc end
+2026-03-19 11:16:11.378526000 [INFO ] [ctrl   ] infra:monitor async sinks proc end
+2026-03-19 11:16:11.382481000 [INFO ] [ctrl   ] infra:error async sinks proc end
+2026-03-19 11:16:11.382569000 [INFO ] [ctrl   ] infra group routines end
+2026-03-19 11:16:11.382581000 [INFO ] [ctrl   ] role group Infra(infra) await end!
+2026-03-19 11:16:11.382600000 [INFO ] [ctrl   ] monitor broadcast cmd :Stop(Immediate) 
+2026-03-19 11:16:11.382615000 [INFO ] [ctrl   ] monitor group routines [0] wait... 
+2026-03-19 11:16:11.382626000 [INFO ] [ctrl   ] monitor recv cmd: CtrlCmd::Stop(StopNow)
+2026-03-19 11:16:11.382640000 [INFO ] [ctrl   ] monitor update cmd: CtrlCmd::Stop(StopNow) 
+2026-03-19 11:16:11.382652000 [INFO ] [ctrl   ] routine cmd stop 
+2026-03-19 11:16:11.382704000 [INFO ] [ctrl   ] monitor proc end (total_events=20)
+2026-03-19 11:16:11.383379000 [INFO ] [ctrl   ] monitor group routines end
+2026-03-19 11:16:11.383392000 [INFO ] [ctrl   ] role group Monitor(monitor) await end!
+2026-03-19 11:16:11.383403000 [INFO ] [ctrl   ] all role groups await end!

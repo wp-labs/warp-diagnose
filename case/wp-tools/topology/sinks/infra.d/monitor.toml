@@ -7,6 +7,7 @@ name = "monitor"
 connect = "file_proto_sink"
 
 [sink_group.sinks.params]
+base = "${CASE_PATH}/data/out_dat"
 file = "monitor.dat"
 
 [sink_group.sinks.expect]

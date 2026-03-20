@@ -1,0 +1,4 @@
+name : /oml/wparse
+rule : /wpl/wparse/*
+---
+* = take();

@@ -1,0 +1,197 @@
+# 语义词典外部配置（知识配置）
+# 文件位置：models/knowledge/semantic_dict.toml
+# 用于扩展或替换系统内置的语义词典
+
+version = 1
+enabled = true
+
+# 配置模式：
+#   - "add"：将下面的词汇添加到系统内置词典（默认，推荐）
+#   - "replace"：用下面的词汇完全替换系统内置词典
+mode = "add"
+
+# 停用词（可选）
+[stop_words]
+english = [
+  "all",
+  "call",
+  "context",
+  "data",
+  "depth",
+  "event",
+  "file",
+  "files",
+  "frame",
+  "group",
+  "kind",
+  "key",
+  "line_max",
+  "name",
+  "no",
+  "parallel",
+  "path",
+  "pending_cnt",
+  "proc",
+  "src",
+  "src_key",
+  "stat",
+  "target",
+  "times",
+  "total",
+  "users",
+  "wait",
+  "with",
+]
+chinese = ["个数据源"]
+
+# 日志领域关键词（可选）
+# 注意：支持任意自定义分类名，不局限于下面的例子
+[domain_words]
+# 基于 data/in_dat/wparse.log 高频 content 抽取
+# 用于快速识别：主体(subject) / 客户(customer) / 行为(behavior)
+subject = [
+  "actor",
+  "amt",
+  "engine",
+  "file_1-picker",
+  "infra",
+  "lang",
+  "maintainer",
+  "monitor",
+  "oml-sink",
+  "picker",
+  "routine",
+  "sinkgroup",
+  "wparse",
+  "wparse-parse",
+  "wpl-parse",
+]
+
+customer = [
+  "benchmark",
+  "/benchmark/benchmark_1",
+  "/benchmark/benchmark_2",
+  "benchmark_1",
+  "benchmark_2",
+  "/sink/benchmark",
+  "/sink/simple",
+  "enterprise-backend",
+  "file_1",
+  "kdb",
+  "knowdb",
+  "rule_mapping",
+  "sink/benchmark",
+  "sink/simple",
+  "syslog_1",
+]
+
+behavior = [
+  "alloc",
+  "await",
+  "broadcast",
+  "build",
+  "close",
+  "create",
+  "dispatch",
+  "drain",
+  "find",
+  "init",
+  "isolate",
+  "load",
+  "match",
+  "parse",
+  "receive",
+  "run",
+  "save",
+  "spawn",
+  "start",
+  "stop",
+  "update",
+  "validate",
+]
+
+pipeline = ["ctrl", "ctrlcmd", "oml", "wpl", "wpls"]
+
+# 状态词（可选）
+[status_words]
+english = [
+  "alone",
+  "complete",
+  "disabled",
+  "draining",
+  "end",
+  "eof",
+  "error",
+  "fail",
+  "immediate",
+  "miss",
+  "normal",
+  "pending",
+  "started",
+  "stopped",
+  "suc",
+  "success",
+  "terminal",
+]
+chinese = ["阻塞", "失败", "成功", "排空", "完成", "结束", "等待", "正常结束", "跳过"]
+
+# 动作词（可选）
+[action_verbs]
+english = [
+  "alloc",
+  "await",
+  "broadcast",
+  "build",
+  "close",
+  "create",
+  "drain",
+  "find",
+  "init",
+  "load",
+  "match",
+  "parse",
+  "receive",
+  "run",
+  "save",
+  "spawn",
+  "start",
+  "stop",
+  "update",
+  "validate",
+]
+chinese = ["分配", "加载", "创建", "启动", "更新", "停止", "校验", "解析", "接收", "发送", "广播", "关闭", "收集"]
+
+# 实体名词（可选）
+[entity_nouns]
+english = [
+  "actor",
+  "agent",
+  "benchmark",
+  "benchmark_1",
+  "benchmark_2",
+  "ctrl",
+  "ctrlcmd",
+  "engine",
+  "file_1",
+  "infra",
+  "kdb",
+  "knowdb",
+  "maintainer",
+  "miss",
+  "model",
+  "monitor",
+  "oml",
+  "picker",
+  "residue",
+  "routine",
+  "rule",
+  "sink",
+  "sinkgroup",
+  "source",
+  "syslog_1",
+  "table",
+  "wparse",
+  "wpl",
+  "wpls",
+]
+chinese = ["主组", "数据源", "接受器", "监控", "模型"]

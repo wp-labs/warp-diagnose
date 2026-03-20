@@ -1,0 +1,75 @@
+2026-03-18 12:04:54.462091000 [INFO ] [ctrl   ] log conf: level: warn,ctrl=info,data=error,matrc=error,dfx=warn,kdb=warn
+output: File
+path: Some("openclaw/data/logs/")
+ 
+2026-03-18 12:04:54.462326000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='arrow-file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:11 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:11
+2026-03-18 12:04:54.462371000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='arrow-ipc' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:12 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:12
+2026-03-18 12:04:54.462401000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='blackhole' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:13 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:13
+2026-03-18 12:04:54.462429000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:14 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:14
+2026-03-18 12:04:54.462457000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='syslog' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:15 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:15
+2026-03-18 12:04:54.462484000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='tcp' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:16 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:16
+2026-03-18 12:04:54.462509000 [WARN ] [wp_core_connectors::registry] duplicate sink factory registration ignored: kind='test_rescue' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:17 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sinks/builtin_factories.rs:17
+2026-03-18 12:04:54.462535000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='syslog' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/syslog/mod.rs:48 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/syslog/mod.rs:48
+2026-03-18 12:04:54.462561000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='tcp' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/tcp/factory.rs:116 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/tcp/factory.rs:116
+2026-03-18 12:04:54.462586000 [WARN ] [wp_core_connectors::registry] duplicate source factory registration ignored: kind='file' existing=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/file/factory.rs:140 new=/Users/zuowenjian/devspace/wp-labs/wp-motor/src/sources/file/factory.rs:140
+2026-03-18 12:04:54.462671000 [INFO ] [ctrl   ] version 0.21.0 (branch env/local, commit 2b94aa99, built 2026-03-17T19:00:25+08:00 via rustc 1.92.0 (ded5c06cf 2025-12-08))
+2026-03-18 12:04:54.462697000 [INFO ] [ctrl   ] enterprise control plane disabled (feature 'enterprise-backend' not enabled)
+2026-03-18 12:04:54.463356000 [INFO ] [ctrl   ] build engine with run_mode=Batch, parallel=2, line_max=None
+2026-03-18 12:04:54.463443000 [INFO ] [ctrl   ] semantic dict: use builtin (missing or disabled external config)
+2026-03-18 12:04:54.463480000 [WARN ] [ctrl   ] knowdb config not found at /Users/zuowenjian/devspace/wp-labs/warp-diagnose/case/wp-tools/openclaw/models/knowledge/knowdb.toml; skip knowdb init
+2026-03-18 12:04:54.465634000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : default/[0]
+	kind : file
+: validate suc!
+2026-03-18 12:04:54.465655000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : default/[0]
+	kind : file
+
+2026-03-18 12:04:54.465705000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : error/[0]
+	kind : file
+: validate suc!
+2026-03-18 12:04:54.465721000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : error/[0]
+	kind : file
+
+2026-03-18 12:04:54.465747000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : miss/[0]
+	kind : file
+: validate suc!
+2026-03-18 12:04:54.465765000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : miss/[0]
+	kind : file
+
+2026-03-18 12:04:54.465789000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : monitor/[0]
+	kind : file
+: validate suc!
+2026-03-18 12:04:54.465804000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : monitor/[0]
+	kind : file
+
+2026-03-18 12:04:54.465826000 [WARN ] [ctrl   ] validate sink conf: 
+call context:
+	name : residue/[0]
+	kind : file
+: validate suc!
+2026-03-18 12:04:54.465840000 [INFO ] [ctrl   ] suc! validate sink conf: 
+call context:
+	name : residue/[0]
+	kind : file
+
+2026-03-18 12:04:54.466196000 [INFO ] [ctrl   ] create sink:default/[0] batch_size=128
+2026-03-18 12:04:54.466338000 [INFO ] [ctrl   ] create sink:residue/[0] batch_size=1
+2026-03-18 12:04:54.466448000 [INFO ] [ctrl   ] create sink:miss/[0] batch_size=1
+2026-03-18 12:04:54.466558000 [INFO ] [ctrl   ] create sink:error/[0] batch_size=1
+2026-03-18 12:04:54.466677000 [INFO ] [ctrl   ] create sink:monitor/[0] batch_size=1
+2026-03-18 12:04:54.467424000 [ERROR] [orion_error::core::context] fail! load-engine-res

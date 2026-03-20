@@ -7,4 +7,5 @@ name = "residue"
 connect = "file_json_sink"
 
 [sink_group.sinks.params]
+base = "${CASE_PATH}/data/out_dat"
 file = "residue.dat"

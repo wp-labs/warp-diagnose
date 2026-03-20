@@ -14,7 +14,7 @@ toml = "0.8"
 chrono = { version = "0.4", features = ["serde"] }
 regex = "1"
 arrow = { version = "54", default-features = false, features = ["ipc"] }
-wp-arrow = { path = "../wp-arrow" }
+wp-arrow =  "0.1"
 
 [build-dependencies]
 slint-build = "1"

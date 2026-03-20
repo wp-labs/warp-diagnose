@@ -1,0 +1,10 @@
+package /wpl/wparse {
+    rule line {
+        (
+            json(_@id,_@message/content[0]/thinking,_@message/content[0]/thinkingSignature,
+                _@message/content[0]/text,
+                _@message/details/aggregated
+            )
+        )
+    }
+}
